@@ -1,0 +1,189 @@
+{
+  "home": {
+    "welcome": "Chào mừng trở lại",
+    "lastEvaluation": "Đánh giá lần cuối",
+    "datePlaceholder": "Ngày 12 tháng 10, 2023",
+    "startNewEvaluation": "Bắt đầu bài đánh giá mới",
+    "currentProgress": "Tiến độ hiện tại",
+    "radar": {
+      "humanCentered": "Tư duy lấy\ncon người làm trung tâm",
+      "ethics": "Đạo đức AI",
+      "application": "Kỹ thuật &\nỨng dụng AI",
+      "systemDesign": "Thiết kế\nHệ thống AI",
+      "humanCenteredSingleLine": "Tư duy lấy con người làm trung tâm",
+      "ethicsSingleLine": "Đạo đức AI",
+      "applicationSingleLine": "Kỹ thuật & Ứng dụng AI",
+      "systemDesignSingleLine": "Thiết kế Hệ thống AI"
+    },
+    "recommendations": {
+      "title": "Đề xuất cho bạn",
+      "viewAll": "Xem tất cả",
+      "tag1": "ĐẠO ĐỨC AI",
+      "title1": "Định kiến trong Mô hình Học máy",
+      "desc1": "Hiểu các nguồn gốc gây định kiến trong các tập dữ liệu và việc ra quyết định của thuật toán, đồng thời ti...",
+      "tag2": "KỸ THUẬT AI",
+      "title2": "Nền tảng của Mạng Nơ-ron",
+      "desc2": "Tìm hiểu sâu về kiến trúc của mạng nơ-ron hiện đại, lan truyền ngược và hàm kích hoạt.",
+      "tag3": "THIẾT KẾ HỆ THỐNG",
+      "title3": "Kiến trúc MLOps có thể mở rộng",
+      "desc3": "Học cách triển khai, giám sát và bảo trì các mô hình học máy trong môi trường sản xuất một cách hiệu...",
+      "viewDocument": "Xem tài liệu"
+    }
+  },
+  "footer": {
+    "description": "Hệ thống Đánh giá Năng lực Sử dụng Trí tuệ Nhân tạo dành cho Sinh viên Đại học. Học tập thông minh, đánh giá chính xác.",
+    "platform": "Nền tảng",
+    "assessCompetency": "Đánh giá năng lực",
+    "howItWorks": "Cách hoạt động",
+    "userGuide": "Hướng dẫn sử dụng",
+    "resources": "Tài nguyên",
+    "aiNews": "Tin tức AI",
+    "researchResults": "Kết quả nghiên cứu",
+    "helpCenter": "Trung tâm trợ giúp",
+    "company": "Tổ chức",
+    "aboutUs": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "privacyPolicy": "Chính sách bảo mật",
+    "copyright": "© 2026 AILD. Đã đăng ký bản quyền.",
+    "terms": "Điều khoản dịch vụ"
+  },
+  "not_found": {
+    "message": "Trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.",
+    "button": "Quay lại Trang chủ"
+  },
+  "common": {
+    "popup_confirm": {
+      "title": "Xác nhận",
+      "button": {
+        "close": "Đóng",
+        "agree": "Đồng ý"
+      }
+    },
+    "validation": {
+      "required": "{{fieldName}} không được để trống",
+      "email_invalid": "{{fieldName}} không hợp lệ"
+    },
+    "upload_images": "Nhấn hoặc kéo thả để tải ảnh lên"
+  },
+  "login": {
+    "title": "Đăng nhập",
+    "username": {
+      "title": "Tên đăng nhập",
+      "placeholder": "Nhập tên đăng nhập"
+    },
+    "email": {
+      "title": "Email",
+      "placeholder": "Nhập email"
+    },
+    "password": {
+      "title": "Mật khẩu",
+      "placeholder": "Nhập mật khẩu"
+    },
+    "confirmPassword": {
+      "title": "Xác nhận mật khẩu",
+      "placeholder": "Xác nhận mật khẩu"
+    },
+    "forgotPasswordLink": "Quên mật khẩu?",
+    "loginButton": "Đăng nhập",
+    "signupButton": "Đăng ký",
+    "orSignUpWith": "hoặc đăng ký bằng",
+    "or": "hoặc",
+    "alreadyHaveAccount": "Đã có tài khoản?",
+    "signInNow": "Đăng nhập ngay",
+    "createAccountTitle": "Tạo tài khoản mới",
+    "createAccountDesc": "Đánh giá năng lực sử dụng AI của bạn ngay hôm nay.",
+    "googleOnlyForStudent": "Lưu ý: Đăng nhập bằng Google chỉ dành cho Sinh viên",
+    "registerButton": "Đăng ký tài khoản",
+    "dontHaveAccount": "Chưa có tài khoản?",
+    "testimonial": {
+      "text": "Hệ thống AILD đã giúp tôi hiểu rõ năng lực AI của bản thân và cải thiện hiệu quả học tập qua từng ngày!",
+      "author": "Nguyễn Văn A",
+      "role": "Sinh viên năm 3"
+    },
+    "joinCount": "Tham gia cùng hàng ngàn sinh viên đánh giá năng lực AI",
+    "validate": {
+      "username": {
+        "email": "Email không hợp lệ"
+      }
+    },
+    "success": {
+      "title": "Đăng nhập thành công",
+      "message": "Chào mừng bạn đã trở lại!"
+    },
+    "failed": {
+      "title": "Đăng nhập thất bại",
+      "message": "Tên đăng nhập hoặc mật khẩu không chính xác."
+    },
+    "processingGoogle": "Đang xử lý đăng nhập Google..."
+  },
+  "register": {
+    "step1": {
+      "fullName": "Họ và tên",
+      "fullNamePlaceholder": "Nhập họ và tên",
+      "fullNameRequired": "Vui lòng nhập họ và tên",
+      "passwordMismatch": "Mật khẩu không khớp",
+      "passwordMinLength": "Mật khẩu phải có ít nhất 8 ký tự",
+      "passwordRequired": "Vui lòng nhập mật khẩu",
+      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
+      "emailRequired": "Vui lòng nhập email",
+      "emailInvalid": "Email không hợp lệ"
+    },
+    "step2": {
+      "title": "Chọn vai trò của bạn",
+      "subtitle": "Để bắt đầu trải nghiệm tốt nhất, vui lòng cho chúng tôi biết bạn muốn tham gia với vai trò gì.",
+      "studentTitle": "Đăng ký trở thành Học sinh",
+      "studentDesc": "Tìm kiếm gia sư giỏi, tham gia các lớp học bổ ích và nâng cao kiến thức của bạn ngay hôm nay.",
+      "teacherTitle": "Đăng ký trở thành Gia sư",
+      "teacherDesc": "Chia sẻ kiến thức, kết nối với học viên và tạo thêm thu nhập từ đam mê giảng dạy của bạn."
+    },
+    "step3": {
+      "title": "Hồ sơ năng lực",
+      "phone": "Số điện thoại",
+      "phonePlaceholder": "0912 xxx xxx",
+      "phoneRequired": "Vui lòng nhập số điện thoại",
+      "submit": "Gửi hồ sơ đăng ký",
+      "teacher": {
+        "subject": "Môn học đăng ký dạy",
+        "subjectPlaceholder": "Chọn môn học",
+        "subjectRequired": "Vui lòng chọn môn học",
+        "experience": "Kinh nghiệm giảng dạy (năm)",
+        "experiencePlaceholder": "Ví dụ: 2",
+        "experienceRequired": "Vui lòng nhập số năm kinh nghiệm",
+        "description": "Giới thiệu ngắn về bản thân",
+        "descriptionPlaceholder": "Hãy viết đôi dòng về phong cách giảng dạy và thế mạnh của bạn...",
+        "certificate": "Bằng cấp / Chứng chỉ",
+        "education": "Đối tượng giảng dạy",
+        "educationPlaceholder": "Chọn đối tượng",
+        "educationRequired": "Vui lòng chọn đối tượng"
+      },
+      "student": {
+        "learningGoal": "Mục tiêu học tập",
+        "learningGoalPlaceholder": "Mục tiêu của bạn là gì?",
+        "subject": "Môn học quan tâm",
+        "subjectPlaceholder": "Chọn môn học",
+        "subjectRequired": "Vui lòng chọn môn học",
+        "education": "Trình độ học vấn",
+        "educationPlaceholder": "Chọn học vấn",
+        "educationRequired": "Vui lòng chọn học vấn"
+      }
+    },
+    "common": {
+      "continue": "Tiếp tục"
+    },
+    "messages": {
+      "emailExist": "Email đã tồn tại, vui lòng sử dụng email khác.",
+      "emailCheckError": "Đã có lỗi xảy ra khi kiểm tra email.",
+      "registerSuccess": "Đăng ký tài khoản thành công!",
+      "registerFailed": "Đăng ký thất bại, vui lòng thử lại.",
+      "registerError": "Đã có lỗi xảy ra trong quá trình đăng ký.",
+      "successTitle": "Thành công",
+      "errorTitle": "Lỗi"
+    }
+  },
+  "menu": {
+    "overview": "Tổng quan",
+    "user": "Quản lý người dùng",
+    "submission": "Danh sách bài làm",
+    "exam": "Danh sách đề thi"
+  }
+}

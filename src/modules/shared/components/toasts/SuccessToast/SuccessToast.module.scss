@@ -1,0 +1,11 @@
+.container {
+  @apply flex items-center space-x-2;
+
+  .icon-container {
+    @apply p-2 rounded-full bg-[#bcf7cc];
+  }
+
+  .content {
+    @apply text-black;
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "home": {
+    "welcome": "Welcome back",
+    "lastEvaluation": "Last evaluation",
+    "datePlaceholder": "October 12, 2023",
+    "startNewEvaluation": "Start new evaluation",
+    "currentProgress": "Current progress",
+    "radar": {
+      "humanCentered": "Human-Centered\\nDesign",
+      "ethics": "AI Ethics",
+      "application": "AI Engineering\\n& Application",
+      "systemDesign": "AI System\\nDesign",
+      "humanCenteredSingleLine": "Human-Centered Design",
+      "ethicsSingleLine": "AI Ethics",
+      "applicationSingleLine": "AI Engineering & Application",
+      "systemDesignSingleLine": "AI System Design"
+    },
+    "recommendations": {
+      "title": "Recommended for you",
+      "viewAll": "View all",
+      "tag1": "AI ETHICS",
+      "title1": "Bias in Machine Learning Models",
+      "desc1": "Understand the sources of bias in datasets and algorithmic decision making, while findin...",
+      "tag2": "AI ENGINEERING",
+      "title2": "Fundamentals of Neural Networks",
+      "desc2": "Deep dive into modern neural network architecture, backpropagation and activation functions.",
+      "tag3": "SYSTEM DESIGN",
+      "title3": "Scalable MLOps Architecture",
+      "desc3": "Learn how to deploy, monitor and maintain machine learning models in production effectiv...",
+      "viewDocument": "View document"
+    }
+  },
+  "footer": {
+    "description": "Artificial Intelligence Competency Assessment System for University Students. Learn smarter, assess accurately.",
+    "platform": "Platform",
+    "assessCompetency": "Competency Assessment",
+    "howItWorks": "How it works",
+    "userGuide": "User Guide",
+    "resources": "Resources",
+    "aiNews": "AI News",
+    "researchResults": "Research Results",
+    "helpCenter": "Help Center",
+    "company": "Organization",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "copyright": "© 2026 AILD. All rights reserved.",
+    "terms": "Terms of Service"
+  },
+  "common": {
+    "popup_confirm": {
+      "title": "Confirm",
+      "button": {
+        "close": "Close",
+        "agree": "Agree"
+      }
+    },
+    "validation": {
+      "required": "{{fieldName}} is required",
+      "email_invalid": "{{fieldName}} is invalid"
+    },
+    "upload_images": "Click or drag and drop to upload images"
+  },
+  "login": {
+    "title": "Login",
+    "username": {
+      "title": "Username",
+      "placeholder": "Enter username"
+    },
+    "email": {
+      "title": "Email",
+      "placeholder": "Enter email"
+    },
+    "password": {
+      "title": "Password",
+      "placeholder": "Enter password"
+    },
+    "confirmPassword": {
+      "title": "Confirm password",
+      "placeholder": "Confirm your password"
+    },
+    "forgotPasswordLink": "Forgot password?",
+    "loginButton": "Login",
+    "signupButton": "Sign up",
+    "orSignUpWith": "or sign up with",
+    "or": "or",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInNow": "Sign in now",
+    "createAccountTitle": "Create new account",
+    "createAccountDesc": "Assess your AI competency today.",
+    "googleOnlyForStudent": "Note: Google login is for Students only",
+    "registerButton": "Sign up account",
+    "dontHaveAccount": "Don't have an account?",
+    "testimonial": {
+      "text": "The AILD system helped me clearly understand my AI competency and improve my learning efficiency day by day!",
+      "author": "Nguyen Van A",
+      "role": "3rd Year Student"
+    },
+    "joinCount": "Join thousands of students assessing their AI competency",
+    "validate": {
+      "username": {
+        "email": "Invalid email address"
+      }
+    },
+    "success": {
+      "title": "Login successful",
+      "message": "Welcome back!"
+    },
+    "failed": {
+      "title": "Login failed",
+      "message": "The username or password is incorrect."
+    },
+    "processingGoogle": "Processing Google login..."
+  },
+  "register": {
+    "step1": {
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Enter full name",
+      "fullNameRequired": "Please enter your full name",
+      "passwordMismatch": "Passwords do not match",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordRequired": "Please enter a password",
+      "confirmPasswordRequired": "Please confirm your password",
+      "emailRequired": "Please enter your email",
+      "emailInvalid": "Invalid email address"
+    },
+    "step2": {
+      "title": "Choose your role",
+      "subtitle": "To get the best experience, please tell us how you want to join us.",
+      "studentTitle": "Register as a Student",
+      "studentDesc": "Find great tutors, join useful classes, and improve your knowledge today.",
+      "teacherTitle": "Register as a Tutor",
+      "teacherDesc": "Share your knowledge, connect with students, and earn income from your passion for teaching."
+    },
+    "step3": {
+      "title": "Profile information",
+      "phone": "Phone number",
+      "phonePlaceholder": "0912 xxx xxx",
+      "phoneRequired": "Please enter your phone number",
+      "submit": "Submit registration profile",
+      "teacher": {
+        "subject": "Subject to teach",
+        "subjectPlaceholder": "Select a subject",
+        "subjectRequired": "Please select a subject",
+        "experience": "Teaching experience (years)",
+        "experiencePlaceholder": "Example: 2",
+        "experienceRequired": "Please enter your years of experience",
+        "description": "Short introduction",
+        "descriptionPlaceholder": "Write a few lines about your teaching style and strengths...",
+        "certificate": "Degree / Certificate",
+        "education": "Teaching audience",
+        "educationPlaceholder": "Select audience",
+        "educationRequired": "Please select an audience"
+      },
+      "student": {
+        "learningGoal": "Learning goal",
+        "learningGoalPlaceholder": "What is your goal?",
+        "subject": "Interested subject",
+        "subjectPlaceholder": "Select a subject",
+        "subjectRequired": "Please select a subject",
+        "education": "Education Level",
+        "educationPlaceholder": "Select education",
+        "educationRequired": "Please select education level"
+      }
+    },
+    "common": {
+      "continue": "Continue"
+    },
+    "messages": {
+      "emailExist": "The email already exists. Please use another email.",
+      "emailCheckError": "An error occurred while checking the email.",
+      "registerSuccess": "Account registered successfully!",
+      "registerFailed": "Registration failed. Please try again.",
+      "registerError": "An error occurred during registration.",
+      "successTitle": "Success",
+      "errorTitle": "Error"
+    }
+  },
+  "menu": {
+    "overview": "Overview",
+    "user": "Users",
+    "submission": "Submissions",
+    "exam": "Exams"
+  }
+}

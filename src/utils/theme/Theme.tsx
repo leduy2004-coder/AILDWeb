@@ -1,0 +1,65 @@
+import { useSelector } from '@/store/hooks';
+import { AppState } from '@/store/store';
+import { BaseTheme } from '@/types/shared';
+import * as locales from '@mui/material/locale';
+import { Components, createTheme, Theme } from '@mui/material/styles';
+import _ from 'lodash';
+import { useEffect } from 'react';
+import components from './Components';
+import { DarkThemeColors } from './DarkThemeColors';
+import { baseDarkTheme, baselightTheme } from './DefaultColors';
+import { LightThemeColors } from './LightThemeColors';
+import { darkshadows, shadows } from './Shadows';
+import typography from './Typography';
+
+export const BuildTheme = (config: { theme?: string; direction: string }) => {
+  const themeOptions = LightThemeColors.find(
+    (theme) => theme.name === config.theme,
+  );
+  const darkthemeOptions = DarkThemeColors.find(
+    (theme) => theme.name === config.theme,
+  );
+  const customizer = useSelector((state: AppState) => state.customizer);
+  const defaultTheme =
+    customizer.activeMode === 'dark' ? baseDarkTheme : baselightTheme;
+  const defaultShadow =
+    customizer.activeMode === 'dark' ? darkshadows : shadows;
+  const themeSelect =
+    customizer.activeMode === 'dark' ? darkthemeOptions : themeOptions;
+  const baseMode = {
+    palette: {
+      mode: customizer.activeMode,
+    },
+    shape: {
+      borderRadius: customizer.borderRadius,
+    },
+    shadows: defaultShadow,
+    typography: typography,
+  };
+  const theme = createTheme(
+    _.merge({}, baseMode, defaultTheme, locales, themeSelect, {
+      direction: config.direction,
+    }),
+  );
+  theme.components = components(theme) as any;
+
+  return theme;
+};
+
+const ThemeSettings = () => {
+  const activDir = useSelector((state: AppState) => state.customizer.activeDir);
+  const activeTheme = useSelector(
+    (state: AppState) => state.customizer.activeTheme,
+  );
+  const theme = BuildTheme({
+    direction: activDir,
+    theme: activeTheme,
+  });
+  useEffect(() => {
+    document.dir = activDir;
+  }, [activDir]);
+
+  return theme;
+};
+
+export { ThemeSettings };
