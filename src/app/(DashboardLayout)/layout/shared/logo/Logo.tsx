@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { styled } from '@mui/material/styles';
 import { AppState } from '@/store/store';
 import Image from 'next/image';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import logoTutor from '@/assests/images/logo.png';
 
 interface LogoProps {
@@ -23,36 +23,54 @@ const LinkStyled = styled(Link, {
 })<StyledProps>(
   ({ $collapse, $topbarHeight, margin }) => ({
     height: $collapse ? '50px' : $topbarHeight,
-    width: $collapse ? '40px' : '200px',
+    width: $collapse ? '100%' : '200px',
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: $collapse ? 'center' : 'flex-start',
     margin: margin || 'auto',
     zIndex: 99999,
     textDecoration: 'none',
   }),
 );
 
-export default function Logo({ margin}: LogoProps) {
+export default function Logo({ margin, isSidebar }: LogoProps) {
   const customizerState = useSelector((state: AppState) => state.customizer);
   const menuState = useSelector((state: AppState) => state.menu);
+  
+  const isCollapsed = isSidebar 
+    ? (menuState.isCollapse && !menuState.isSidebarHover)
+    : menuState.isCollapse;
 
   return (
     <LinkStyled
       href="/"
-      $collapse={menuState.isCollapse}
+      $collapse={isCollapsed}
       $topbarHeight={customizerState.TopbarHeight ?? 70}
       margin={margin}
     >
-      <Box display="flex" alignItems="center" gap={1} width="100%">
-        <Image
-          src={logoTutor}
+      <Box display="flex" alignItems="center" gap={0} width="100%" justifyContent={isCollapsed ? "center" : "flex-start"}>
+        <Box
+          component="img"
+          src={logoTutor.src}
           alt="AILD Logo"
-          width={60}
-          height={60}
-          style={{ borderRadius: '8px', flexShrink: 0 }}
+          sx={{ height: 50, width: 'auto', borderRadius: '8px', flexShrink: 0, objectFit: 'contain' }}
         />
+        {!isCollapsed && (
+          <Typography
+            variant="h5"
+            fontWeight={800}
+            sx={{
+              color: '#1E3A8A',
+              letterSpacing: '1px',
+              fontFamily: '"Inter", "Outfit", sans-serif',
+              ml: -2.5,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            AILD
+          </Typography>
+        )}
       </Box>
     </LinkStyled>
   );

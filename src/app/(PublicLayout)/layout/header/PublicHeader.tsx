@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { IconSearch } from '@tabler/icons-react';
-import logo from '@/assests/images/logo.png';
 import Language from '@/app/(DashboardLayout)/layout/vertical/header/Language';
+import Logo from '@/app/(DashboardLayout)/layout/shared/logo/Logo';
 
 export const PublicHeader: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -19,24 +19,7 @@ export const PublicHeader: React.FC = () => {
     <Box sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper', py: 2 }}>
       <Container maxWidth="lg" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Logo */}
-        <Box 
-          sx={{ display: 'flex', alignItems: 'center', gap: 0, cursor: 'pointer' }}
-          onClick={() => router.push('/home')}
-        >
-          <Box component="img" src={logo.src} alt="AILD Logo" sx={{ height: 50, borderRadius: '8px' }} />
-          <Typography 
-            variant="h5" 
-            fontWeight={800} 
-            sx={{ 
-              color: '#1E3A8A', // Dark blue
-              letterSpacing: '1px',
-              fontFamily: '"Inter", "Outfit", sans-serif',
-              ml: -2
-            }}
-          >
-            AILD
-          </Typography>
-      </Box>
+        <Logo margin="0" />
 
         {/* Links & Actions */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>

@@ -95,12 +95,12 @@ const Menuitems: IMenu[] = [
   {
     data: {
       id: 1,
-      code: 'USER',
-      icon: 'user-rounded-linear',
-      link: '/admin/users',
-      name: 'menu.user',
+      code: 'RESOURCE',
+      icon: 'box-linear',
+      link: '/admin/resources',
+      name: 'menu.resource',
       type: 'basic',
-      title: 'menu.user',
+      title: 'menu.resource',
       priAccess: MENU_ADMIN,
       priRead: MENU_ADMIN,
       priInsert: MENU_ADMIN,

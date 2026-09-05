@@ -184,6 +184,63 @@
     "overview": "Tổng quan",
     "user": "Quản lý người dùng",
     "submission": "Danh sách bài làm",
-    "exam": "Danh sách đề thi"
+    "exam": "Danh sách đề thi",
+    "resource": "Quản lý tài nguyên"
+  },
+  "admin_overview": {
+    "title": "Tổng quan",
+    "errorFetchData": "Lỗi khi tải dữ liệu tổng quan.",
+    "noData": "Không có dữ liệu",
+    "totalStudents": "Tổng số học viên",
+    "completedAssessments": "Đánh giá đã hoàn thành",
+    "avgScore": "Điểm năng lực trung bình",
+    "questionsNeedingAttention": "Câu hỏi cần chú ý",
+    "scoreByDomain": "Điểm trung bình theo lĩnh vực",
+    "proficiencyDistribution": "Phân bố mức độ thành thạo",
+    "recentActivity": "Hoạt động gần đây",
+    "viewAll": "Xem tất cả",
+    "table": {
+      "student": "Học viên",
+      "questionSet": "Bộ đề",
+      "score": "Điểm",
+      "date": "Ngày",
+      "status": "Trạng thái"
+    },
+    "status": {
+      "COMPLETED": "Đã hoàn thành",
+      "IN_PROGRESS": "Đang tiến hành",
+      "NEEDS_REVIEW": "Cần đánh giá",
+      "REVIEWED": "Đã đánh giá"
+    },
+    "domain": {
+      "name": {
+        "1": "Tư duy",
+        "2": "Đạo đức",
+        "3": "Kỹ thuật",
+        "4": "Thiết kế hệ thống"
+      }
+    },
+    "level": {
+      "name": {
+        "1": "Hiểu",
+        "2": "Áp dụng",
+        "3": "Sáng tạo"
+      }
+    },
+    "recent": {
+      "assessment": {
+        "default": "Bài đánh giá"
+      }
+    }
+  },
+  "header": {
+    "findTutor": "Tìm Gia sư",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "profile": {
+      "title": "Hồ sơ của tôi",
+      "changePassword": "Đổi mật khẩu",
+      "logout": "Đăng xuất"
+    }
   }
 }

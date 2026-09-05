@@ -86,8 +86,8 @@ const request = async <Response>(
     body instanceof FormData
       ? {}
       : {
-          "Content-Type": "application/json",
-        };
+        "Content-Type": "application/json",
+      };
   if (isClient()) {
     const sessionToken = localStorage.getItem(AuthActionTypes.ACCESS_TOKEN);
     if (sessionToken) {
@@ -148,7 +148,7 @@ const request = async <Response>(
           });
           const retryPayload = await retryRes.json();
           if (!retryRes.ok) {
-             throw new HttpError({ status: retryRes.status, payload: retryPayload });
+            throw new HttpError({ status: retryRes.status, payload: retryPayload });
           }
           return { status: retryRes.status, payload: retryPayload };
         };
@@ -164,9 +164,9 @@ const request = async <Response>(
                 headers: { "Content-Type": "application/json" }
               }
             );
-            
+
             const refreshData = await refreshRes.json();
-            
+
             if (refreshRes.ok && refreshData.result?.accessToken) {
               localStorage.setItem(AuthActionTypes.ACCESS_TOKEN, refreshData.result.accessToken);
               processQueue(null, refreshData.result.accessToken);

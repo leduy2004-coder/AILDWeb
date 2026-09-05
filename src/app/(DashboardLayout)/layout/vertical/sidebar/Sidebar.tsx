@@ -36,7 +36,7 @@ export default function Sidebar() {
     return (
       <Box
         sx={{
-          zIndex: 100,
+          zIndex: menuState.isCollapse ? 1200 : 100,
           width: toggleWidth,
           flexShrink: 0,
           ...(menuState.isCollapse && {

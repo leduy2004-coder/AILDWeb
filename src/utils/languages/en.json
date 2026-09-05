@@ -180,6 +180,63 @@
     "overview": "Overview",
     "user": "Users",
     "submission": "Submissions",
-    "exam": "Exams"
+    "exam": "Exams",
+    "resource": "Resources"
+  },
+  "admin_overview": {
+    "title": "Overview",
+    "errorFetchData": "Failed to fetch overview data.",
+    "noData": "No data available",
+    "totalStudents": "Total Students",
+    "completedAssessments": "Completed Assessments",
+    "avgScore": "Average Competency Score",
+    "questionsNeedingAttention": "Questions Needing Attention",
+    "scoreByDomain": "Average Score by Domain",
+    "proficiencyDistribution": "Proficiency Distribution",
+    "recentActivity": "Recent Activity",
+    "viewAll": "View all",
+    "table": {
+      "student": "Student",
+      "questionSet": "Question Set",
+      "score": "Score",
+      "date": "Date",
+      "status": "Status"
+    },
+    "status": {
+      "COMPLETED": "Completed",
+      "IN_PROGRESS": "In Progress",
+      "NEEDS_REVIEW": "Needs Review",
+      "REVIEWED": "Reviewed"
+    },
+    "domain": {
+      "name": {
+        "1": "Human-Centered Design",
+        "2": "AI Ethics",
+        "3": "AI Engineering",
+        "4": "System Design"
+      }
+    },
+    "level": {
+      "name": {
+        "1": "Understanding",
+        "2": "Applying",
+        "3": "Creating"
+      }
+    },
+    "recent": {
+      "assessment": {
+        "default": "Assessment"
+      }
+    }
+  },
+  "header": {
+    "findTutor": "Find a Tutor",
+    "login": "Login",
+    "register": "Sign up",
+    "profile": {
+      "title": "My Profile",
+      "changePassword": "Change Password",
+      "logout": "Logout"
+    }
   }
 }

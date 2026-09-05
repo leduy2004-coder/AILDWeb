@@ -8,10 +8,11 @@ import {
   RegisterResType,
 } from '@/types/shared';
 import { IUser } from '@/types/users/user.type';
+import { API_PREFIX } from '@/constants/api.constant';
 
 export async function login(body: LoginBodyType): Promise<LoginRes> {
   const { payload } = await http.post<LoginRes>(
-    '/api/v1/auth/login',
+    `${API_PREFIX.AUTH}/login`,
     body,
   );
 
@@ -20,7 +21,7 @@ export async function login(body: LoginBodyType): Promise<LoginRes> {
 
 export async function loginGoogle(code: string): Promise<LoginRes> {
   const { payload } = await http.post<LoginRes>(
-    `/api/v1/auth/login/oauth2?code=${code}`,
+    `${API_PREFIX.AUTH}/login/oauth2?code=${code}`,
     {},
   );
 
@@ -29,7 +30,7 @@ export async function loginGoogle(code: string): Promise<LoginRes> {
 
 export async function register(body: RegisterBodyType): Promise<RegisterResType> {
   const { payload } = await http.post<RegisterResType>(
-    '/api/v1/auth/register',
+    `${API_PREFIX.AUTH}/register`,
     body,
   );
 
@@ -39,7 +40,7 @@ export async function register(body: RegisterBodyType): Promise<RegisterResType>
 
 export async function getInfoByUsername(): Promise<IApiResponse<IUser>> {
   const { payload } = await http.get<IApiResponse<IUser>>(
-    '/api/v1/auth/users/get-user',
+    `${API_PREFIX.AUTH}/users/get-user`,
   );
 
   return payload;
@@ -49,7 +50,7 @@ export async function checkUserTypeByUsername(
   username: string,
 ): Promise<IApiResponse<number>> {
   const { payload } = await http.get<IApiResponse<number>>(
-    '/api/v1/auth/users/check-user-type/' + username,
+    `${API_PREFIX.AUTH}/users/check-user-type/` + username,
   );
 
   return payload;
@@ -59,7 +60,7 @@ export async function checkEmailExist(
   email: string,
 ): Promise<IApiResponse<boolean>> {
   const { payload } = await http.get<IApiResponse<boolean>>(
-    '/api/v1/auth/check-email?email=' + email,
+    `${API_PREFIX.AUTH}/check-email?email=` + email,
   );
 
   return payload;
@@ -67,7 +68,7 @@ export async function checkEmailExist(
 
 export async function logout(): Promise<IApiResponse<void>> {
   const { payload } = await http.post<IApiResponse<void>>(
-    '/api/v1/auth/logout',
+    `${API_PREFIX.AUTH}/logout`,
     {},
   );
 
