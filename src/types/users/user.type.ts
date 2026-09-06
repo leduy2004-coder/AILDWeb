@@ -27,8 +27,10 @@ export interface IUserRequest {
 export interface IUserUpdateRequest {
   id?: number;
   name?: string;
+  email?: string;
   status?: boolean;
   password?: string;
+  role?: IRoleRequest;
   phone?: string;
   description?: string;
   subjectId?: number[];
@@ -42,10 +44,13 @@ export interface IUserUpdateRequest {
 export interface IUser {
   id: number;
   code?: string;
-  role: RoleType;
+  role: { id?: number; code: string; name?: string } | RoleType;
   name: string;
   email: string;
   status?: boolean;
+  createdDate?: string;
+  modifiedDate?: string;
+  updatedAt?: string;
   phone?: string;
   description?: string;
   subjectId?: number[];

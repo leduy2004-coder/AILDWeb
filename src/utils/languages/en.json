@@ -302,6 +302,72 @@
       "error": "Error deleting resource"
     }
   },
+  "admin_user": {
+    "title": "User Management",
+    "subtitle": "Manage user accounts, roles, and status.",
+    "search": "Search by name or email...",
+    "newUser": "Add New User",
+    "filter": {
+      "allRoles": "All Roles",
+      "allStatus": "All Status",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "table": {
+      "name": "Full Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "updatedAt": "Updated Date",
+      "action": "Actions",
+      "empty": "No users found."
+    },
+    "roles": {
+      "ADMIN": "Administrator",
+      "STUDENT": "Student"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "form": {
+      "addTitle": "Add New User",
+      "editTitle": "Edit User",
+      "name": "Full Name",
+      "namePlaceholder": "Enter full name...",
+      "email": "Email Address",
+      "emailPlaceholder": "example@email.com",
+      "emailDisabledNote": "* Email cannot be changed after creation.",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password...",
+      "passwordEditNote": "* Leave as ******** if you don't want to change password.",
+      "role": "Role",
+      "status": "Account Status",
+      "cancel": "Cancel",
+      "save": "Save",
+      "successAdd": "User added successfully",
+      "successEdit": "User updated successfully",
+      "error": "Error saving user",
+      "validation": {
+        "nameRequired": "Full name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email address",
+        "passwordRequired": "Password is required for new user",
+        "passwordMin": "Password must be at least 6 characters",
+        "roleRequired": "Please select a role"
+      }
+    },
+    "delete": {
+      "title": "Delete User",
+      "content": "Are you sure you want to delete this user?",
+      "bulkTitle": "Delete Multiple Users",
+      "bulkContent": "Are you sure you want to delete {{count}} selected users?",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "success": "User deleted successfully",
+      "error": "Error deleting user"
+    }
+  },
   "admin_question": {
     "title": "Question Bank",
     "description": "Manage and organize assessment items across all domains.",

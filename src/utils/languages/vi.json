@@ -306,6 +306,72 @@
       "error": "Lỗi khi xóa tài nguyên"
     }
   },
+  "admin_user": {
+    "title": "Quản lý người dùng",
+    "subtitle": "Quản lý danh sách, vai trò và trạng thái tài khoản người dùng.",
+    "search": "Tìm kiếm theo tên hoặc email...",
+    "newUser": "Thêm người dùng mới",
+    "filter": {
+      "allRoles": "Tất cả vai trò",
+      "allStatus": "Tất cả trạng thái",
+      "active": "Đang hoạt động",
+      "inactive": "Đã khóa"
+    },
+    "table": {
+      "name": "Họ và tên",
+      "email": "Email",
+      "role": "Vai trò",
+      "status": "Trạng thái",
+      "updatedAt": "Ngày cập nhật",
+      "action": "Hành động",
+      "empty": "Không tìm thấy người dùng nào."
+    },
+    "roles": {
+      "ADMIN": "Quản trị viên",
+      "STUDENT": "Học viên"
+    },
+    "status": {
+      "active": "Đang hoạt động",
+      "inactive": "Đã khóa"
+    },
+    "form": {
+      "addTitle": "Thêm người dùng mới",
+      "editTitle": "Chỉnh sửa người dùng",
+      "name": "Họ và tên",
+      "namePlaceholder": "Nhập họ và tên...",
+      "email": "Email",
+      "emailPlaceholder": "example@email.com",
+      "emailDisabledNote": "* Email không thể thay đổi sau khi tạo.",
+      "password": "Mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu...",
+      "passwordEditNote": "* Để nguyên ******** nếu không muốn thay đổi mật khẩu.",
+      "role": "Vai trò",
+      "status": "Trạng thái tài khoản",
+      "cancel": "Hủy bỏ",
+      "save": "Lưu thông tin",
+      "successAdd": "Thêm người dùng thành công",
+      "successEdit": "Cập nhật người dùng thành công",
+      "error": "Có lỗi xảy ra khi lưu người dùng",
+      "validation": {
+        "nameRequired": "Họ tên không được để trống",
+        "emailRequired": "Email không được để trống",
+        "emailInvalid": "Email không hợp lệ",
+        "passwordRequired": "Mật khẩu không được để trống khi tạo mới",
+        "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự",
+        "roleRequired": "Vui lòng chọn vai trò"
+      }
+    },
+    "delete": {
+      "title": "Xóa người dùng",
+      "content": "Bạn có chắc chắn muốn xóa người dùng này không?",
+      "bulkTitle": "Xóa nhiều người dùng",
+      "bulkContent": "Bạn có chắc chắn muốn xóa {{count}} người dùng đã chọn không?",
+      "confirm": "Xóa",
+      "cancel": "Hủy",
+      "success": "Xóa người dùng thành công",
+      "error": "Lỗi khi xóa người dùng"
+    }
+  },
   "admin_question": {
     "title": "Ngân hàng câu hỏi",
     "description": "Quản lý và tổ chức các mục đánh giá trên tất cả các lĩnh vực.",
