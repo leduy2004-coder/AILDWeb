@@ -43,6 +43,11 @@ export async function deleteQuestion(id: number): Promise<IApiResponse<void>> {
   return payload;
 }
 
+export async function deleteQuestions(ids: number[]): Promise<IApiResponse<void>> {
+  const { payload } = await http.delete<IApiResponse<void>>(`${API_PREFIX.AILD_ADMIN}/questions/bulk`, ids);
+  return payload;
+}
+
 export async function generateQuestionAI(data: IAIGenerateQuestionRequest): Promise<IApiResponse<any>> {
   const { payload } = await http.post<IApiResponse<any>>(`${API_PREFIX.AILD_ADMIN}/questions/generate-ai`, data);
   return payload;

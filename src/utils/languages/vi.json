@@ -246,6 +246,66 @@
       "logout": "Đăng xuất"
     }
   },
+  "admin_resource": {
+    "title": "Tài nguyên học tập",
+    "subtitle": "Quản lý và giám tuyển tài liệu giáo dục.",
+    "search": "Tìm kiếm tài nguyên...",
+    "newResource": "Tài nguyên mới",
+    "filter": {
+      "allDomains": "Tất cả lĩnh vực",
+      "searchPlaceholder": "Tìm kiếm theo tiêu đề..."
+    },
+    "table": {
+      "title": "Tiêu đề",
+      "domain": "Lĩnh vực",
+      "level": "Cấp độ",
+      "updatedAt": "Ngày cập nhật",
+      "action": "Hành động",
+      "empty": "Không tìm thấy tài nguyên nào.",
+      "actionPreview": "Xem trước",
+      "actionEdit": "Chỉnh sửa",
+      "actionDelete": "Xóa"
+    },
+    "preview": {
+      "title": "Xem trước: ",
+      "articleNote": "Tài liệu này là một bài viết ngoài.",
+      "articleWarning": "Trang web đích có thể không cho phép nhúng trực tiếp. Vui lòng mở trong thẻ mới để đọc.",
+      "openLink": "Mở trang đích"
+    },
+    "form": {
+      "addTitle": "Thêm tài nguyên mới",
+      "editTitle": "Chỉnh sửa tài nguyên",
+      "title": "Tiêu đề",
+      "titlePlaceholder": "Nhập tiêu đề tài nguyên...",
+      "url": "Đường dẫn URL",
+      "urlPlaceholder": "https://...",
+      "urlNote": "* Hệ thống hỗ trợ nhúng tự động link YouTube, Google Slides, Google Docs. Các link khác sẽ mở ở thẻ mới.",
+      "domain": "Lĩnh vực",
+      "level": "Cấp độ mục tiêu",
+      "description": "Mô tả",
+      "descriptionPlaceholder": "Nhập mô tả ngắn gọn về tài nguyên...",
+      "cancel": "Hủy bỏ",
+      "save": "Lưu tài nguyên",
+      "successAdd": "Thêm tài nguyên thành công",
+      "successEdit": "Cập nhật tài nguyên thành công",
+      "error": "Có lỗi xảy ra khi lưu tài nguyên",
+      "validation": {
+        "titleRequired": "Tiêu đề không được để trống",
+        "urlRequired": "Đường dẫn không được để trống",
+        "urlInvalid": "Đường dẫn URL không hợp lệ",
+        "domainRequired": "Vui lòng chọn lĩnh vực",
+        "levelRequired": "Vui lòng chọn cấp độ"
+      }
+    },
+    "delete": {
+      "title": "Xóa tài nguyên",
+      "content": "Bạn có chắc chắn muốn xóa tài nguyên này không? Hành động này không thể hoàn tác.",
+      "confirm": "Xóa",
+      "cancel": "Hủy",
+      "success": "Xóa tài nguyên thành công",
+      "error": "Lỗi khi xóa tài nguyên"
+    }
+  },
   "admin_question": {
     "title": "Ngân hàng câu hỏi",
     "description": "Quản lý và tổ chức các mục đánh giá trên tất cả các lĩnh vực.",

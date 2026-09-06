@@ -15,6 +15,8 @@ import PageContainer from '@/app/(DashboardLayout)/components/container/PageCont
 import AIGenerationWidget from './components/ai/AIGenerationWidget';
 import { IAIGenerateQuestionRequest } from '@/types/admin/question.type';
 import { useGenerateQuestionAI } from '@/apis/question/hook/useGenerateQuestionAI';
+import { useBulkDeleteQuestion } from '@/apis/question/hook/useBulkDeleteQuestion';
+import ConfirmBulkDeleteModal from './components/modal/ConfirmBulkDeleteModal';
 
 export default function QuestionBankPage() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_question' });
@@ -32,7 +34,11 @@ export default function QuestionBankPage() {
   const [editingId, setEditingId] = useState<number | null>(null);
 
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  const bulkDeleteMutation = useBulkDeleteQuestion();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isBulkDeleteOpen, setIsBulkDeleteOpen] = useState(false);
 
   const { data, isLoading, isError } = useQuestions(filter);
   
@@ -108,6 +114,40 @@ export default function QuestionBankPage() {
     setDeleteId(null);
   };
 
+  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelected = data?.result?.content?.map((n) => n.id) || [];
+      setSelectedIds(newSelected);
+      return;
+    }
+    setSelectedIds([]);
+  };
+
+  const handleSelectOne = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    const selectedIndex = selectedIds.indexOf(id);
+    let newSelected: number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selectedIds, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selectedIds.slice(1));
+    } else if (selectedIndex === selectedIds.length - 1) {
+      newSelected = newSelected.concat(selectedIds.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selectedIds.slice(0, selectedIndex),
+        selectedIds.slice(selectedIndex + 1)
+      );
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedIds.length > 0) {
+      setIsBulkDeleteOpen(true);
+    }
+  };
+
   return (
     <PageContainer title={t('title')} description={t('description')}>
       <Box p={3}>
@@ -120,15 +160,28 @@ export default function QuestionBankPage() {
               {t('description')}
             </Typography>
           </Box>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<Icon icon="solar:add-circle-bold" />}
-            onClick={handleOpenAdd}
-            sx={{ borderRadius: '8px', textTransform: 'none', px: 3, py: 1 }}
-          >
-            {t('newQuestion')}
-          </Button>
+          <Box display="flex" gap={2}>
+            {selectedIds.length > 0 && (
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<Icon icon="solar:trash-bin-trash-bold" />}
+                onClick={handleBulkDelete}
+                disabled={bulkDeleteMutation.isPending}
+              >
+                Xóa {selectedIds.length} mục
+              </Button>
+            )}
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<Icon icon="solar:add-circle-bold" />}
+              onClick={handleOpenAdd}
+              sx={{ borderRadius: '8px', textTransform: 'none', px: 3, py: 1 }}
+            >
+              {t('newQuestion')}
+            </Button>
+          </Box>
         </Stack>
 
         <QuestionFilter filter={filter} onFilterChange={handleFilterChange} />
@@ -149,6 +202,9 @@ export default function QuestionBankPage() {
               onPageChange={handlePageChange}
               onEdit={handleOpenEdit}
               onDelete={handleOpenDelete}
+              selectedIds={selectedIds}
+              onSelectAll={handleSelectAll}
+              onSelectOne={handleSelectOne}
             />
           )}
         </Box>
@@ -166,6 +222,13 @@ export default function QuestionBankPage() {
           open={isDeleteOpen}
           onClose={handleCloseDelete}
           questionId={deleteId}
+        />
+
+        <ConfirmBulkDeleteModal
+          open={isBulkDeleteOpen}
+          onClose={() => setIsBulkDeleteOpen(false)}
+          selectedIds={selectedIds}
+          onSuccess={() => setSelectedIds([])}
         />
 
         <AIGenerationWidget 

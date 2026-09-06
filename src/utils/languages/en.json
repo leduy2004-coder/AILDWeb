@@ -242,6 +242,66 @@
       "logout": "Logout"
     }
   },
+  "admin_resource": {
+    "title": "Learning Resources",
+    "subtitle": "Manage and curate educational materials.",
+    "search": "Search resources...",
+    "newResource": "New Resource",
+    "filter": {
+      "allDomains": "All Domains",
+      "searchPlaceholder": "Search by title..."
+    },
+    "table": {
+      "title": "Title",
+      "domain": "Domain",
+      "level": "Level",
+      "updatedAt": "Updated At",
+      "action": "Actions",
+      "empty": "No resources found.",
+      "actionPreview": "Preview",
+      "actionEdit": "Edit",
+      "actionDelete": "Delete"
+    },
+    "preview": {
+      "title": "Preview: ",
+      "articleNote": "This document is an external article.",
+      "articleWarning": "The destination website might not allow direct embedding. Please open it in a new tab to read.",
+      "openLink": "Open Link"
+    },
+    "form": {
+      "addTitle": "Add New Resource",
+      "editTitle": "Edit Resource",
+      "title": "Title",
+      "titlePlaceholder": "Enter resource title...",
+      "url": "URL Link",
+      "urlPlaceholder": "https://...",
+      "urlNote": "* Automatically embeds YouTube, Google Slides, and Google Docs links. Other links will open in a new tab.",
+      "domain": "Domain",
+      "level": "Target Level",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a short description...",
+      "cancel": "Cancel",
+      "save": "Save Resource",
+      "successAdd": "Resource added successfully",
+      "successEdit": "Resource updated successfully",
+      "error": "Error saving resource",
+      "validation": {
+        "titleRequired": "Title is required",
+        "urlRequired": "URL is required",
+        "urlInvalid": "Invalid URL",
+        "domainRequired": "Please select a domain",
+        "levelRequired": "Please select a target level"
+      }
+    },
+    "delete": {
+      "title": "Delete Resource",
+      "content": "Are you sure you want to delete this resource? This action cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "success": "Resource deleted successfully",
+      "error": "Error deleting resource"
+    }
+  },
   "admin_question": {
     "title": "Question Bank",
     "description": "Manage and organize assessment items across all domains.",

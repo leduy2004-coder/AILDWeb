@@ -79,7 +79,7 @@ export default function QuestionFilter({ filter, onFilterChange }: Props) {
       </FormControl>
 
       {(filter.domainId || filter.levelId || filter.status || filter.keyword) && (
-        <Button size="small" variant="text" color="inherit" onClick={handleClear} sx={{ ml: 'auto' }}>
+        <Button size="small" variant="text" color="error" startIcon={<Icon icon="solar:close-circle-linear" />} onClick={handleClear}>
           {t('filters.clearFilters')}
         </Button>
       )}

@@ -12,6 +12,7 @@ import {
   Typography,
   TablePagination,
   Box,
+  Checkbox,
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +27,9 @@ interface Props {
   onPageChange: (newPage: number) => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
+  selectedIds: number[];
+  onSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSelectOne: (event: React.ChangeEvent<HTMLInputElement>, id: number) => void;
 }
 
 export default function QuestionTable({
@@ -36,6 +40,9 @@ export default function QuestionTable({
   onPageChange,
   onEdit,
   onDelete,
+  selectedIds,
+  onSelectAll,
+  onSelectOne,
 }: Props) {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_question' });
   const { t: tDomain } = useTranslation('translation', { keyPrefix: 'admin_overview.domain.name' });
@@ -50,7 +57,15 @@ export default function QuestionTable({
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
-              <TableCell width="30%"><Typography variant="subtitle2" fontWeight={600}>{t('table.question')}</Typography></TableCell>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  color="primary"
+                  indeterminate={selectedIds.length > 0 && selectedIds.length < data.length}
+                  checked={data.length > 0 && selectedIds.length === data.length}
+                  onChange={onSelectAll}
+                />
+              </TableCell>
+              <TableCell width="40%"><Typography variant="subtitle2" fontWeight={600}>{t('table.question')}</Typography></TableCell>
               <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('table.domain')}</Typography></TableCell>
               <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('table.level')}</Typography></TableCell>
               <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('table.type')}</Typography></TableCell>
@@ -63,16 +78,25 @@ export default function QuestionTable({
           <TableBody>
             {data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} align="center" sx={{ py: 3 }}>
+                <TableCell colSpan={9} align="center" sx={{ py: 3 }}>
                   <Typography variant="body2" color="textSecondary">
                     {t('noData', { defaultValue: 'Không có dữ liệu' })}
                   </Typography>
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((row) => (
-                <TableRow key={row.id} hover>
-                  <TableCell>
+              data.map((row) => {
+                const isSelected = selectedIds.indexOf(row.id) !== -1;
+                return (
+                  <TableRow key={row.id} hover selected={isSelected}>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isSelected}
+                        onChange={(event) => onSelectOne(event, row.id)}
+                      />
+                    </TableCell>
+                    <TableCell>
                     <Typography variant="body2" sx={{
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
@@ -97,7 +121,13 @@ export default function QuestionTable({
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {row.updatedAt ? new Date(row.updatedAt).toLocaleDateString('vi-VN') : '-'}
+                      {(() => {
+                        if (!row.updatedAt) return '-';
+                        const d = new Date(row.updatedAt);
+                        if (isNaN(d.getTime())) return '-';
+                        const pad = (n: number) => n.toString().padStart(2, '0');
+                        return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+                      })()}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -118,7 +148,8 @@ export default function QuestionTable({
                     </Box>
                   </TableCell>
                 </TableRow>
-              ))
+                );
+              })
             )}
           </TableBody>
         </Table>
