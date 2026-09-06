@@ -1,4 +1,7 @@
 {
+  "button": {
+    "back_to_top": "Lên đầu trang"
+  },
   "home": {
     "welcome": "Chào mừng trở lại",
     "lastEvaluation": "Đánh giá lần cuối",
@@ -184,7 +187,7 @@
     "overview": "Tổng quan",
     "user": "Quản lý người dùng",
     "submission": "Danh sách bài làm",
-    "exam": "Danh sách đề thi",
+    "question": "Danh sách câu hỏi",
     "resource": "Quản lý tài nguyên"
   },
   "admin_overview": {
@@ -241,6 +244,97 @@
       "title": "Hồ sơ của tôi",
       "changePassword": "Đổi mật khẩu",
       "logout": "Đăng xuất"
+    }
+  },
+  "admin_question": {
+    "title": "Ngân hàng câu hỏi",
+    "description": "Quản lý và tổ chức các mục đánh giá trên tất cả các lĩnh vực.",
+    "newQuestion": "Câu hỏi mới",
+    "filters": {
+      "allDomains": "Tất cả lĩnh vực",
+      "allLevels": "Tất cả cấp độ",
+      "allStatuses": "Tất cả trạng thái",
+      "clearFilters": "Xóa bộ lọc"
+    },
+    "table": {
+      "question": "Câu hỏi",
+      "domain": "Lĩnh vực",
+      "level": "Cấp độ",
+      "type": "Loại",
+      "status": "Trạng thái",
+      "action": "Thao tác",
+      "difficultyIndex": "Độ khó",
+      "updatedAt": "Ngày cập nhật",
+      "difficultyNote": "* Độ khó: dựa vào đánh giá bài làm sinh viên"
+    },
+    "types": {
+      "MULTIPLE_CHOICE": "Trắc nghiệm",
+      "PRACTICAL": "Thực hành"
+    },
+    "status": {
+      "DRAFT": "Nháp",
+      "PUBLISHED": "Đã chốt",
+      "REJECTED": "Loại bỏ"
+    },
+    "ai": {
+      "generateButton": "Tạo bằng AI",
+      "dialogTitle": "Tạo câu hỏi bằng AI",
+      "dialogDescription": "AI sẽ sinh câu hỏi dựa trên Lĩnh vực, Cấp độ và Loại câu hỏi bạn đã chọn ở Form. Bạn có thể thêm thông tin dưới đây để AI tạo câu hỏi sát với thực tế hơn.",
+      "applicationArea": "Lĩnh vực áp dụng (VD: y tế, giáo dục...)",
+      "applicationAreaPlaceholder": "Bỏ trống để ngẫu nhiên",
+      "notes": "Ghi chú thêm cho AI",
+      "notesPlaceholder": "VD: Tập trung vào các vấn đề rủi ro bảo mật...",
+      "cancel": "Hủy",
+      "startGenerate": "Bắt đầu tạo",
+      "toastDuplicate": "Câu hỏi AI vừa tạo khá giống với dữ liệu đã có. Vui lòng kiểm tra lại và chỉnh sửa thêm!",
+      "toastSuccess": "Dữ liệu AI đã được điền vào form!",
+      "widgetGenerating": "AI đang tạo câu hỏi...",
+      "widgetSuccess": "Tạo câu hỏi thành công (Click để xem)",
+      "widgetError": "Lỗi khi tạo câu hỏi"
+    },
+    "form": {
+      "addTitle": "Tạo Câu hỏi",
+      "editTitle": "Chỉnh sửa Câu hỏi",
+      "content": "Nội dung câu hỏi",
+      "contentPlaceholder": "Nhập nội dung câu hỏi...",
+      "difficultyIndex": "Độ khó (Tùy chọn)",
+      "domain": "Lĩnh vực",
+      "level": "Mức độ tiến triển",
+      "type": "Loại câu hỏi",
+      "optionsTitle": "Tùy chọn câu trả lời",
+      "optionsCorrectHint": "Chọn câu trả lời đúng",
+      "addOption": "Thêm tùy chọn",
+      "optionPlaceholder": "Nhập văn bản tùy chọn...",
+      "rubric": "Tiêu chí đánh giá (Rubric)",
+      "rubricPlaceholder": "Nhập rubric đánh giá cho loại câu hỏi thực hành...",
+      "status": "Trạng thái",
+      "cancel": "Hủy bỏ",
+      "save": "Lưu câu hỏi",
+      "saveButton": "Lưu",
+      "validation": {
+        "contentRequired": "Nội dung câu hỏi không được để trống",
+        "domainRequired": "Vui lòng chọn lĩnh vực",
+        "levelRequired": "Vui lòng chọn mức độ",
+        "typeRequired": "Vui lòng chọn loại câu hỏi",
+        "optionsRequired": "Vui lòng nhập ít nhất 2 tùy chọn",
+        "oneCorrectRequired": "Phải có ít nhất 1 câu trả lời đúng",
+        "difficultyRequired": "Độ khó không được để trống"
+      },
+      "confirmClose": {
+        "title": "Hủy thao tác",
+        "content": "Bạn có dữ liệu chưa lưu. Bạn có chắc chắn muốn đóng form này không?",
+        "confirm": "Có",
+        "cancel": "Không"
+      },
+      "successAdd": "Thêm câu hỏi thành công",
+      "successEdit": "Cập nhật câu hỏi thành công",
+      "error": "Có lỗi xảy ra khi lưu câu hỏi"
+    },
+    "confirmDelete": {
+      "title": "Xóa câu hỏi",
+      "content": "Bạn có chắc chắn muốn xóa câu hỏi này không? Hành động này không thể hoàn tác.",
+      "success": "Xóa câu hỏi thành công",
+      "error": "Có lỗi xảy ra khi xóa"
     }
   }
 }

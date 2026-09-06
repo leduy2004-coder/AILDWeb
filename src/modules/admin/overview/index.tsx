@@ -7,7 +7,7 @@ import { AdminOverviewCards } from './components/AdminOverviewCards';
 import { ScoreByDomainChart } from './components/ScoreByDomainChart';
 import { ProficiencyDistribution } from './components/ProficiencyDistribution';
 import { RecentActivityTable } from './components/RecentActivityTable';
-import { useGetOverview } from '@/apis/admin/hook';
+import { useGetOverview } from '@/apis/overview/hook';
 
 export default function AdminOverviewModule() {
   const { t } = useTranslation('admin_overview');

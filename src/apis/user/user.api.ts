@@ -1,7 +1,7 @@
 import http from '@/lib/http';
 import { IApiResponse, IPageResponse } from '@/types/shared';
 import { IUser, IUserStats, IUserRequest, IUserUpdateRequest } from '@/types/users/user.type';
-import { API_PREFIX } from '@/constants/api.constant';
+import { API_PREFIX } from '@/apis/constants/api.constant';
 
 async function getUserStats(): Promise<IApiResponse<IUserStats>> {
   const { payload } = await http.get<IApiResponse<IUserStats>>(

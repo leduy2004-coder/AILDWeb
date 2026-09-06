@@ -35,12 +35,12 @@ const Menuitems: IMenu[] = [
   {
     data: {
       id: 3,
-      code: 'EXAM',
+      code: 'QUESTION',
       icon: 'document-text-linear',
-      link: '/admin/exams',
-      name: 'menu.exam',
+      link: '/admin/questions',
+      name: 'menu.question',
       type: 'basic',
-      title: 'menu.exam',
+      title: 'menu.question',
       priAccess: MENU_ADMIN,
       priRead: MENU_ADMIN,
       priInsert: MENU_ADMIN,

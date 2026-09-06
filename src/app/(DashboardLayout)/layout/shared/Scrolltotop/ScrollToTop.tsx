@@ -16,7 +16,7 @@ export function ScrollTop() {
             position: 'fixed',
             bottom: 20,
             right: 26,
-            zIndex: 1300,
+            zIndex: 1000,
           }}
           onClick={handleTop}
         >

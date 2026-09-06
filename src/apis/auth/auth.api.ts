@@ -8,7 +8,7 @@ import {
   RegisterResType,
 } from '@/types/shared';
 import { IUser } from '@/types/users/user.type';
-import { API_PREFIX } from '@/constants/api.constant';
+import { API_PREFIX } from '@/apis/constants/api.constant';
 
 export async function login(body: LoginBodyType): Promise<LoginRes> {
   const { payload } = await http.post<LoginRes>(
