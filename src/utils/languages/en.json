@@ -5,18 +5,61 @@
   "home": {
     "welcome": "Welcome back",
     "lastEvaluation": "Last evaluation",
+    "noEvaluationYet": "No assessment yet",
+    "notAssessed": "NOT ASSESSED",
+    "noEvaluationDesc": "You haven't taken any assessment yet. Start a new evaluation to measure your AI competency!",
     "datePlaceholder": "October 12, 2023",
     "startNewEvaluation": "Start new evaluation",
-    "currentProgress": "Current progress",
+    "evaluatedAlert": "Assessment completed at {{date}}",
+    "currentProgress": "AI Competency & Skill Tree",
     "radar": {
-      "humanCentered": "Human-Centered\\nDesign",
+      "title": "AI Competency Radar Chart",
+      "subtitle": "0 - 100% scale across 4 domains (Decision 3439 / UNESCO)",
+      "evaluated": "Evaluated",
+      "notEvaluated": "Not Evaluated",
+      "legendTitle": "4 Competency Domains Legend:",
+      "humanCentered": "Human-Centered\nDesign",
       "ethics": "AI Ethics",
-      "application": "AI Engineering\\n& Application",
-      "systemDesign": "AI System\\nDesign",
+      "application": "AI Engineering\n& Application",
+      "systemDesign": "AI System\nDesign",
       "humanCenteredSingleLine": "Human-Centered Design",
       "ethicsSingleLine": "AI Ethics",
       "applicationSingleLine": "AI Engineering & Application",
-      "systemDesignSingleLine": "AI System Design"
+      "systemDesignSingleLine": "AI System Design",
+      "domainShort": {
+        "HCM": "Human-Centered",
+        "ETHICS": "AI Ethics",
+        "TECH": "AI Engineering",
+        "DESIGN": "System Design"
+      }
+    },
+    "skillTree": {
+      "title": "AI Skill Tree (12 Nodes)",
+      "subtitle": "Assessment framework: 4 Domains × 3 Progression Levels (12 Nodes)",
+      "verticalSubtitle": "Vertical progression path (Level 1 ➔ Level 2 ➔ Level 3)",
+      "completedCount": "Completed {{completed}}/12 competency nodes",
+      "completedShort": "Completed {{completed}}/12",
+      "status": {
+        "COMPLETED": "Completed",
+        "UNLOCKED": "Unlocked",
+        "LOCKED": "Locked"
+      },
+      "needsReview": "Needs Review",
+      "startNode": "Take Quiz",
+      "prerequisiteTooltip": "Must complete previous level to unlock",
+      "legend": {
+        "title": "Status Legend:",
+        "completed": "Completed",
+        "unlocked": "Unlocked",
+        "locked": "Locked",
+        "review": "Needs Review"
+      }
+    },
+    "level": {
+      "UNDERSTAND": "UNDERSTAND",
+      "APPLY": "APPLY",
+      "CREATE": "CREATE",
+      "NOT_ASSESSED": "NOT ASSESSED"
     },
     "recommendations": {
       "title": "Recommended for you",
@@ -31,6 +74,12 @@
       "title3": "Scalable MLOps Architecture",
       "desc3": "Learn how to deploy, monitor and maintain machine learning models in production effectiv...",
       "viewDocument": "View document"
+    },
+    "aiFeedback": {
+      "title": "Insights & Advice",
+      "subtitle": "Automated analysis based on your competency evaluation results",
+      "tag": "Personalized Advice",
+      "defaultDesc": "You haven't completed any evaluation yet. Start a new assessment to let AI analyze your strengths and generate personalized learning recommendations!"
     }
   },
   "footer": {

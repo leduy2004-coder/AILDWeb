@@ -5,10 +5,19 @@
   "home": {
     "welcome": "Chào mừng trở lại",
     "lastEvaluation": "Đánh giá lần cuối",
+    "noEvaluationYet": "Chưa có bài đánh giá nào",
+    "notAssessed": "CHƯA ĐÁNH GIÁ",
+    "noEvaluationDesc": "Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để đo lường năng lực AI của bạn!",
     "datePlaceholder": "Ngày 12 tháng 10, 2023",
     "startNewEvaluation": "Bắt đầu bài đánh giá mới",
-    "currentProgress": "Tiến độ hiện tại",
+    "evaluatedAlert": "Đã làm bài đánh giá vào lúc {{date}}",
+    "currentProgress": "Năng lực & Cây kỹ năng AI",
     "radar": {
+      "title": "Biểu đồ Năng lực AI",
+      "subtitle": "Thang đo năng lực 0 - 100% (4 miền năng lực QĐ 3439/UNESCO)",
+      "evaluated": "Đã đánh giá",
+      "notEvaluated": "Chưa đánh giá",
+      "legendTitle": "Chú thích 4 miền năng lực:",
       "humanCentered": "Tư duy lấy\ncon người làm trung tâm",
       "ethics": "Đạo đức AI",
       "application": "Kỹ thuật &\nỨng dụng AI",
@@ -16,7 +25,41 @@
       "humanCenteredSingleLine": "Tư duy lấy con người làm trung tâm",
       "ethicsSingleLine": "Đạo đức AI",
       "applicationSingleLine": "Kỹ thuật & Ứng dụng AI",
-      "systemDesignSingleLine": "Thiết kế Hệ thống AI"
+      "systemDesignSingleLine": "Thiết kế Hệ thống AI",
+      "domainShort": {
+        "HCM": "Tư duy AI",
+        "ETHICS": "Đạo đức AI",
+        "TECH": "Kỹ thuật AI",
+        "DESIGN": "Thiết kế hệ thống"
+      }
+    },
+    "skillTree": {
+      "title": "Cây Kỹ Năng AI (12 Node)",
+      "subtitle": "Khung đánh giá 4 Miền năng lực × 3 Mức tiến trình (12 Node)",
+      "verticalSubtitle": "Cấu trúc tiến trình theo chiều dọc (Level 1 ➔ Level 2 ➔ Level 3)",
+      "completedCount": "Đã đạt {{completed}}/12 node năng lực",
+      "completedShort": "Đã đạt {{completed}}/12",
+      "status": {
+        "COMPLETED": "Đã đạt",
+        "UNLOCKED": "Sẵn sàng",
+        "LOCKED": "Khóa"
+      },
+      "needsReview": "Gợi ý ôn tập",
+      "startNode": "Làm bài ngay",
+      "prerequisiteTooltip": "Cần hoàn thành mức trước để mở khóa",
+      "legend": {
+        "title": "Chú thích trạng thái:",
+        "completed": "Đã đạt",
+        "unlocked": "Sẵn sàng",
+        "locked": "Đã khóa",
+        "review": "Gợi ý ôn tập"
+      }
+    },
+    "level": {
+      "UNDERSTAND": "HIỂU",
+      "APPLY": "ÁP DỤNG",
+      "CREATE": "SÁNG TẠO",
+      "NOT_ASSESSED": "CHƯA ĐÁNH GIÁ"
     },
     "recommendations": {
       "title": "Đề xuất cho bạn",
@@ -31,6 +74,12 @@
       "title3": "Kiến trúc MLOps có thể mở rộng",
       "desc3": "Học cách triển khai, giám sát và bảo trì các mô hình học máy trong môi trường sản xuất một cách hiệu...",
       "viewDocument": "Xem tài liệu"
+    },
+    "aiFeedback": {
+      "title": "Nhận xét & Gợi ý",
+      "subtitle": "Phân tích tự động dựa trên kết quả đánh giá năng lực của bạn",
+      "tag": "Gợi ý cá nhân hóa",
+      "defaultDesc": "Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để AI phân tích thế mạnh và đưa ra nhận xét, gợi ý lộ trình học tập cá nhân hóa dành riêng cho bạn!"
     }
   },
   "footer": {

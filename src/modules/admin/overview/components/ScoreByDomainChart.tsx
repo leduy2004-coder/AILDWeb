@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 import { IDomainScore } from '@/types/admin/overview.type';
 
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts').then((mod) => mod.default), { ssr: false });
 
 interface Props {
   data?: IDomainScore[];

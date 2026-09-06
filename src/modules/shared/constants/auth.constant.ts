@@ -3,7 +3,7 @@ export const PATH_NAME = {
   HOME: '/home',
   ADMIN: '/admin/overview',
   TEACHER: '/teacher/overview',
-  STUDENT: '/student/overview',
+  STUDENT: '/home',
 };
 
 export const RESPONSE_CODE = {

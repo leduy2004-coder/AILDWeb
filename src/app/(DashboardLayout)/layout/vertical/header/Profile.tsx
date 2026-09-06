@@ -60,11 +60,11 @@ const Profile = () => {
     try {
       disableUnsavedWarning();
       await logout();
-      
+
       // Clear session variables
       localStorage.removeItem(AuthActionTypes.ACCESS_TOKEN);
       localStorage.removeItem(AuthActionTypes.REFRESH_TOKEN);
-      
+
       // Redirect to login page
       router.push('/auth/login');
     } catch (error) {
@@ -85,12 +85,13 @@ const Profile = () => {
   return (
     <Box>
       <IconButton
-        size="large"
+        size="small"
         aria-label="show 11 new notifications"
         color="inherit"
         aria-controls="msgs-menu"
         aria-haspopup="true"
         sx={{
+          p: 0.5,
           ...(typeof anchorEl2 === 'object' && {
             color: 'primary.main',
           }),
@@ -102,14 +103,14 @@ const Profile = () => {
           justifyContent="center"
           alignItems="center"
           sx={{
-            width: 45,
-            height: 45,
-            borderRadius: 25,
+            width: 36,
+            height: 36,
+            borderRadius: '50%',
             backgroundColor: '#0084E5',
           }}
         >
-          <Typography variant="h3" color="white">
-            {userInfo?.email?.substring(0, 1).toUpperCase()}
+          <Typography variant="subtitle1" color="white" fontWeight={600}>
+            {userInfo?.email?.substring(0, 1).toUpperCase() || 'U'}
           </Typography>
         </Box>
       </IconButton>
@@ -132,23 +133,23 @@ const Profile = () => {
         }}
       >
         <Typography variant="h5">{t('header.profile.title')}</Typography>
-        <Stack direction="row" py={3} spacing={2} alignItems="center">
-          <Avatar
-            src={logoImg.src}
-            alt={'ProfileImg'}
+        <Stack direction="row" py={2.5} spacing={2} alignItems="center">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
             sx={{
-              objectFit: 'contain',
-              width: 70,
-              height: 70,
-              '& img': {
-                objectFit: 'contain',
-              },
-              cursor: 'pointer',
-              '&:hover': {
-                opacity: 0.8,
-              },
+              width: 48,
+              height: 48,
+              borderRadius: '50%',
+              backgroundColor: '#0084E5',
+              flexShrink: 0,
             }}
-          />
+          >
+            <Typography variant="h5" color="white" fontWeight={600}>
+              {userInfo?.email?.substring(0, 1).toUpperCase() || 'U'}
+            </Typography>
+          </Box>
           <Box>
             <Tooltip title={userInfo?.name || ''} arrow>
               <Typography
