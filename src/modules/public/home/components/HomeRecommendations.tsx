@@ -3,13 +3,27 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardContent, Chip, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { IconArrowUpRight, IconBrandYoutube, IconPresentation, IconFileText, IconArticle } from '@tabler/icons-react';
 import Link from 'next/link';
+import NiceModal from '@ebay/nice-modal-react';
 import { IStudentRecommendedResource } from '@/types/student/student-dashboard.type';
+import { detectResourceType } from '@/utils/resource.util';
 
 interface HomeRecommendationsProps {
   recommendedResources?: IStudentRecommendedResource[];
 }
+
+const getResourceIcon = (url?: string) => {
+  if (!url) return <IconArticle size={20} color="#10B981" />;
+  const type = detectResourceType(url);
+  switch (type) {
+    case 'youtube': return <IconBrandYoutube size={20} color="#E53935" />;
+    case 'google_slide': return <IconPresentation size={20} color="#F59E0B" />;
+    case 'google_doc': return <IconFileText size={20} color="#2563EB" />;
+    case 'pdf': return <IconFileText size={20} color="#EF4444" />;
+    default: return <IconArticle size={20} color="#10B981" />;
+  }
+};
 
 export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recommendedResources = [] }) => {
   const { t } = useTranslation();
@@ -30,15 +44,18 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
           {t('home.recommendations.title', 'Đề xuất cho bạn')}
         </Typography>
         <Typography
-          component={Link}
-          href="/resources"
+          component="span"
+          onClick={() => {
+            NiceModal.show('home-resource-list-modal', { resources: recommendedResources });
+          }}
           sx={{
             color: '#1E3A8A',
             textDecoration: 'none',
             fontWeight: 600,
             fontSize: '14px',
+            cursor: 'pointer',
             '&:hover': {
-              textDecoration: 'underline',
+              opacity: 0.8,
             },
           }}
         >
@@ -67,37 +84,49 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
             <Grid size={{ xs: 12, md: 4 }} key={item.id}>
               <Card
                 elevation={0}
-                onClick={() => handleOpenLink(item.url)}
+                onClick={() => NiceModal.show('home-resource-list-modal', { resources: recommendedResources, initialResource: item })}
                 sx={{
-                  border: '1px solid',
-                  borderColor: 'grey.200',
-                  borderRadius: '12px',
+                  position: 'relative',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '16px',
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                   cursor: 'pointer',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  backgroundColor: '#FFFFFF',
+                  overflow: 'hidden',
                   '&:hover': {
+                    borderColor: '#93C5FD',
+                    boxShadow: '0 10px 25px -5px rgba(37, 99, 235, 0.1), 0 8px 10px -6px rgba(37, 99, 235, 0.1)',
                     transform: 'translateY(-4px)',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    '& .icon-arrow': {
+                      transform: 'translate(4px, -4px)',
+                      color: '#2563EB',
+                    }
                   },
                 }}
               >
-                <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ p: 2.5, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                   <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-                    <Chip
-                      label={item.domainName || item.domainCode || 'AI'}
-                      size="small"
-                      sx={{
-                        borderRadius: '4px',
-                        backgroundColor: 'grey.100',
-                        color: 'text.secondary',
-                        fontWeight: 600,
-                        fontSize: '11px',
-                        height: '24px',
-                      }}
-                    />
-                    <IconArrowUpRight size={20} color="#9CA3AF" />
+                    <Box display="flex" alignItems="center" gap={1.5}>
+                      <Box sx={{ display: 'flex', p: 0.5, borderRadius: '8px', backgroundColor: '#F1F5F9' }}>
+                        {getResourceIcon(item.url)}
+                      </Box>
+                      <Chip
+                        label={item.domainName || item.domainCode || 'AI'}
+                        size="small"
+                        sx={{
+                          borderRadius: '6px',
+                          backgroundColor: '#EFF6FF',
+                          color: '#1E40AF',
+                          fontWeight: 600,
+                          fontSize: '0.75rem',
+                          height: '24px',
+                        }}
+                      />
+                    </Box>
+                    <IconArrowUpRight className="icon-arrow" size={20} color="#94A3B8" style={{ transition: 'all 0.3s' }} />
                   </Box>
 
                   <Typography
@@ -132,15 +161,12 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
                     {item.description}
                   </Typography>
 
-                  <Box display="flex" alignItems="center" justifyContent="space-between" mt="auto">
+                  <Box display="flex" alignItems="center" justifyContent="space-between" mt="auto" pt={2} sx={{ borderTop: '1px solid #F1F5F9' }}>
                     <Typography
                       sx={{
-                        color: '#1E3A8A',
+                        color: '#2563EB',
                         fontWeight: 600,
-                        fontSize: '14px',
-                        '&:hover': {
-                          textDecoration: 'underline',
-                        },
+                        fontSize: '0.875rem',
                       }}
                     >
                       {t('home.recommendations.viewDocument', 'Xem tài liệu')}
@@ -150,7 +176,7 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
                         label={item.targetLevelName}
                         size="small"
                         variant="outlined"
-                        sx={{ fontSize: '10px', height: '20px' }}
+                        sx={{ fontSize: '0.7rem', height: '22px', borderRadius: '6px', color: '#64748B', borderColor: '#CBD5E1' }}
                       />
                     )}
                   </Box>

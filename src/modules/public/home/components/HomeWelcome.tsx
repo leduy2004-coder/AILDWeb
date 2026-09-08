@@ -40,6 +40,15 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
       })
     : t('home.noEvaluationYet', 'Chưa có bài đánh giá nào');
 
+  const handleStartEvaluation = () => {
+    const token = getLocalStorageItem<string>(AuthActionTypes.ACCESS_TOKEN);
+    if (!token) {
+      router.push('/auth/login');
+    } else {
+      router.push('/assessment');
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -62,7 +71,7 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
       <Button
         variant="contained"
         startIcon={<IconSparkles size={20} />}
-        onClick={() => router.push('/skill-tree')}
+        onClick={handleStartEvaluation}
         sx={{
           background: 'linear-gradient(135deg, #112c66ff 0%, #1D4ED8 100%)',
           color: '#ffffff',
@@ -81,7 +90,9 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
           },
         }}
       >
-        {t('home.startNewEvaluation', 'Bắt đầu bài đánh giá mới')}
+        {isEvaluated
+          ? t('home.startNewEvaluation', 'Bắt đầu bài đánh giá mới')
+          : t('home.startEvaluation', 'Bắt đầu đánh giá')}
       </Button>
     </Box>
   );

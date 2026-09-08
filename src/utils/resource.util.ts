@@ -1,4 +1,4 @@
-export type ResourceType = 'youtube' | 'google_slide' | 'google_doc' | 'article';
+export type ResourceType = 'youtube' | 'google_slide' | 'google_doc' | 'pdf' | 'article';
 
 export const detectResourceType = (url: string): ResourceType => {
   if (!url) return 'article';
@@ -16,6 +16,11 @@ export const detectResourceType = (url: string): ResourceType => {
   // Google Docs match
   if (url.includes('docs.google.com/document')) {
     return 'google_doc';
+  }
+
+  // PDF match
+  if (url.toLowerCase().endsWith('.pdf') || url.includes('.pdf?')) {
+    return 'pdf';
   }
 
   return 'article';

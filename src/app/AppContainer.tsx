@@ -15,6 +15,7 @@ import ToastProvider from '@/contexts/Toast.context';
 import { AuthActionTypes } from '@/types/shared';
 import '@/utils/i18n';
 import { ConfirmModal } from '@/modules/shared/components';
+import { ResourceListViewerModal } from '@/modules/public/home/components/modal/ResourceListViewerModal';
 
 export default function AppContainer({ children }: { children: ReactNode }) {
 
@@ -37,6 +38,7 @@ export default function AppContainer({ children }: { children: ReactNode }) {
     // OPTIMIZATION: Register common modals to make them available faster
     // This helps reduce first-time mount delay
     NiceModal.register('confirm-modal', ConfirmModal);
+    NiceModal.register('home-resource-list-modal', ResourceListViewerModal);
     setTimeout(() => setLoading(true), 3000);
 
     // Multi-tab synchronization

@@ -30,7 +30,7 @@ export default function Dashboard() {
 
     // STUDENT -> student overview
     if (userRoles.includes(ROLE_CODE.STUDENT)) {
-      router.replace('/student/overview');
+      router.replace('/home');
       return;
     }
 

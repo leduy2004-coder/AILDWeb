@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import {
@@ -9,7 +9,6 @@ import {
   Alert,
   Paper,
   Tooltip,
-  Button,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
@@ -23,19 +22,8 @@ import {
   IconCpu,
   IconHierarchy2,
   IconChartRadar,
-  IconPlayerPlayFilled,
 } from '@tabler/icons-react';
 import { IDomainProgress, ISkillNode } from '@/types/student/student-dashboard.type';
-import { useRouter } from 'next/navigation';
-import {
-  DEFAULT_DOMAINS as defaultDomains,
-  DEFAULT_LEVELS as defaultLevels,
-  DOMAIN_CHART_LABELS_MAP as domainChartLabelsMap,
-  DOMAIN_THEME_MAP as domainThemeMap,
-  getDomainLabelsMap,
-  getLevelNameMap,
-  getShortDomainTitleMap,
-} from '../constant/home-progress.constant';
 
 const Chart = dynamic(() => import('react-apexcharts').then((mod) => mod.default), { ssr: false });
 
@@ -53,11 +41,67 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
   lastEvaluationDate = null,
 }) => {
   const { t, i18n } = useTranslation();
-  const router = useRouter();
 
-  const domainLabelsMap = getDomainLabelsMap(t);
-  const levelNameMap = getLevelNameMap(t);
-  const shortDomainTitleMap = getShortDomainTitleMap(t);
+  const domainLabelsMap: Record<string, string> = {
+    HCM: t('home.radar.humanCenteredSingleLine', 'Tư duy lấy con người làm trung tâm'),
+    ETHICS: t('home.radar.ethicsSingleLine', 'Đạo đức AI'),
+    TECH: t('home.radar.applicationSingleLine', 'Kỹ thuật & Ứng dụng AI'),
+    DESIGN: t('home.radar.systemDesignSingleLine', 'Thiết kế Hệ thống AI'),
+  };
+
+  // Concise Axis Labels for 4 Corners of Radar Chart (Prevents Outer Clipping)
+  const domainChartLabelsMap: Record<string, string> = {
+    HCM: 'HCM',
+    ETHICS: 'ETHICS',
+    TECH: 'TECH',
+    DESIGN: 'DESIGN',
+  };
+
+  const domainThemeMap: Record<
+    string,
+    { icon: React.ReactNode; bgGradient: string; textPrimary: string; border: string }
+  > = {
+    HCM: {
+      icon: <IconBrain size={20} color="#FFFFFF" />,
+      bgGradient: 'linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)',
+      textPrimary: '#4338CA',
+      border: '#C7D2FE',
+    },
+    ETHICS: {
+      icon: <IconShieldCheck size={20} color="#FFFFFF" />,
+      bgGradient: 'linear-gradient(135deg, #059669 0%, #10B981 100%)',
+      textPrimary: '#047857',
+      border: '#A7F3D0',
+    },
+    TECH: {
+      icon: <IconCpu size={20} color="#FFFFFF" />,
+      bgGradient: 'linear-gradient(135deg, #0284C7 0%, #06B6D4 100%)',
+      textPrimary: '#0369A1',
+      border: '#BAE6FD',
+    },
+    DESIGN: {
+      icon: <IconHierarchy2 size={20} color="#FFFFFF" />,
+      bgGradient: 'linear-gradient(135deg, #D97706 0%, #F59E0B 100%)',
+      textPrimary: '#B45309',
+      border: '#FDE68A',
+    },
+  };
+
+  const defaultDomains = ['HCM', 'ETHICS', 'TECH', 'DESIGN'];
+  const defaultLevels = ['UNDERSTAND', 'APPLY', 'CREATE'];
+
+  const levelNameMap: Record<string, string> = {
+    UNDERSTAND: t('home.level.UNDERSTAND', 'HIỂU'),
+    APPLY: t('home.level.APPLY', 'ÁP DỤNG'),
+    CREATE: t('home.level.CREATE', 'SÁNG TẠO'),
+  };
+
+  const shortDomainTitleMap: Record<string, string> = {
+    HCM: t('home.radar.domainShort.HCM', 'Tư duy AI'),
+    ETHICS: t('home.radar.domainShort.ETHICS', 'Đạo đức AI'),
+    TECH: t('home.radar.domainShort.TECH', 'Kỹ thuật AI'),
+    DESIGN: t('home.radar.domainShort.DESIGN', 'Thiết kế hệ thống'),
+  };
 
   // Map progress items matching default 4 domains for the Radar Chart
   const progressItems = defaultDomains.map((code) => {

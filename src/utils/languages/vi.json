@@ -26,11 +26,14 @@
       "ethicsSingleLine": "Đạo đức AI",
       "applicationSingleLine": "Kỹ thuật & Ứng dụng AI",
       "systemDesignSingleLine": "Thiết kế Hệ thống AI",
+      "criticalThinkingSingleLine": "Tư duy phản biện",
       "domainShort": {
         "HCM": "Tư duy AI",
         "ETHICS": "Đạo đức AI",
         "TECH": "Kỹ thuật AI",
-        "DESIGN": "Thiết kế hệ thống"
+        "DESIGN": "Thiết kế hệ thống",
+        "CRIT": "Tư duy PB",
+        "ETHIC": "Đạo đức AI"
       }
     },
     "skillTree": {
@@ -59,11 +62,20 @@
       "UNDERSTAND": "HIỂU",
       "APPLY": "ÁP DỤNG",
       "CREATE": "SÁNG TẠO",
+      "L1": "NHẬN BIẾT",
+      "L2": "HIỂU & ÁP DỤNG",
+      "L3": "PHÂN TÍCH & ĐÁNH GIÁ",
       "NOT_ASSESSED": "CHƯA ĐÁNH GIÁ"
     },
     "recommendations": {
       "title": "Đề xuất cho bạn",
       "viewAll": "Xem tất cả",
+      "modalTitle": "Tài nguyên đề xuất",
+      "backToList": "Quay lại danh sách",
+      "previewTitle": "Đang xem: ",
+      "noResources": "Chưa có tài nguyên nào được đề xuất.",
+      "unsupportedPreview": "Tài liệu này không hỗ trợ xem trực tiếp trong modal.",
+      "openInNewTab": "Mở liên kết ở tab mới",
       "tag1": "ĐẠO ĐỨC AI",
       "title1": "Định kiến trong Mô hình Học máy",
       "desc1": "Hiểu các nguồn gốc gây định kiến trong các tập dữ liệu và việc ra quyết định của thuật toán, đồng thời ti...",
@@ -292,7 +304,11 @@
     "profile": {
       "title": "Hồ sơ của tôi",
       "changePassword": "Đổi mật khẩu",
-      "logout": "Đăng xuất"
+      "logout": "Đăng xuất",
+      "popup_confirm": {
+        "title": "Bạn có chắc chắn muốn đăng xuất?",
+        "confirm": "Đăng xuất"
+      }
     }
   },
   "admin_resource": {
@@ -425,6 +441,13 @@
     "title": "Ngân hàng câu hỏi",
     "description": "Quản lý và tổ chức các mục đánh giá trên tất cả các lĩnh vực.",
     "newQuestion": "Câu hỏi mới",
+    "configButton": "Cấu hình bài thi",
+    "config": {
+      "title": "Cấu hình Bài thi Đánh giá",
+      "subtitle": "Cấu hình này sẽ áp dụng cho tất cả bài thi Đánh giá năng lực của sinh viên.",
+      "questionCount": "Tổng số câu hỏi",
+      "duration": "Thời gian làm bài (Phút)"
+    },
     "filters": {
       "allDomains": "Tất cả lĩnh vực",
       "allLevels": "Tất cả cấp độ",
@@ -510,6 +533,28 @@
       "content": "Bạn có chắc chắn muốn xóa câu hỏi này không? Hành động này không thể hoàn tác.",
       "success": "Xóa câu hỏi thành công",
       "error": "Có lỗi xảy ra khi xóa"
+    }
+  },
+  "assessment": {
+    "startError": "Không thể bắt đầu bài thi. Vui lòng thử lại sau.",
+    "loadQuestionError": "Lỗi khi tải câu hỏi.",
+    "submitAnswerError": "Lỗi khi lưu đáp án.",
+    "processingResult": "Đang xử lý kết quả...",
+    "nextQuestion": "Câu tiếp theo",
+    "progress": "Câu hỏi {{current}} trên {{total}}",
+    "finish": "Nộp bài",
+    "timeUp": "Hết thời gian làm bài!",
+    "submitSuccess": "Nộp bài thành công!",
+    "submitError": "Lỗi khi nộp bài.",
+    "finishTitle": "Chúc mừng bạn đã hoàn thành bài đánh giá!",
+    "finishDesc": "Hệ thống đã ghi nhận đáp án và cập nhật điểm số Miền năng lực & Cây kỹ năng AI của bạn.",
+    "domainResultTitle": "Kết quả đánh giá theo Miền năng lực:",
+    "viewDashboardBtn": "Xem Bảng điều khiển & Cây kỹ năng",
+    "domains": {
+      "HCM": "Tư duy lấy con người làm trung tâm",
+      "ETHICS": "Đạo đức AI",
+      "TECH": "Kỹ thuật & Ứng dụng AI",
+      "DESIGN": "Thiết kế Hệ thống AI"
     }
   }
 }

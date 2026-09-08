@@ -26,11 +26,14 @@
       "ethicsSingleLine": "AI Ethics",
       "applicationSingleLine": "AI Engineering & Application",
       "systemDesignSingleLine": "AI System Design",
+      "criticalThinkingSingleLine": "Critical Thinking",
       "domainShort": {
         "HCM": "Human-Centered",
         "ETHICS": "AI Ethics",
         "TECH": "AI Engineering",
-        "DESIGN": "System Design"
+        "DESIGN": "System Design",
+        "CRIT": "Crit. Thinking",
+        "ETHIC": "AI Ethics"
       }
     },
     "skillTree": {
@@ -59,11 +62,20 @@
       "UNDERSTAND": "UNDERSTAND",
       "APPLY": "APPLY",
       "CREATE": "CREATE",
+      "L1": "REMEMBER",
+      "L2": "UNDERSTAND & APPLY",
+      "L3": "ANALYZE & EVALUATE",
       "NOT_ASSESSED": "NOT ASSESSED"
     },
     "recommendations": {
       "title": "Recommended for you",
       "viewAll": "View all",
+      "modalTitle": "Recommended Resources",
+      "backToList": "Back to list",
+      "previewTitle": "Viewing: ",
+      "noResources": "No recommended resources yet.",
+      "unsupportedPreview": "This document does not support direct preview in modal.",
+      "openInNewTab": "Open link in new tab",
       "tag1": "AI ETHICS",
       "title1": "Bias in Machine Learning Models",
       "desc1": "Understand the sources of bias in datasets and algorithmic decision making, while findin...",
@@ -288,7 +300,11 @@
     "profile": {
       "title": "My Profile",
       "changePassword": "Change Password",
-      "logout": "Logout"
+      "logout": "Logout",
+      "popup_confirm": {
+        "title": "Are you sure you want to logout?",
+        "confirm": "Logout"
+      }
     }
   },
   "admin_resource": {
@@ -506,6 +522,28 @@
       "content": "Are you sure you want to delete this question? This action cannot be undone.",
       "success": "Question deleted successfully",
       "error": "An error occurred while deleting"
+    }
+  },
+  "assessment": {
+    "startError": "Cannot start assessment. Please try again later.",
+    "loadQuestionError": "Error loading question.",
+    "submitAnswerError": "Error saving answer.",
+    "processingResult": "Processing results...",
+    "nextQuestion": "Next Question",
+    "progress": "Question {{current}} of {{total}}",
+    "finish": "Submit",
+    "timeUp": "Time is up!",
+    "submitSuccess": "Submitted successfully!",
+    "submitError": "Error submitting assessment.",
+    "finishTitle": "Congratulations on completing the assessment!",
+    "finishDesc": "The system has recorded your responses and updated your AI Competency Scores & Skill Tree.",
+    "domainResultTitle": "Assessment results by Competency Domain:",
+    "viewDashboardBtn": "View Dashboard & Skill Tree",
+    "domains": {
+      "HCM": "Human-Centered Design",
+      "ETHICS": "AI Ethics",
+      "TECH": "AI Applications & Tech",
+      "DESIGN": "AI System Design"
     }
   }
 }
