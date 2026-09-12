@@ -17,7 +17,11 @@ export const getQuestionSchema = (t: (key: string, options?: any) => string) => 
       })
     ).optional(),
     correctOptionIndex: z.number().nullable().optional(),
-    difficultyIndex: z.number().nullable().optional(),
+    difficultyIndex: z.number()
+      .min(0, { message: t('form.validation.difficultyMinMax') })
+      .max(1, { message: t('form.validation.difficultyMinMax') })
+      .nullable()
+      .optional(),
   }).superRefine((data, ctx) => {
     if (data.status === 'PUBLISHED') {
       if (!data.content || data.content.trim() === '') {

@@ -366,14 +366,14 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                       fullWidth
                       type="number"
                       placeholder="0.00 - 1.00"
-                      inputProps={{ min: 0, max: 1, step: 0.01 }}
+                      inputProps={{ step: 0.01 }}
                       value={field.value ?? ''}
                       onChange={(e) => {
                         const val = e.target.value;
                         field.onChange(val === '' ? undefined : Number(val));
                       }}
                       error={!!error}
-                      helperText={error?.message}
+                      helperText={error?.message || "(0.0 = Cực khó, 1.0 = Cực dễ)"}
                     />
                   )}
                 />
@@ -400,6 +400,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                             <TextField
                               {...field}
                               fullWidth
+                              multiline
                               size="small"
                               placeholder={t('form.optionPlaceholder')}
                               error={!!error}

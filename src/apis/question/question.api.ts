@@ -53,6 +53,11 @@ export async function generateQuestionAI(data: IAIGenerateQuestionRequest): Prom
   return payload;
 }
 
+export async function syncDifficulty(): Promise<IApiResponse<string>> {
+  const { payload } = await http.post<IApiResponse<string>>(`${API_PREFIX.AILD_ADMIN}/questions/sync-difficulty`);
+  return payload;
+}
+
 export const QuestionApi = {
   getQuestions,
   getQuestion,
@@ -60,5 +65,6 @@ export const QuestionApi = {
   updateQuestion,
   deleteQuestion,
   generateQuestionAI,
+  syncDifficulty,
 };
 

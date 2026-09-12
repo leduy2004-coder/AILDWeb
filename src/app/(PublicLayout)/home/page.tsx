@@ -7,6 +7,7 @@ import { HomeWelcome } from '@/modules/public/home/components/HomeWelcome';
 import { HomeProgress } from '@/modules/public/home/components/HomeProgress';
 import { HomeAiFeedback } from '@/modules/public/home/components/HomeAiFeedback';
 import { HomeRecommendations } from '@/modules/public/home/components/HomeRecommendations';
+import HomeCertificate from '@/modules/public/home/components/HomeCertificate';
 import { useGetStudentDashboard } from '@/apis/student/hook';
 
 export default function HomePage() {
@@ -29,7 +30,7 @@ export default function HomePage() {
               </Alert>
               <HomeWelcome lastEvaluationDate={null} isEvaluated={false} />
               <HomeProgress domainProgresses={[]} isEvaluated={false} />
-              <HomeAiFeedback aiFeedback={null} isEvaluated={false} />
+              <HomeAiFeedback aiFeedback={null} isEvaluated={false} domainProgresses={[]} />
               <HomeRecommendations recommendedResources={[]} />
             </Box>
           ) : (
@@ -44,9 +45,11 @@ export default function HomePage() {
                 isEvaluated={dashboardData?.isEvaluated}
                 lastEvaluationDate={dashboardData?.lastEvaluationDate}
               />
+              <HomeCertificate isEvaluated={dashboardData?.isEvaluated} />
               <HomeAiFeedback
                 aiFeedback={dashboardData?.aiFeedback}
                 isEvaluated={dashboardData?.isEvaluated}
+                domainProgresses={dashboardData?.domainProgresses}
               />
               <HomeRecommendations
                 recommendedResources={dashboardData?.recommendedResources}

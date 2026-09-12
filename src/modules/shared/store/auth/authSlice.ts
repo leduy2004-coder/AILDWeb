@@ -9,7 +9,7 @@ import { t } from 'i18next';
 import { showErrorToast } from '../../components/toasts/ToastHelper';
 export const signingSlice = createAsyncThunk(
   'auth/signin',
-  async (signingBody: ISigningBody) => {
+  async (signingBody: ISigningBody, { rejectWithValue }) => {
     try {
 
       const response = await login(signingBody as LoginBodyType);
@@ -36,10 +36,9 @@ export const signingSlice = createAsyncThunk(
         });
         window.location.replace(redirectPath);
       }
-    } catch (e) {
-      const error = e as AxiosError;
-      showErrorToast(t('login.failed.title'), t('login.failed.message'));
-      console.error('An unexpected error occurred:', error);
+    } catch (e: any) {
+      showErrorToast(t('login.failed.title'), e?.payload?.message || t('login.failed.message'));
+      return rejectWithValue(e?.payload?.message || 'Login failed');
     }
   },
 );

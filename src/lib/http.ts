@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 type CustomOptions = Omit<RequestInit, "method" | "body"> & {
   baseUrl?: string | undefined;
   body?: any;
+  responseType?: 'json' | 'blob';
 };
 
 const ENTITY_ERROR_STATUS = 422;
@@ -115,7 +116,12 @@ const request = async <Response>(
     body,
     method,
   });
-  const payload: Response = await res.json();
+  let payload: any;
+  if (options?.responseType === 'blob') {
+    payload = await res.blob();
+  } else {
+    payload = await res.json();
+  }
   const data = {
     status: res.status,
     payload,
@@ -146,7 +152,12 @@ const request = async <Response>(
             body,
             method,
           });
-          const retryPayload = await retryRes.json();
+          let retryPayload: any;
+          if (options?.responseType === 'blob') {
+            retryPayload = await retryRes.blob();
+          } else {
+            retryPayload = await retryRes.json();
+          }
           if (!retryRes.ok) {
             throw new HttpError({ status: retryRes.status, payload: retryPayload });
           }

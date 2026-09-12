@@ -83,14 +83,15 @@ export default function AssessmentPage() {
     }
   };
 
-  const handleNext = async (selectedOptionId: number | null) => {
-    if (!assessmentId || !currentQuestion?.questionId || !selectedOptionId) return;
+  const handleNext = async (selectedOptionId: number | null, answerText?: string) => {
+    if (!assessmentId || !currentQuestion?.questionId) return;
 
     setIsSubmitting(true);
     try {
       await submitAnswer(assessmentId, {
         questionId: currentQuestion.questionId,
-        selectedOptionId,
+        selectedOptionId: selectedOptionId || undefined,
+        answerText: answerText?.trim(),
       });
       await fetchNextQuestion(assessmentId);
     } catch (error) {
@@ -200,6 +201,7 @@ export default function AssessmentPage() {
             domainName={currentQuestion.domainName || ''}
             levelName={currentQuestion.levelName || ''}
             content={currentQuestion.content || ''}
+            type={currentQuestion.type}
             options={currentQuestion.options || []}
             onNext={handleNext}
             isSubmitting={isSubmitting}

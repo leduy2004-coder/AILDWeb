@@ -88,10 +88,17 @@
       "viewDocument": "View document"
     },
     "aiFeedback": {
-      "title": "Insights & Advice",
-      "subtitle": "Automated analysis based on your competency evaluation results",
-      "tag": "Personalized Advice",
-      "defaultDesc": "You haven't completed any evaluation yet. Start a new assessment to let AI analyze your strengths and generate personalized learning recommendations!"
+      "title": "AI Feedback",
+      "subtitle": "Automated analysis based on your competency assessment results",
+      "tag": "Personalized Suggestions",
+      "defaultDesc": "You haven't taken any assessment yet. Start a new assessment for AI to analyze your strengths and provide personalized feedback and a learning path tailored for you!",
+      "evaluatedFallback": "Based on the latest test results, you show strength in the '{{highestDomain}}' domain ({{highestScore}}%). To optimize your AI competency, you should focus on practicing the '{{lowestDomain}}' domain ({{lowestScore}}%)."
+    },
+    "certificate": {
+      "viewBtn": "View Certificate",
+      "title": "AI Competency Certificate",
+      "downloadBtn": "Download",
+      "error": "Cannot load certificate at this time. Please try again later."
     }
   },
   "footer": {
@@ -435,8 +442,12 @@
   },
   "admin_question": {
     "title": "Question Bank",
-    "description": "Manage and organize assessment items across all domains.",
+    "description": "Manage and organize assessment items across all areas.",
     "newQuestion": "New Question",
+    "configButton": "Test Configuration",
+    "syncDifficultyButton": "Sync Difficulty",
+    "syncDifficultySuccess": "Successfully synchronized question difficulty!",
+    "syncDifficultyError": "Error syncing difficulty!",
     "filters": {
       "allDomains": "All Domains",
       "allLevels": "All Levels",
@@ -504,8 +515,9 @@
         "levelRequired": "Please select a level",
         "typeRequired": "Please select a question type",
         "optionsRequired": "Please enter at least 2 options",
-        "oneCorrectRequired": "There must be at least 1 correct answer",
-        "difficultyRequired": "Difficulty index is required"
+        "oneCorrectRequired": "Must have at least 1 correct option",
+        "difficultyRequired": "Difficulty index is required",
+        "difficultyMinMax": "Difficulty index must be between 0 and 1"
       },
       "confirmClose": {
         "title": "Discard changes",

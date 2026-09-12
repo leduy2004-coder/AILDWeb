@@ -18,6 +18,7 @@ import { useGenerateQuestionAI } from '@/apis/question/hook/useGenerateQuestionA
 import { useBulkDeleteQuestion } from '@/apis/question/hook/useBulkDeleteQuestion';
 import ConfirmBulkDeleteModal from './components/modal/ConfirmBulkDeleteModal';
 import { TestConfigModal } from './components/modal/TestConfigModal';
+import { useSyncDifficulty } from '@/apis/question/hook/useSyncDifficulty';
 
 export default function QuestionBankPage() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_question' });
@@ -41,6 +42,8 @@ export default function QuestionBankPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isBulkDeleteOpen, setIsBulkDeleteOpen] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
+
+  const syncDifficultyMutation = useSyncDifficulty();
 
   const { data, isLoading, isError } = useQuestions(filter);
   
@@ -150,6 +153,17 @@ export default function QuestionBankPage() {
     }
   };
 
+  const handleSyncDifficulty = () => {
+    syncDifficultyMutation.mutate(undefined, {
+      onSuccess: () => {
+        toast.success(t('syncDifficultySuccess', 'Đã đồng bộ độ khó thành công!'));
+      },
+      onError: () => {
+        toast.error(t('syncDifficultyError', 'Lỗi khi đồng bộ độ khó!'));
+      }
+    });
+  };
+
   return (
     <PageContainer title={t('title')} description={t('description')}>
       <Box p={3}>
@@ -174,6 +188,16 @@ export default function QuestionBankPage() {
                 Xóa {selectedIds.length} mục
               </Button>
             )}
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={syncDifficultyMutation.isPending ? <CircularProgress size={20} color="inherit" /> : <Icon icon="solar:refresh-circle-bold" />}
+              onClick={handleSyncDifficulty}
+              disabled={syncDifficultyMutation.isPending}
+              sx={{ borderRadius: '8px', textTransform: 'none', px: 3, py: 1 }}
+            >
+              {t('syncDifficultyButton', 'Đồng bộ độ khó')}
+            </Button>
             <Button
               variant="outlined"
               color="primary"

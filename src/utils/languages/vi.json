@@ -88,10 +88,17 @@
       "viewDocument": "Xem tài liệu"
     },
     "aiFeedback": {
-      "title": "Nhận xét & Gợi ý",
+      "title": "Nhận xét từ AI",
       "subtitle": "Phân tích tự động dựa trên kết quả đánh giá năng lực của bạn",
       "tag": "Gợi ý cá nhân hóa",
-      "defaultDesc": "Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để AI phân tích thế mạnh và đưa ra nhận xét, gợi ý lộ trình học tập cá nhân hóa dành riêng cho bạn!"
+      "defaultDesc": "Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để AI phân tích thế mạnh và đưa ra nhận xét, gợi ý lộ trình học tập cá nhân hóa dành riêng cho bạn!",
+      "evaluatedFallback": "Dựa trên kết quả bài làm mới nhất, bạn thể hiện thế mạnh ở miền '{{highestDomain}}' ({{highestScore}}% điểm). Để tối ưu hóa năng lực AI, bạn cần chú trọng luyện tập thêm miền '{{lowestDomain}}' ({{lowestScore}}% điểm)."
+    },
+    "certificate": {
+      "viewBtn": "Xem Chứng Chỉ",
+      "title": "Chứng Chỉ Năng Lực AI",
+      "downloadBtn": "Tải xuống",
+      "error": "Không thể tải chứng chỉ lúc này. Vui lòng thử lại sau."
     }
   },
   "footer": {
@@ -439,10 +446,13 @@
   },
   "admin_question": {
     "title": "Ngân hàng câu hỏi",
-    "description": "Quản lý và tổ chức các mục đánh giá trên tất cả các lĩnh vực.",
-    "newQuestion": "Câu hỏi mới",
-    "configButton": "Cấu hình bài thi",
-    "config": {
+    "description": "Quản lý ngân hàng câu hỏi dùng cho cả bài Test và thực hành.",
+    "newQuestion": "Tạo câu hỏi",
+    "configButton": "Cấu hình đề thi",
+    "syncDifficultyButton": "Đồng bộ độ khó",
+    "syncDifficultySuccess": "Đã đồng bộ độ khó các câu hỏi thành công!",
+    "syncDifficultyError": "Lỗi khi đồng bộ độ khó!",
+    "tabs": {
       "title": "Cấu hình Bài thi Đánh giá",
       "subtitle": "Cấu hình này sẽ áp dụng cho tất cả bài thi Đánh giá năng lực của sinh viên.",
       "questionCount": "Tổng số câu hỏi",
@@ -516,7 +526,8 @@
         "typeRequired": "Vui lòng chọn loại câu hỏi",
         "optionsRequired": "Vui lòng nhập ít nhất 2 tùy chọn",
         "oneCorrectRequired": "Phải có ít nhất 1 câu trả lời đúng",
-        "difficultyRequired": "Độ khó không được để trống"
+        "difficultyRequired": "Độ khó không được để trống",
+        "difficultyMinMax": "Độ khó phải từ 0 đến 1"
       },
       "confirmClose": {
         "title": "Hủy thao tác",

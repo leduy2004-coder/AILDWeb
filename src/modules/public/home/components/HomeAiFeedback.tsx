@@ -8,20 +8,38 @@ import { IconSparkles, IconBrain } from '@tabler/icons-react';
 interface HomeAiFeedbackProps {
   aiFeedback?: string | null;
   isEvaluated?: boolean;
+  domainProgresses?: { domainCode: string; score: number }[];
 }
 
 export const HomeAiFeedback: React.FC<HomeAiFeedbackProps> = ({
   aiFeedback,
   isEvaluated = false,
+  domainProgresses = [],
 }) => {
   const { t } = useTranslation();
 
-  const feedbackText =
-    aiFeedback ||
-    t(
-      'home.aiFeedback.defaultDesc',
-      'Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để AI phân tích thế mạnh và đưa ra nhận xét, gợi ý lộ trình học tập cá nhân hóa dành riêng cho bạn!'
-    );
+  let fallbackText = t(
+    'home.aiFeedback.defaultDesc',
+    'Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để AI phân tích thế mạnh và đưa ra nhận xét, gợi ý lộ trình học tập cá nhân hóa dành riêng cho bạn!'
+  );
+
+  if (isEvaluated && (!aiFeedback || aiFeedback.trim() === '')) {
+    if (domainProgresses && domainProgresses.length > 0) {
+      const sorted = [...domainProgresses].sort((a, b) => b.score - a.score);
+      const highest = sorted[0];
+      const lowest = sorted[sorted.length - 1];
+      
+      fallbackText = t('home.aiFeedback.evaluatedFallback', {
+        highestDomain: t(`home.radar.domainShort.${highest.domainCode}`),
+        highestScore: Math.round(highest.score),
+        lowestDomain: t(`home.radar.domainShort.${lowest.domainCode}`),
+        lowestScore: Math.round(lowest.score),
+        defaultValue: `Dựa trên kết quả bài làm mới nhất, bạn thể hiện thế mạnh ở miền '${t(`home.radar.domainShort.${highest.domainCode}`)}' (${Math.round(highest.score)}% điểm). Để tối ưu hóa năng lực AI, bạn cần chú trọng luyện tập thêm miền '${t(`home.radar.domainShort.${lowest.domainCode}`)}' (${Math.round(lowest.score)}% điểm).`
+      });
+    }
+  }
+
+  const feedbackText = aiFeedback || fallbackText;
 
   return (
     <Paper

@@ -462,16 +462,20 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                     px: 0.8,
                                     borderRadius: '12px',
                                     border: '2px solid',
-                                    borderColor: isCompleted
-                                      ? '#10B981'
-                                      : isUnlocked
-                                        ? '#3B82F6'
-                                        : '#E2E8F0',
-                                    backgroundColor: isCompleted
-                                      ? '#ECFDF5'
-                                      : isUnlocked
-                                        ? '#EFF6FF'
-                                        : '#FFFFFF',
+                                    borderColor: needsReview
+                                      ? '#F59E0B'
+                                      : isCompleted
+                                        ? '#10B981'
+                                        : isUnlocked
+                                          ? '#3B82F6'
+                                          : '#E2E8F0',
+                                    backgroundColor: needsReview
+                                      ? '#FFFBEB'
+                                      : isCompleted
+                                        ? '#ECFDF5'
+                                        : isUnlocked
+                                          ? '#EFF6FF'
+                                          : '#FFFFFF',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
@@ -479,11 +483,13 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                     transition: 'transform 0.2s, box-shadow 0.2s',
                                     '&:hover': {
                                       transform: 'scale(1.04)',
-                                      boxShadow: isCompleted
-                                        ? '0px 4px 12px rgba(16,185,129,0.25)'
-                                        : isUnlocked
-                                          ? '0px 4px 12px rgba(59,130,246,0.25)'
-                                          : 'none',
+                                      boxShadow: needsReview
+                                        ? '0px 4px 12px rgba(245,158,11,0.25)'
+                                        : isCompleted
+                                          ? '0px 4px 12px rgba(16,185,129,0.25)'
+                                          : isUnlocked
+                                            ? '0px 4px 12px rgba(59,130,246,0.25)'
+                                            : 'none',
                                     },
                                   }}
                                 >
@@ -496,19 +502,25 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
-                                      background: isCompleted
-                                        ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
-                                        : isUnlocked
-                                          ? 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)'
-                                          : '#F1F5F9',
-                                      boxShadow: isCompleted
-                                        ? '0px 3px 8px rgba(16,185,129,0.3)'
-                                        : isUnlocked
-                                          ? '0px 3px 8px rgba(59,130,246,0.3)'
-                                          : 'none',
+                                      background: needsReview
+                                        ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)'
+                                        : isCompleted
+                                          ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
+                                          : isUnlocked
+                                            ? 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)'
+                                            : '#F1F5F9',
+                                      boxShadow: needsReview
+                                        ? '0px 3px 8px rgba(245,158,11,0.3)'
+                                        : isCompleted
+                                          ? '0px 3px 8px rgba(16,185,129,0.3)'
+                                          : isUnlocked
+                                            ? '0px 3px 8px rgba(59,130,246,0.3)'
+                                            : 'none',
                                     }}
                                   >
-                                    {isCompleted ? (
+                                    {needsReview ? (
+                                      <IconAlertTriangle size={18} color="#FFFFFF" />
+                                    ) : isCompleted ? (
                                       <IconCheck size={18} color="#FFFFFF" />
                                     ) : isUnlocked ? (
                                       <IconLockOpen size={16} color="#FFFFFF" />
@@ -521,38 +533,42 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                     variant="caption"
                                     fontWeight={700}
                                     sx={{
-                                      color: isCompleted
-                                        ? '#065F46'
-                                        : isUnlocked
-                                          ? '#1E40AF'
-                                          : '#64748B',
+                                      color: needsReview
+                                        ? '#B45309'
+                                        : isCompleted
+                                          ? '#065F46'
+                                          : isUnlocked
+                                            ? '#1E40AF'
+                                            : '#64748B',
                                       fontSize: '11px',
                                     }}
                                   >
                                     {levelTitle}
                                   </Typography>
 
-                                  <Chip
-                                    label={
-                                      isCompleted
-                                        ? t('home.skillTree.status.COMPLETED', 'Đã đạt')
-                                        : isUnlocked
-                                          ? t('home.skillTree.status.UNLOCKED', 'Sẵn sàng')
-                                          : t('home.skillTree.status.LOCKED', 'Khóa')
-                                    }
-                                    size="small"
-                                    sx={{
-                                      height: '18px',
-                                      fontSize: '9px',
-                                      fontWeight: 700,
-                                      backgroundColor: isCompleted
-                                        ? '#10B981'
-                                        : isUnlocked
-                                          ? '#3B82F6'
-                                          : '#CBD5E1',
-                                      color: isCompleted || isUnlocked ? '#FFFFFF' : '#475569',
-                                    }}
-                                  />
+                                  {!needsReview && (
+                                    <Chip
+                                      label={
+                                        isCompleted
+                                          ? t('home.skillTree.status.COMPLETED', 'Đã đạt')
+                                          : isUnlocked
+                                            ? t('home.skillTree.status.UNLOCKED', 'Sẵn sàng')
+                                            : t('home.skillTree.status.LOCKED', 'Khóa')
+                                      }
+                                      size="small"
+                                      sx={{
+                                        height: '18px',
+                                        fontSize: '9px',
+                                        fontWeight: 700,
+                                        backgroundColor: isCompleted
+                                          ? '#10B981'
+                                          : isUnlocked
+                                            ? '#3B82F6'
+                                            : '#CBD5E1',
+                                        color: isCompleted || isUnlocked ? '#FFFFFF' : '#475569',
+                                      }}
+                                    />
+                                  )}
 
                                   {needsReview && (
                                     <Tooltip title={t('home.skillTree.needsReview', 'Gợi ý ôn tập')}>

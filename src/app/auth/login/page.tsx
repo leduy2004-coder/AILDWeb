@@ -38,7 +38,7 @@ export default function Login() {
     try {
       await dispatch(signingSlice(body));
     } catch (error) {
-      console.error(error);
+      // Error is handled in the slice
     } finally {
       setIsLoading(false);
     }
