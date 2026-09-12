@@ -29,7 +29,7 @@ export default function QuestionBankPage() {
     status: null,
     keyword: '',
     page: 0,
-    size: 10,
+    size: 20,
   });
 
   const [isFormOpen, setIsFormOpen] = useState(false);

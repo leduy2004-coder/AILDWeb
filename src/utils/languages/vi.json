@@ -258,6 +258,64 @@
     "question": "Danh sách câu hỏi",
     "resource": "Quản lý tài nguyên"
   },
+  "admin_submission": {
+    "title": "Danh sách Bài làm",
+    "subtitle": "Quản lý toàn bộ bài làm của sinh viên",
+    "filter": {
+      "search": "Tìm kiếm theo tên hoặc email...",
+      "selected": "Đã chọn {{count}}",
+      "status": "Trạng thái",
+      "all": "Tất cả"
+    },
+    "status": {
+      "IN_PROGRESS": "Đang làm",
+      "SUBMITTED": "Đã nộp",
+      "REVIEWED": "Đã chấm điểm",
+      "COMPLETED": "Hoàn thành"
+    },
+    "action": {
+      "deleteSelected": "Xóa",
+      "view": "Xem chi tiết",
+      "back": "Quay lại",
+      "cancel": "Hủy",
+      "delete": "Xóa"
+    },
+    "table": {
+      "student": "Sinh viên",
+      "startedAt": "Bắt đầu lúc",
+      "status": "Trạng thái",
+      "actions": "Thao tác",
+      "noData": "Không có dữ liệu"
+    },
+    "delete": {
+      "success": "Đã xóa bài làm thành công.",
+      "error": "Có lỗi xảy ra khi xóa bài làm.",
+      "bulkTitle": "Xác nhận xóa nhiều bài làm",
+      "bulkConfirm": "Bạn có chắc chắn muốn xóa {{count}} bài làm này? Hành động này không thể hoàn tác."
+    },
+    "detail": {
+      "notFound": "Không tìm thấy thông tin bài làm.",
+      "title": "Chi tiết bài làm #{{id}}",
+      "generalInfo": "Thông tin chung",
+      "studentName": "Họ tên",
+      "studentEmail": "Email",
+      "startedAt": "Bắt đầu",
+      "submittedAt": "Nộp bài",
+      "status": "Trạng thái",
+      "answersTitle": "Chi tiết các câu hỏi",
+      "questionNumber": "Câu {{num}}",
+      "correct": "Đúng",
+      "incorrect": "Sai",
+      "selected": "Sinh viên chọn",
+      "correctAnswer": "Đáp án đúng",
+      "studentAnswerText": "Câu trả lời của sinh viên:",
+      "noAnswer": "(Không có câu trả lời)",
+      "rubric": "Tiêu chí chấm / Đáp án đúng:",
+      "aiFeedback": "AI Chấm điểm & Nhận xét",
+      "score": "Điểm:",
+      "noAIFeedback": "(Không có nhận xét từ AI)"
+    }
+  },
   "admin_overview": {
     "title": "Tổng quan",
     "errorFetchData": "Lỗi khi tải dữ liệu tổng quan.",

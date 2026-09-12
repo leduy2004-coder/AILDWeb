@@ -254,6 +254,64 @@
     "question": "Question Bank",
     "resource": "Resources"
   },
+  "admin_submission": {
+    "title": "Submissions List",
+    "subtitle": "Manage all student submissions",
+    "filter": {
+      "search": "Search by name or email...",
+      "selected": "Selected {{count}}",
+      "status": "Status",
+      "all": "All"
+    },
+    "status": {
+      "IN_PROGRESS": "In Progress",
+      "SUBMITTED": "Submitted",
+      "REVIEWED": "Reviewed",
+      "COMPLETED": "Completed"
+    },
+    "action": {
+      "deleteSelected": "Delete",
+      "view": "View Details",
+      "back": "Back",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "table": {
+      "student": "Student",
+      "startedAt": "Started At",
+      "status": "Status",
+      "actions": "Actions",
+      "noData": "No data available"
+    },
+    "delete": {
+      "success": "Submissions deleted successfully.",
+      "error": "An error occurred while deleting submissions.",
+      "bulkTitle": "Confirm Bulk Delete",
+      "bulkConfirm": "Are you sure you want to delete these {{count}} submissions? This action cannot be undone."
+    },
+    "detail": {
+      "notFound": "Submission not found.",
+      "title": "Submission Details #{{id}}",
+      "generalInfo": "General Information",
+      "studentName": "Full Name",
+      "studentEmail": "Email",
+      "startedAt": "Started At",
+      "submittedAt": "Submitted At",
+      "status": "Status",
+      "answersTitle": "Questions Details",
+      "questionNumber": "Question {{num}}",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "selected": "Selected by Student",
+      "correctAnswer": "Correct Answer",
+      "studentAnswerText": "Student Answer:",
+      "noAnswer": "(No answer provided)",
+      "rubric": "Evaluation Rubric / Correct Answer:",
+      "aiFeedback": "AI Evaluation & Feedback",
+      "score": "Score:",
+      "noAIFeedback": "(No feedback from AI)"
+    }
+  },
   "admin_overview": {
     "title": "Overview",
     "errorFetchData": "Failed to fetch overview data.",
