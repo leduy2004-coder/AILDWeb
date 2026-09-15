@@ -20,21 +20,24 @@
       "legendTitle": "4 Competency Domains Legend:",
       "humanCentered": "Human-Centered\nDesign",
       "ethics": "AI Ethics",
-      "application": "AI Engineering\n& Application",
+      "application": "AI Techniques &\nApplications",
       "systemDesign": "AI System\nDesign",
-      "humanCenteredSingleLine": "Human-Centered Design",
+      "humanCenteredSingleLine": "Human-centred Mindset",
       "ethicsSingleLine": "AI Ethics",
-      "applicationSingleLine": "AI Engineering & Application",
+      "applicationSingleLine": "AI Techniques & Applications",
       "systemDesignSingleLine": "AI System Design",
       "criticalThinkingSingleLine": "Critical Thinking",
       "domainShort": {
-        "HCM": "Human-Centered",
+        "HCM": "Human-centred",
         "ETHICS": "AI Ethics",
-        "TECH": "AI Engineering",
-        "DESIGN": "System Design",
-        "CRIT": "Crit. Thinking",
-        "ETHIC": "AI Ethics"
+        "TECH": "AI Tech",
+        "DESIGN": "System Design"
       }
+    },
+    "level": {
+      "L1": "UNDERSTAND",
+      "L2": "APPLY",
+      "L3": "CREATE"
     },
     "skillTree": {
       "title": "AI Skill Tree (12 Nodes)",
@@ -57,15 +60,6 @@
         "locked": "Locked",
         "review": "Needs Review"
       }
-    },
-    "level": {
-      "UNDERSTAND": "UNDERSTAND",
-      "APPLY": "APPLY",
-      "CREATE": "CREATE",
-      "L1": "REMEMBER",
-      "L2": "UNDERSTAND & APPLY",
-      "L3": "ANALYZE & EVALUATE",
-      "NOT_ASSESSED": "NOT ASSESSED"
     },
     "recommendations": {
       "title": "Recommended for you",
@@ -339,17 +333,17 @@
     },
     "domain": {
       "name": {
-        "1": "Human-Centered Design",
+        "1": "Human-centred Mindset",
         "2": "AI Ethics",
-        "3": "AI Engineering",
-        "4": "System Design"
+        "3": "AI Techniques & Applications",
+        "4": "AI System Design"
       }
     },
     "level": {
       "name": {
-        "1": "Understanding",
-        "2": "Applying",
-        "3": "Creating"
+        "1": "Understand",
+        "2": "Apply",
+        "3": "Create"
       }
     },
     "recent": {
@@ -610,9 +604,9 @@
     "domainResultTitle": "Assessment results by Competency Domain:",
     "viewDashboardBtn": "View Dashboard & Skill Tree",
     "domains": {
-      "HCM": "Human-Centered Design",
+      "HCM": "Human-centred Mindset",
       "ETHICS": "AI Ethics",
-      "TECH": "AI Applications & Tech",
+      "TECH": "AI Techniques & Applications",
       "DESIGN": "AI System Design"
     }
   }

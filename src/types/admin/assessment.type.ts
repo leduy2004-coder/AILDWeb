@@ -6,6 +6,7 @@ export interface IAdminAssessmentListDto {
   startedAt: string;
   submittedAt: string | null;
   status: string;
+  finalScore: number | null;
 }
 
 export interface IQuestionOptionDto {

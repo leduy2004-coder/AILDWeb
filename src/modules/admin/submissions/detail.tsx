@@ -80,6 +80,12 @@ export default function SubmissionDetailModule({ id }: SubmissionDetailModulePro
             <Typography variant="body2" color="text.secondary">{t('detail.status', 'Trạng thái')}</Typography>
             <Typography variant="body1" fontWeight={500}>{info.status}</Typography>
           </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Typography variant="body2" color="text.secondary">{t('detail.finalScore', 'Điểm tổng kết')}</Typography>
+            <Typography variant="body1" fontWeight={700} color="primary.main">
+              {info.finalScore !== null && info.finalScore !== undefined ? `${info.finalScore.toFixed(1)}/10` : '-'}
+            </Typography>
+          </Grid>
         </Grid>
       </Paper>
 

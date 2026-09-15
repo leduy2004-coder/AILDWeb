@@ -12,9 +12,10 @@ import { IconSparkles } from '@tabler/icons-react';
 interface HomeWelcomeProps {
   lastEvaluationDate?: string | null;
   isEvaluated?: boolean;
+  finalScore?: number | null;
 }
 
-export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, isEvaluated }) => {
+export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, isEvaluated, finalScore }) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const [userName, setUserName] = useState<string>('Học viên');
@@ -64,9 +65,35 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
         <Typography variant="h3" fontWeight={700} color="text.primary" gutterBottom>
           {t('home.welcome', 'Chào mừng trở lại')}, {userName}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {t('home.lastEvaluation', 'Đánh giá lần cuối')}: {formattedDate}
-        </Typography>
+        
+        <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+          <Typography variant="body1" color="text.secondary">
+            {t('home.lastEvaluation', 'Đánh giá lần cuối')}: {formattedDate}
+          </Typography>
+          
+          {isEvaluated && finalScore !== undefined && finalScore !== null && (
+            <Box
+              sx={{
+                px: 2,
+                py: 0.5,
+                borderRadius: '20px',
+                background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)',
+              }}
+            >
+              <Typography variant="subtitle2" fontWeight={700}>
+                Điểm tổng kết:
+              </Typography>
+              <Typography variant="subtitle1" fontWeight={800}>
+                {finalScore.toFixed(1)}/10
+              </Typography>
+            </Box>
+          )}
+        </Box>
       </Box>
       <Button
         variant="contained"

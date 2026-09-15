@@ -40,5 +40,6 @@ export interface IDomainScoreDto {
 export interface IAssessmentSummaryResponse {
   assessmentId: number;
   status: string;
+  finalScore?: number;
   domainScores: IDomainScoreDto[];
 }

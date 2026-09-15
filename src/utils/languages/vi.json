@@ -20,21 +20,24 @@
       "legendTitle": "Chú thích 4 miền năng lực:",
       "humanCentered": "Tư duy lấy\ncon người làm trung tâm",
       "ethics": "Đạo đức AI",
-      "application": "Kỹ thuật &\nỨng dụng AI",
+      "application": "Kỹ thuật và\nỨng dụng AI",
       "systemDesign": "Thiết kế\nHệ thống AI",
       "humanCenteredSingleLine": "Tư duy lấy con người làm trung tâm",
       "ethicsSingleLine": "Đạo đức AI",
-      "applicationSingleLine": "Kỹ thuật & Ứng dụng AI",
+      "applicationSingleLine": "Kỹ thuật và Ứng dụng AI",
       "systemDesignSingleLine": "Thiết kế Hệ thống AI",
       "criticalThinkingSingleLine": "Tư duy phản biện",
       "domainShort": {
         "HCM": "Tư duy AI",
         "ETHICS": "Đạo đức AI",
         "TECH": "Kỹ thuật AI",
-        "DESIGN": "Thiết kế hệ thống",
-        "CRIT": "Tư duy PB",
-        "ETHIC": "Đạo đức AI"
+        "DESIGN": "Thiết kế HT"
       }
+    },
+    "level": {
+      "L1": "THÔNG HIỂU",
+      "L2": "VẬN DỤNG",
+      "L3": "SÁNG TẠO"
     },
     "skillTree": {
       "title": "Cây Kỹ Năng AI (12 Node)",
@@ -58,15 +61,7 @@
         "review": "Gợi ý ôn tập"
       }
     },
-    "level": {
-      "UNDERSTAND": "HIỂU",
-      "APPLY": "ÁP DỤNG",
-      "CREATE": "SÁNG TẠO",
-      "L1": "NHẬN BIẾT",
-      "L2": "HIỂU & ÁP DỤNG",
-      "L3": "PHÂN TÍCH & ĐÁNH GIÁ",
-      "NOT_ASSESSED": "CHƯA ĐÁNH GIÁ"
-    },
+
     "recommendations": {
       "title": "Đề xuất cho bạn",
       "viewAll": "Xem tất cả",
@@ -343,16 +338,16 @@
     },
     "domain": {
       "name": {
-        "1": "Tư duy",
-        "2": "Đạo đức",
-        "3": "Kỹ thuật",
-        "4": "Thiết kế hệ thống"
+        "1": "Tư duy lấy con người làm trung tâm",
+        "2": "Đạo đức AI",
+        "3": "Kỹ thuật và Ứng dụng AI",
+        "4": "Thiết kế Hệ thống AI"
       }
     },
     "level": {
       "name": {
-        "1": "Hiểu",
-        "2": "Áp dụng",
+        "1": "Thông hiểu",
+        "2": "Vận dụng",
         "3": "Sáng tạo"
       }
     },
@@ -622,7 +617,7 @@
     "domains": {
       "HCM": "Tư duy lấy con người làm trung tâm",
       "ETHICS": "Đạo đức AI",
-      "TECH": "Kỹ thuật & Ứng dụng AI",
+      "TECH": "Kỹ thuật và Ứng dụng AI",
       "DESIGN": "Thiết kế Hệ thống AI"
     }
   }

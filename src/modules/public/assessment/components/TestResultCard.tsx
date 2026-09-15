@@ -155,6 +155,34 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
           )}
         </Typography>
 
+        {/* Final Score Badge */}
+        {summaryData?.finalScore !== undefined && summaryData.finalScore !== null && (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mb: 4,
+              p: 3,
+              borderRadius: '20px',
+              background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
+              border: '1px solid #FDE68A',
+              boxShadow: '0 10px 30px rgba(245, 158, 11, 0.15)',
+              width: '100%',
+              maxWidth: '300px',
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight={700} color="#D97706" mb={1}>
+              {t('assessment.finalScoreTitle', 'ĐIỂM TỔNG KẾT')}
+            </Typography>
+            <Typography variant="h2" fontWeight={900} color="#B45309" sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+              {summaryData.finalScore.toFixed(1)}
+              <Typography variant="h5" fontWeight={700} color="#D97706" sx={{ opacity: 0.8 }}>/ 10</Typography>
+            </Typography>
+          </Box>
+        )}
+
         {/* Domain Scores List */}
         {domainScores.length > 0 && (
           <Box width="100%" mb={4}>

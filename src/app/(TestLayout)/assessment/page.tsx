@@ -29,8 +29,13 @@ export default function AssessmentPage() {
   const [isStarted, setIsStarted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFinishing, setIsFinishing] = useState(false);
+  const initRef = React.useRef(false);
 
   useEffect(() => {
+    // Prevent double execution in React Strict Mode
+    if (initRef.current) return;
+    initRef.current = true;
+
     // Start assessment on mount
     const initAssessment = async () => {
       try {

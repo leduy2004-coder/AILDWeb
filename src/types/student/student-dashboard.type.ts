@@ -38,6 +38,7 @@ export interface IStudentRecommendedResource {
 export interface IStudentDashboardResponse {
   lastEvaluationDate: string | null;
   isEvaluated: boolean;
+  finalScore: number | null;
   aiFeedback: string | null;
   domainProgresses: IDomainProgress[];
   skillNodes: ISkillNode[];

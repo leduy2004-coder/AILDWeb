@@ -38,6 +38,7 @@ export default function HomePage() {
               <HomeWelcome
                 lastEvaluationDate={dashboardData?.lastEvaluationDate}
                 isEvaluated={dashboardData?.isEvaluated}
+                finalScore={dashboardData?.finalScore}
               />
               <HomeProgress
                 domainProgresses={dashboardData?.domainProgresses}

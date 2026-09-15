@@ -77,6 +77,7 @@ export default function SubmissionTable({
               <TableCell sx={{ fontWeight: 600 }}>ID</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>{t('table.student', 'Sinh viên')}</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>{t('table.startedAt', 'Bắt đầu lúc')}</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>{t('table.finalScore', 'Điểm')}</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>{t('table.status', 'Trạng thái')}</TableCell>
               <TableCell align="center" sx={{ fontWeight: 600 }}>
                 {t('table.actions', 'Thao tác')}
@@ -116,6 +117,15 @@ export default function SubmissionTable({
                   </TableCell>
                   <TableCell>
                     {dayjs(row.startedAt).format('DD/MM/YYYY HH:mm')}
+                  </TableCell>
+                  <TableCell>
+                    {row.finalScore !== null && row.finalScore !== undefined ? (
+                      <Typography variant="body2" fontWeight={600} color="primary.main">
+                        {row.finalScore.toFixed(1)}
+                      </Typography>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">-</Typography>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Chip
