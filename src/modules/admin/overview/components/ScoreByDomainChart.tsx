@@ -22,49 +22,95 @@ export const ScoreByDomainChart = ({ data = [] }: Props) => {
       type: 'bar',
       toolbar: { show: false },
       fontFamily: theme.typography.fontFamily,
+      animations: {
+        enabled: true,
+        easing: 'easeinout',
+        speed: 800,
+      }
     },
-    colors: [theme.palette.primary.main],
+    colors: [
+      theme.palette.primary.main, 
+      theme.palette.success.main, 
+      theme.palette.warning.main, 
+      theme.palette.info.main
+    ],
     plotOptions: {
       bar: {
-        borderRadius: 4,
-        columnWidth: '40%',
-        distributed: true, // Will make colors different if we provide array of colors, or just one color
+        borderRadius: 6,
+        columnWidth: '45%',
+        distributed: true,
       },
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'light',
+        type: 'vertical',
+        shadeIntensity: 0.25,
+        inverseColors: false,
+        opacityFrom: 0.9,
+        opacityTo: 0.7,
+        stops: [0, 100]
+      }
     },
     dataLabels: {
       enabled: true,
       formatter: (val: number) => `${val}%`,
       style: {
-        fontSize: '12px',
-        colors: [theme.palette.text.primary],
+        fontSize: '11px',
+        fontWeight: 600,
+        colors: [theme.palette.mode === 'dark' ? '#fff' : '#000'],
       },
       offsetY: -20,
+      background: {
+        enabled: true,
+        foreColor: theme.palette.mode === 'dark' ? '#000' : '#fff',
+        borderRadius: 2,
+        padding: 3,
+        opacity: 0.7,
+        borderWidth: 0
+      }
     },
     stroke: { show: false },
     xaxis: {
       categories,
       labels: {
-        style: {
-          colors: theme.palette.text.secondary,
-          fontSize: '12px',
-        },
+        show: false
       },
       axisBorder: { show: false },
       axisTicks: { show: false },
     },
     yaxis: {
-      labels: { show: false },
+      labels: { 
+        style: {
+          colors: theme.palette.text.disabled,
+        },
+        formatter: (val: number) => `${val}%`,
+      },
       min: 0,
       max: 100,
+      tickAmount: 5,
     },
-    grid: { show: false },
+    grid: { 
+      show: true,
+      borderColor: theme.palette.divider,
+      strokeDashArray: 4,
+      xaxis: { lines: { show: false } },
+      yaxis: { lines: { show: true } },
+    },
     tooltip: {
       theme: theme.palette.mode,
       y: {
         formatter: (val: number) => `${val}%`,
       },
     },
-    legend: { show: false },
+    legend: { 
+      show: true, 
+      position: 'bottom',
+      labels: {
+        colors: theme.palette.text.secondary
+      }
+    },
   };
 
   const series = [
@@ -80,7 +126,7 @@ export const ScoreByDomainChart = ({ data = [] }: Props) => {
         <Typography variant="h6" fontWeight={600} mb={3}>
           {t('scoreByDomain')}
         </Typography>
-        <Box height={280}>
+        <Box height={320}>
           <Chart options={options} series={series} type="bar" height="100%" />
         </Box>
       </CardContent>

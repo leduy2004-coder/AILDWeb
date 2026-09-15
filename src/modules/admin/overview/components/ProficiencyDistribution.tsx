@@ -1,7 +1,43 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography, LinearProgress, useTheme } from '@mui/material';
+import { Box, Card, CardContent, Typography, LinearProgress, useTheme, linearProgressClasses, styled } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { IProficiencyDistribution } from '@/types/admin/overview.type';
+
+const BorderLinearProgress = styled(LinearProgress)(({ theme, color }) => {
+  const isPrimary = color === 'primary';
+  const isSuccess = color === 'success';
+  const isInfo = color === 'info';
+  
+  let mainColor = theme.palette.primary.main;
+  let bgColor = theme.palette.primary.light;
+  
+  if (isSuccess) {
+    mainColor = theme.palette.success.main;
+    bgColor = theme.palette.success.light;
+  } else if (isInfo) {
+    mainColor = theme.palette.info.main;
+    bgColor = theme.palette.info.light;
+  }
+
+  return {
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: theme.palette.mode === 'light' ? bgColor : theme.palette.grey[800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: mainColor,
+      backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent)`,
+      backgroundSize: '1rem 1rem',
+      animation: 'progress-stripes 1s linear infinite'
+    },
+    '@keyframes progress-stripes': {
+      from: { backgroundPosition: '1rem 0' },
+      to: { backgroundPosition: '0 0' }
+    }
+  };
+});
 
 interface Props {
   data?: IProficiencyDistribution[];
@@ -31,11 +67,10 @@ export const ProficiencyDistribution = ({ data = [] }: Props) => {
                     {Math.round(item.percentage)}%
                   </Typography>
                 </Box>
-                <LinearProgress 
+                <BorderLinearProgress 
                   variant="determinate" 
                   value={item.percentage} 
                   color={color as any}
-                  sx={{ height: 6, borderRadius: 3 }}
                 />
               </Box>
             );

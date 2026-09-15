@@ -4,7 +4,9 @@ import {
   TableContainer, TableHead, TableRow, Avatar, Chip, useTheme, Button
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 import { IRecentActivity } from '@/types/admin/overview.type';
+import logoTutor from '@/assests/images/logo.png';
 
 import { ACTIVITY_STATUS_COLOR } from '../constant/overview.constant';
 
@@ -15,6 +17,7 @@ interface Props {
 export const RecentActivityTable = ({ data = [] }: Props) => {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_overview' });
   const theme = useTheme();
+  const router = useRouter();
 
   const getStatusLabel = (status: string) => {
     return t(`status.${status}`);
@@ -36,7 +39,11 @@ export const RecentActivityTable = ({ data = [] }: Props) => {
           <Typography variant="h6" fontWeight={600}>
             {t('recentActivity')}
           </Typography>
-          <Button size="small" sx={{ textTransform: 'none', fontWeight: 600 }}>
+          <Button 
+            size="small" 
+            sx={{ textTransform: 'none', fontWeight: 600 }}
+            onClick={() => router.push('/admin/submissions')}
+          >
             {t('viewAll')}
           </Button>
         </Box>
@@ -54,12 +61,27 @@ export const RecentActivityTable = ({ data = [] }: Props) => {
             </TableHead>
             <TableBody>
               {data.map((row, index) => (
-                <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableRow 
+                  key={index} 
+                  hover
+                  onClick={() => router.push(`/admin/submissions/${row.assessmentId}`)}
+                  sx={{ 
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    cursor: 'pointer'
+                  }}
+                >
                   <TableCell>
                     <Box display="flex" alignItems="center" gap={2}>
-                      <Avatar src={row.studentAvatar} sx={{ width: 36, height: 36, bgcolor: theme.palette.primary.light }}>
-                        {row.studentName.charAt(0)}
-                      </Avatar>
+                      <Box 
+                        component="img"
+                        src={logoTutor.src} 
+                        sx={{ 
+                          height: 40, 
+                          width: 'auto', 
+                          objectFit: 'contain',
+                          borderRadius: 1
+                        }}
+                      />
                       <Typography variant="body2" fontWeight={600}>
                         {row.studentName}
                       </Typography>

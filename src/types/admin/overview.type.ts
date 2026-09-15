@@ -10,6 +10,7 @@ export interface IProficiencyDistribution {
 }
 
 export interface IRecentActivity {
+  assessmentId: number;
   studentId: number;
   studentName: string;
   studentAvatar: string;
