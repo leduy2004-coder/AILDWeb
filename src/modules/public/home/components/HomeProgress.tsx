@@ -685,6 +685,26 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                 }}
               />
             </Paper>
+            <Alert
+              severity="info"
+              sx={{
+                mt: 2,
+                borderRadius: '12px',
+                py: 0.5,
+                fontSize: '13px',
+                backgroundColor: '#EFF6FF',
+                color: '#1E3A8A',
+                border: '1px solid #BFDBFE',
+                '& .MuiAlert-icon': {
+                  color: '#3B82F6',
+                },
+              }}
+            >
+              {t(
+                'home.skillTree.cumulativeNote',
+                '* Lưu ý: Cây kỹ năng thể hiện sự tiến bộ tích lũy qua nhiều bài đánh giá, giúp theo dõi sự phát triển toàn diện của bạn.'
+              )}
+            </Alert>
           </Paper>
         </Grid>
       </Grid>

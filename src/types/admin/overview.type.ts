@@ -14,7 +14,7 @@ export interface IRecentActivity {
   studentId: number;
   studentName: string;
   studentAvatar: string;
-  questionSetName: string;
+  durationSeconds: number | null;
   score: number | null;
   date: string;
   status: string;

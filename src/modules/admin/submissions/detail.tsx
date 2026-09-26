@@ -83,7 +83,7 @@ export default function SubmissionDetailModule({ id }: SubmissionDetailModulePro
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="body2" color="text.secondary">{t('detail.finalScore', 'Điểm tổng kết')}</Typography>
             <Typography variant="body1" fontWeight={700} color="primary.main">
-              {info.finalScore !== null && info.finalScore !== undefined ? `${info.finalScore.toFixed(1)}/10` : '-'}
+              {info.finalScore !== null && info.finalScore !== undefined ? `${Math.round(info.finalScore * 100) / 100}/10` : '-'}
             </Typography>
           </Grid>
         </Grid>

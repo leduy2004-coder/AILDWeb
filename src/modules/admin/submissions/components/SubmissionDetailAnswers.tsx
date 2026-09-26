@@ -37,6 +37,18 @@ export default function SubmissionDetailAnswers({ answers }: SubmissionDetailAns
                 />
               </Box>
 
+              <Box display="flex" gap={1} mb={2} flexWrap="wrap">
+                {answer.domainName && (
+                  <Chip size="small" label={`${t('detail.tagDomain', 'Miền')}: ${answer.domainName}`} color="primary" variant="outlined" sx={{ borderRadius: '2px' }} />
+                )}
+                {answer.levelName && (
+                  <Chip size="small" label={`${t('detail.tagLevel', 'Mức độ')}: ${answer.levelName}`} color="secondary" variant="outlined" sx={{ borderRadius: '2px' }} />
+                )}
+                {answer.difficultyIndex !== null && answer.difficultyIndex !== undefined && (
+                  <Chip size="small" label={`${t('detail.tagDifficulty', 'Độ khó')}: ${answer.difficultyIndex}`} color="info" variant="outlined" sx={{ borderRadius: '2px' }} />
+                )}
+              </Box>
+
               <Typography variant="body1" mb={3} dangerouslySetInnerHTML={{ __html: answer.questionContent }} />
 
               {isMultipleChoice ? (

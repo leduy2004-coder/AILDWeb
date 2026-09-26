@@ -32,6 +32,14 @@ export const RecentActivityTable = ({ data = [] }: Props) => {
     }).format(date);
   };
 
+  const formatDuration = (seconds: number | null) => {
+    if (seconds === null || seconds === undefined) return '--';
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    if (m === 0) return `${s}s`;
+    return `${m}m ${s}s`;
+  };
+
   return (
     <Card elevation={0} sx={{ borderRadius: 1, border: `1px solid ${theme.palette.divider}` }}>
       <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
@@ -53,8 +61,8 @@ export const RecentActivityTable = ({ data = [] }: Props) => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>{t('table.student')}</TableCell>
-                <TableCell sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>{t('table.questionSet')}</TableCell>
                 <TableCell sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>{t('table.score')}</TableCell>
+                <TableCell sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>{t('table.duration', 'Thời gian')}</TableCell>
                 <TableCell sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>{t('table.date')}</TableCell>
                 <TableCell sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>{t('table.status')}</TableCell>
               </TableRow>
@@ -88,13 +96,13 @@ export const RecentActivityTable = ({ data = [] }: Props) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" color="textSecondary">
-                      {t(row.questionSetName)}
+                    <Typography variant="body2" fontWeight={600}>
+                      {row.score ? `${row.score}/10` : '--'}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" fontWeight={600}>
-                      {row.score ? `${row.score}%` : '--'}
+                    <Typography variant="body2" color="textSecondary">
+                      {formatDuration(row.durationSeconds)}
                     </Typography>
                   </TableCell>
                   <TableCell>

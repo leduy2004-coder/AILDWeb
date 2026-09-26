@@ -121,7 +121,7 @@ export default function SubmissionTable({
                   <TableCell>
                     {row.finalScore !== null && row.finalScore !== undefined ? (
                       <Typography variant="body2" fontWeight={600} color="primary.main">
-                        {row.finalScore.toFixed(1)}
+                        {Math.round(row.finalScore * 100) / 100}
                       </Typography>
                     ) : (
                       <Typography variant="body2" color="text.secondary">-</Typography>

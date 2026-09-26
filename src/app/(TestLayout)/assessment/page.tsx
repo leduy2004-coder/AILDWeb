@@ -210,6 +210,7 @@ export default function AssessmentPage() {
             options={currentQuestion.options || []}
             onNext={handleNext}
             isSubmitting={isSubmitting}
+            isLastQuestion={currentQuestion.currentIndex === currentQuestion.totalQuestions}
           />
         )}
       </Box>

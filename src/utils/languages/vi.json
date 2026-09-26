@@ -59,7 +59,8 @@
         "unlocked": "Sẵn sàng",
         "locked": "Đã khóa",
         "review": "Gợi ý ôn tập"
-      }
+      },
+      "cumulativeNote": "* Lưu ý: Cây kỹ năng thể hiện sự tiến bộ tích lũy qua nhiều bài đánh giá, giúp theo dõi sự phát triển toàn diện của bạn."
     },
 
     "recommendations": {
@@ -296,9 +297,13 @@
       "studentEmail": "Email",
       "startedAt": "Bắt đầu",
       "submittedAt": "Nộp bài",
+      "duration": "Thời gian làm bài",
       "status": "Trạng thái",
       "answersTitle": "Chi tiết các câu hỏi",
       "questionNumber": "Câu {{num}}",
+      "tagDomain": "Miền",
+      "tagLevel": "Mức độ",
+      "tagDifficulty": "Độ khó",
       "correct": "Đúng",
       "incorrect": "Sai",
       "selected": "Sinh viên chọn",
@@ -321,12 +326,13 @@
     "questionsNeedingAttention": "Câu hỏi cần chú ý",
     "scoreByDomain": "Điểm trung bình theo lĩnh vực",
     "proficiencyDistribution": "Phân bố mức độ thành thạo",
-    "recentActivity": "Hoạt động gần đây",
+    "recentActivity": "Top 5 bài làm điểm cao nhất",
     "viewAll": "Xem tất cả",
     "table": {
       "student": "Học viên",
       "questionSet": "Bộ đề",
       "score": "Điểm",
+      "duration": "Thời gian làm",
       "date": "Ngày",
       "status": "Trạng thái"
     },

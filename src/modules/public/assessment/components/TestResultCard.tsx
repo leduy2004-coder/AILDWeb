@@ -177,7 +177,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
               {t('assessment.finalScoreTitle', 'ĐIỂM TỔNG KẾT')}
             </Typography>
             <Typography variant="h2" fontWeight={900} color="#B45309" sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-              {summaryData.finalScore.toFixed(1)}
+              {Math.round(summaryData.finalScore * 100) / 100}
               <Typography variant="h5" fontWeight={700} color="#D97706" sx={{ opacity: 0.8 }}>/ 10</Typography>
             </Typography>
           </Box>

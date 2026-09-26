@@ -59,7 +59,8 @@
         "unlocked": "Unlocked",
         "locked": "Locked",
         "review": "Needs Review"
-      }
+      },
+      "cumulativeNote": "* Note: The skill tree reflects your cumulative progress across all completed assessments, providing a comprehensive view of your development."
     },
     "recommendations": {
       "title": "Recommended for you",
@@ -291,9 +292,13 @@
       "studentEmail": "Email",
       "startedAt": "Started At",
       "submittedAt": "Submitted At",
+      "duration": "Duration",
       "status": "Status",
       "answersTitle": "Questions Details",
       "questionNumber": "Question {{num}}",
+      "tagDomain": "Domain",
+      "tagLevel": "Level",
+      "tagDifficulty": "Difficulty",
       "correct": "Correct",
       "incorrect": "Incorrect",
       "selected": "Selected by Student",
@@ -316,12 +321,13 @@
     "questionsNeedingAttention": "Questions Needing Attention",
     "scoreByDomain": "Average Score by Domain",
     "proficiencyDistribution": "Proficiency Distribution",
-    "recentActivity": "Recent Activity",
+    "recentActivity": "Top 5 Highest Scoring Submissions",
     "viewAll": "View all",
     "table": {
       "student": "Student",
       "questionSet": "Question Set",
       "score": "Score",
+      "duration": "Duration",
       "date": "Date",
       "status": "Status"
     },

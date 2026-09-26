@@ -28,6 +28,11 @@ export interface IAdminAssessmentAnswerDto {
   aiScore: number | null;
   aiJustification: string | null;
   answeredAt: string;
+  domainCode: string | null;
+  domainName: string | null;
+  levelCode: string | null;
+  levelName: string | null;
+  difficultyIndex: number | null;
   options: IQuestionOptionDto[];
 }
 

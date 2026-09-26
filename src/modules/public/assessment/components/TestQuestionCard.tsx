@@ -23,6 +23,7 @@ interface TestQuestionCardProps {
   options: IOptionDto[];
   onNext: (selectedOptionId: number | null, answerText?: string) => void;
   isSubmitting: boolean;
+  isLastQuestion?: boolean;
 }
 
 export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
@@ -33,6 +34,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
   options,
   onNext,
   isSubmitting,
+  isLastQuestion,
 }) => {
   const { t } = useTranslation();
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
@@ -146,7 +148,9 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
           disabled={isNextDisabled}
           sx={{ px: 4, py: 1.2, borderRadius: '8px', fontWeight: 700, textTransform: 'none' }}
         >
-          {t('assessment.nextQuestion', 'Câu tiếp theo')}
+          {isLastQuestion
+            ? t('assessment.finish', 'Nộp bài')
+            : t('assessment.nextQuestion', 'Câu tiếp theo')}
         </Button>
       </Box>
     </Paper>
