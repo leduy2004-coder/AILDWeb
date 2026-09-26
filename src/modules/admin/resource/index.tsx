@@ -16,6 +16,8 @@ import ResourceForm from './components/form/ResourceForm';
 import ConfirmDeleteResourceModal from './components/modal/ConfirmDeleteResourceModal';
 import ConfirmBulkDeleteResourceModal from './components/modal/ConfirmBulkDeleteResourceModal';
 import ResourcePreviewModal from './components/modal/ResourcePreviewModal';
+import ResourceLikesModal from './components/modal/ResourceLikesModal';
+import ResourceReportsModal from './components/modal/ResourceReportsModal';
 
 export default function ResourceModule() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_resource' });
@@ -43,6 +45,12 @@ export default function ResourceModule() {
   const [resourceToDelete, setResourceToDelete] = useState<IResource | null>(null);
   const [openPreview, setOpenPreview] = useState(false);
   const [resourceToPreview, setResourceToPreview] = useState<IResource | null>(null);
+
+  const [openLikes, setOpenLikes] = useState(false);
+  const [resourceToViewLikes, setResourceToViewLikes] = useState<IResource | null>(null);
+
+  const [openReports, setOpenReports] = useState(false);
+  const [resourceToViewReports, setResourceToViewReports] = useState<IResource | null>(null);
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [isBulkDeleteOpen, setIsBulkDeleteOpen] = useState(false);
@@ -94,6 +102,26 @@ export default function ResourceModule() {
   const handleClosePreview = () => {
     setOpenPreview(false);
     setResourceToPreview(null);
+  };
+
+  const handleOpenLikes = (resource: IResource) => {
+    setResourceToViewLikes(resource);
+    setOpenLikes(true);
+  };
+
+  const handleCloseLikes = () => {
+    setOpenLikes(false);
+    setResourceToViewLikes(null);
+  };
+
+  const handleOpenReports = (resource: IResource) => {
+    setResourceToViewReports(resource);
+    setOpenReports(true);
+  };
+
+  const handleCloseReports = () => {
+    setOpenReports(false);
+    setResourceToViewReports(null);
   };
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,6 +205,8 @@ export default function ResourceModule() {
         onEdit={handleOpenForm}
         onDelete={handleOpenDelete}
         onPreview={handleOpenPreview}
+        onViewLikes={handleOpenLikes}
+        onViewReports={handleOpenReports}
         totalElements={resourceData?.result?.totalElements || 0}
         page={page}
         size={size}
@@ -217,6 +247,22 @@ export default function ResourceModule() {
           onClose={handleClosePreview}
           url={resourceToPreview.url}
           title={resourceToPreview.title}
+        />
+      )}
+
+      {openLikes && resourceToViewLikes && (
+        <ResourceLikesModal
+          open={openLikes}
+          onClose={handleCloseLikes}
+          resourceId={resourceToViewLikes.id}
+          resourceTitle={resourceToViewLikes.title}
+        />
+      )}
+      {openReports && resourceToViewReports && (
+        <ResourceReportsModal
+          open={openReports}
+          onClose={handleCloseReports}
+          resource={resourceToViewReports}
         />
       )}
     </Box>

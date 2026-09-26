@@ -33,6 +33,9 @@ export interface IStudentRecommendedResource {
   targetLevelId: number;
   targetLevelCode: string | null;
   targetLevelName: string | null;
+  likeCount?: number;
+  isLiked?: boolean;
+  isReported?: boolean;
 }
 
 export interface IStudentDashboardResponse {

@@ -384,6 +384,7 @@
       "title": "Tiêu đề",
       "domain": "Lĩnh vực",
       "level": "Cấp độ",
+      "likes": "Lượt thích",
       "updatedAt": "Ngày cập nhật",
       "action": "Hành động",
       "empty": "Không tìm thấy tài nguyên nào.",
@@ -429,6 +430,27 @@
       "cancel": "Hủy",
       "success": "Xóa tài nguyên thành công",
       "error": "Lỗi khi xóa tài nguyên"
+    },
+    "likesModal": {
+      "title": "Lượt thích: {{title}}",
+      "empty": "Chưa có lượt thích nào.",
+      "likedAt": "Thích lúc: "
+    },
+    "reportsModal": {
+      "title": "Lượt báo cáo: {{title}}",
+      "empty": "Không có báo cáo nào.",
+      "loading": "Đang tải...",
+      "table": {
+        "user": "Người dùng",
+        "email": "Email",
+        "reason": "Lý do",
+        "reportedAt": "Ngày báo cáo",
+        "action": "Hành động"
+      },
+      "deleteConfirm": "Bạn có chắc chắn muốn xóa/gỡ báo cáo này?",
+      "deleteTitle": "Xóa/Gỡ báo cáo",
+      "deleteSuccess": "Đã xóa báo cáo thành công",
+      "deleteError": "Có lỗi xảy ra khi xóa báo cáo"
     }
   },
   "admin_user": {

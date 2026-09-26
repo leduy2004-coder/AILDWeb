@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Chip, Typography, Box, Link, Checkbox, TablePagination } from '@mui/material';
-import { IconEdit, IconTrash, IconEye } from '@tabler/icons-react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Chip, Typography, Box, Link, Checkbox, TablePagination, Tooltip } from '@mui/material';
+import { IconEdit, IconTrash, IconEye, IconHeartFilled, IconFlag } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { IResource } from '@/types/admin/resource.type';
 import { QUESTION_DOMAIN_COLOR } from '@/modules/admin/question/constant/question.constant';
@@ -10,6 +10,8 @@ interface ResourceTableProps {
   onEdit: (resource: IResource) => void;
   onDelete: (resource: IResource) => void;
   onPreview: (resource: IResource) => void;
+  onViewLikes: (resource: IResource) => void;
+  onViewReports: (resource: IResource) => void;
   totalElements: number;
   page: number;
   size: number;
@@ -24,6 +26,8 @@ export default function ResourceTable({
   onEdit, 
   onDelete, 
   onPreview,
+  onViewLikes,
+  onViewReports,
   totalElements,
   page,
   size,
@@ -54,6 +58,8 @@ export default function ResourceTable({
             <TableCell width="40%"><Typography variant="subtitle2" fontWeight={600}>{t('title')}</Typography></TableCell>
             <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('domain')}</Typography></TableCell>
             <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('level')}</Typography></TableCell>
+            <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('likes', { defaultValue: 'Lượt thích' })}</Typography></TableCell>
+            <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('reports', { defaultValue: 'Báo cáo' })}</Typography></TableCell>
             <TableCell><Typography variant="subtitle2" fontWeight={600}>{t('updatedAt', { defaultValue: 'NGÀY CẬP NHẬT' })}</Typography></TableCell>
             <TableCell align="right"><Typography variant="subtitle2" fontWeight={600}>{t('action')}</Typography></TableCell>
           </TableRow>
@@ -107,6 +113,38 @@ export default function ResourceTable({
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2">{tLevel(row.targetLevelId.toString())}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Box 
+                    display="flex" 
+                    alignItems="center" 
+                    gap={0.5} 
+                    onClick={() => onViewLikes(row)}
+                    sx={{ 
+                      cursor: 'pointer',
+                      color: (row.likeCount && row.likeCount > 0) ? '#EF4444' : 'text.secondary',
+                      '&:hover': { opacity: 0.7, color: '#EF4444' }
+                    }}
+                  >
+                    <IconHeartFilled size={18} />
+                    <Typography variant="body2" fontWeight={600}>{row.likeCount || 0}</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Box 
+                    display="flex" 
+                    alignItems="center" 
+                    gap={0.5} 
+                    onClick={() => onViewReports(row)}
+                    sx={{ 
+                      cursor: 'pointer',
+                      color: (row.reportCount && row.reportCount > 0) ? '#EF4444' : 'text.secondary',
+                      '&:hover': { opacity: 0.7, color: '#EF4444' }
+                    }}
+                  >
+                    <IconFlag size={18} />
+                    <Typography variant="body2" fontWeight={600}>{row.reportCount || 0}</Typography>
+                  </Box>
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2">

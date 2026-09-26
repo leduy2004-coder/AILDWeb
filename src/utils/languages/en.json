@@ -379,6 +379,7 @@
       "title": "Title",
       "domain": "Domain",
       "level": "Level",
+      "likes": "Likes",
       "updatedAt": "Updated At",
       "action": "Actions",
       "empty": "No resources found.",
@@ -424,6 +425,27 @@
       "cancel": "Cancel",
       "success": "Resource deleted successfully",
       "error": "Error deleting resource"
+    },
+    "likesModal": {
+      "title": "Likes: {{title}}",
+      "empty": "No likes yet.",
+      "likedAt": "Liked at: "
+    },
+    "reportsModal": {
+      "title": "Reports: {{title}}",
+      "empty": "No reports found.",
+      "loading": "Loading...",
+      "table": {
+        "user": "User",
+        "email": "Email",
+        "reason": "Reason",
+        "reportedAt": "Reported At",
+        "action": "Actions"
+      },
+      "deleteConfirm": "Are you sure you want to delete/remove this report?",
+      "deleteTitle": "Delete Report",
+      "deleteSuccess": "Report deleted successfully",
+      "deleteError": "Error deleting report"
     }
   },
   "admin_user": {

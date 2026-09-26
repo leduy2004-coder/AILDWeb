@@ -12,11 +12,13 @@ import {
   CardContent,
   Chip,
 } from '@mui/material';
-import { IconX, IconArrowLeft, IconExternalLink, IconArrowUpRight, IconBrandYoutube, IconPresentation, IconFileText, IconArticle } from '@tabler/icons-react';
+import { IconX, IconArrowLeft, IconExternalLink, IconArrowUpRight, IconBrandYoutube, IconPresentation, IconFileText, IconArticle, IconHeart, IconHeartFilled, IconFlag } from '@tabler/icons-react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useTranslation } from 'react-i18next';
 import { detectResourceType, getEmbedUrl } from '@/utils/resource.util';
 import { IStudentRecommendedResource } from '@/types/student/student-dashboard.type';
+import { StudentApi } from '@/apis/student/student.api';
+import ReportResourceModal from './ReportResourceModal';
 
 interface Props {
   resources: IStudentRecommendedResource[];
@@ -39,12 +41,38 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
   const modal = useModal();
   const { t } = useTranslation();
   const [selectedResource, setSelectedResource] = useState<IStudentRecommendedResource | null>(initialResource || null);
+  const [likesInfo, setLikesInfo] = useState<Record<number, { count: number; isLiked: boolean }>>({});
+  const [selectedResourceForReport, setSelectedResourceForReport] = useState<IStudentRecommendedResource | null>(null);
 
   useEffect(() => {
     if (modal.visible) {
       setSelectedResource(initialResource || null);
+      const initLikes: Record<number, { count: number; isLiked: boolean }> = {};
+      resources.forEach((res) => {
+        initLikes[res.id] = { count: res.likeCount || 0, isLiked: res.isLiked || false };
+      });
+      setLikesInfo(initLikes);
     }
-  }, [modal.visible, initialResource]);
+  }, [modal.visible, initialResource, resources]);
+
+  const handleToggleLike = async (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    try {
+      setLikesInfo((prev) => {
+        const current = prev[id] || { count: 0, isLiked: false };
+        return {
+          ...prev,
+          [id]: {
+            count: current.isLiked ? Math.max(0, current.count - 1) : current.count + 1,
+            isLiked: !current.isLiked
+          }
+        };
+      });
+      await StudentApi.toggleResourceLike(id);
+    } catch (error) {
+      console.error('Failed to toggle like', error);
+    }
+  };
 
   const handleClose = () => {
     setSelectedResource(null);
@@ -71,7 +99,7 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: '16px',
+          borderRadius: selectedResource ? 0 : '16px',
           height: '85vh',
         }
       }}
@@ -190,7 +218,34 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                             }}
                           />
                         </Box>
-                        <IconArrowUpRight className="icon-arrow" size={20} color="#94A3B8" style={{ transition: 'all 0.3s' }} />
+                        <Box display="flex" alignItems="center" gap={0.5}>
+                          <IconButton 
+                            size="small" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedResourceForReport(item);
+                            }}
+                            sx={{ 
+                              color: '#94A3B8',
+                              transition: 'all 0.2s',
+                              '&:hover': { color: '#EF4444' }
+                            }}
+                            title="Báo cáo lỗi"
+                          >
+                            <IconFlag size={20} />
+                          </IconButton>
+                          <IconButton 
+                            size="small" 
+                            onClick={(e) => handleToggleLike(e, item.id)}
+                            sx={{ 
+                              color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8',
+                              transition: 'all 0.2s',
+                              '&:hover': { color: '#EF4444', transform: 'scale(1.1)' }
+                            }}
+                          >
+                            {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={20} /> : <IconHeart size={20} />}
+                          </IconButton>
+                        </Box>
                       </Box>
 
                       <Typography
@@ -252,6 +307,15 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
           )
         )}
       </DialogContent>
+
+      {selectedResourceForReport && (
+        <ReportResourceModal
+          open={!!selectedResourceForReport}
+          onClose={() => setSelectedResourceForReport(null)}
+          resourceId={selectedResourceForReport.id}
+          resourceTitle={selectedResourceForReport.title}
+        />
+      )}
     </Dialog>
   );
 });

@@ -19,7 +19,24 @@ export async function getStudentCertificateBlob(): Promise<Blob> {
   return response.payload ? (response.payload as Blob) : (response as any as Blob);
 }
 
+export async function toggleResourceLike(resourceId: number): Promise<IApiResponse<boolean>> {
+  const { payload } = await http.post<IApiResponse<boolean>>(
+    `${API_PREFIX.AILD}/student/dashboard/resources/${resourceId}/like`
+  );
+  return payload;
+}
+
+export async function reportResource(resourceId: number, reason: string): Promise<IApiResponse<string>> {
+  const { payload } = await http.post<IApiResponse<string>>(
+    `${API_PREFIX.AILD}/student/dashboard/resources/${resourceId}/report`,
+    { reason }
+  );
+  return payload;
+}
+
 export const StudentApi = {
   getStudentDashboard,
   getStudentCertificateBlob,
+  toggleResourceLike,
+  reportResource,
 };

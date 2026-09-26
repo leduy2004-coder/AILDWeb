@@ -1,13 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Box, Typography, Grid, Card, CardContent, Chip, Button } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, Chip, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { IconArrowUpRight, IconBrandYoutube, IconPresentation, IconFileText, IconArticle } from '@tabler/icons-react';
+import { IconArrowUpRight, IconBrandYoutube, IconPresentation, IconFileText, IconArticle, IconHeart, IconHeartFilled, IconFlag } from '@tabler/icons-react';
 import Link from 'next/link';
 import NiceModal from '@ebay/nice-modal-react';
 import { IStudentRecommendedResource } from '@/types/student/student-dashboard.type';
 import { detectResourceType } from '@/utils/resource.util';
+import { StudentApi } from '@/apis/student/student.api';
+import ReportResourceModal from './modal/ReportResourceModal';
 
 interface HomeRecommendationsProps {
   recommendedResources?: IStudentRecommendedResource[];
@@ -27,6 +29,41 @@ const getResourceIcon = (url?: string) => {
 
 export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recommendedResources = [] }) => {
   const { t } = useTranslation();
+  const [likesInfo, setLikesInfo] = React.useState<Record<number, { count: number; isLiked: boolean }>>({});
+  const [selectedResourceForReport, setSelectedResourceForReport] = React.useState<IStudentRecommendedResource | null>(null);
+  const [reportedResources, setReportedResources] = React.useState<Record<number, boolean>>({});
+
+  React.useEffect(() => {
+    const initLikes: Record<number, { count: number; isLiked: boolean }> = {};
+    const initReports: Record<number, boolean> = {};
+    recommendedResources.forEach((res) => {
+      initLikes[res.id] = { count: res.likeCount || 0, isLiked: res.isLiked || false };
+      initReports[res.id] = res.isReported || false;
+    });
+    setLikesInfo(initLikes);
+    setReportedResources(initReports);
+  }, [recommendedResources]);
+
+  const handleToggleLike = async (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    try {
+      // Optimistic update
+      setLikesInfo((prev) => {
+        const current = prev[id] || { count: 0, isLiked: false };
+        return {
+          ...prev,
+          [id]: {
+            count: current.isLiked ? Math.max(0, current.count - 1) : current.count + 1,
+            isLiked: !current.isLiked
+          }
+        };
+      });
+      await StudentApi.toggleResourceLike(id);
+    } catch (error) {
+      console.error('Failed to toggle like', error);
+      // Revert if failed (optional, but skipping for simplicity)
+    }
+  };
 
   const handleOpenLink = (url: string) => {
     if (!url) return;
@@ -126,8 +163,39 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
                         }}
                       />
                     </Box>
-                    <IconArrowUpRight className="icon-arrow" size={20} color="#94A3B8" style={{ transition: 'all 0.3s' }} />
+                    <Box display="flex" alignItems="center" gap={0.5}>
+                      <IconButton 
+                        size="small" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (!reportedResources[item.id]) {
+                            setSelectedResourceForReport(item);
+                          }
+                        }}
+                        disabled={reportedResources[item.id]}
+                        sx={{ 
+                          color: reportedResources[item.id] ? '#EF4444' : '#94A3B8',
+                          opacity: reportedResources[item.id] ? 0.5 : 1,
+                          transition: 'all 0.2s',
+                          '&:hover': { color: '#EF4444' }
+                        }}
+                        title={reportedResources[item.id] ? "Đã báo cáo" : "Báo cáo lỗi"}
+                      >
+                        <IconFlag size={20} />
+                      </IconButton>
+                      <IconButton 
+                        size="small" 
+                        onClick={(e) => handleToggleLike(e, item.id)}
+                      sx={{ 
+                        color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8',
+                        transition: 'all 0.2s',
+                        '&:hover': { color: '#EF4444', transform: 'scale(1.1)' }
+                      }}
+                    >
+                      {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={20} /> : <IconHeart size={20} />}
+                    </IconButton>
                   </Box>
+                </Box>
 
                   <Typography
                     variant="h6"
@@ -185,6 +253,18 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
             </Grid>
           ))}
         </Grid>
+      )}
+      
+      {selectedResourceForReport && (
+        <ReportResourceModal
+          open={!!selectedResourceForReport}
+          onClose={() => setSelectedResourceForReport(null)}
+          resourceId={selectedResourceForReport.id}
+          resourceTitle={selectedResourceForReport.title}
+          onReportSuccess={() => {
+            setReportedResources(prev => ({ ...prev, [selectedResourceForReport.id]: true }));
+          }}
+        />
       )}
     </Box>
   );
