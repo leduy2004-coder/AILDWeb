@@ -58,6 +58,16 @@ export async function syncDifficulty(): Promise<IApiResponse<string>> {
   return payload;
 }
 
+export async function triggerMLTrain(): Promise<IApiResponse<any>> {
+  const { payload } = await http.post<IApiResponse<any>>(`${API_PREFIX.AILD_ADMIN}/questions/trigger-ml-train`);
+  return payload;
+}
+
+export async function predictDifficulty(data: IQuestionRequest): Promise<IApiResponse<any>> {
+  const { payload } = await http.post<IApiResponse<any>>(`${API_PREFIX.AILD_ADMIN}/questions/predict-difficulty`, data);
+  return payload;
+}
+
 export const QuestionApi = {
   getQuestions,
   getQuestion,
@@ -66,5 +76,7 @@ export const QuestionApi = {
   deleteQuestion,
   generateQuestionAI,
   syncDifficulty,
+  predictDifficulty,
+  triggerMLTrain,
 };
 

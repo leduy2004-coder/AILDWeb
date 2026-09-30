@@ -579,7 +579,20 @@
       "toastSuccess": "Dữ liệu AI đã được điền vào form!",
       "widgetGenerating": "AI đang tạo câu hỏi...",
       "widgetSuccess": "Tạo câu hỏi thành công (Click để xem)",
-      "widgetError": "Lỗi khi tạo câu hỏi"
+      "widgetError": "Lỗi khi tạo câu hỏi",
+      "predict": {
+        "mockMode": "Hệ thống dự đoán: {{difficulty}} (Chế độ Mock - Chưa train mô hình)",
+        "success": "Hệ thống đã dự đoán độ khó: {{difficulty}}",
+        "errorNoResult": "Không nhận được kết quả dự đoán từ hệ thống.",
+        "errorConnection": "Lỗi khi kết nối đến dịch vụ dự đoán.",
+        "warningEmpty": "Vui lòng nhập nội dung câu hỏi trước khi dự đoán!"
+      },
+      "train": {
+        "loading": "Đang đồng bộ dữ liệu và huấn luyện mô hình... Vui lòng đợi!",
+        "success": "Đồng bộ và huấn luyện mô hình thành công! Sai số (MSE): {{mse}}",
+        "errorBackend": "Đồng bộ thất bại hoặc có lỗi xảy ra.",
+        "errorConnection": "Lỗi khi kết nối đến server."
+      }
     },
     "form": {
       "addTitle": "Tạo Câu hỏi",

@@ -568,7 +568,20 @@
       "toastSuccess": "AI data has been populated into the form!",
       "widgetGenerating": "AI is generating the question...",
       "widgetSuccess": "Question generated successfully (Click to view)",
-      "widgetError": "Error generating question"
+      "widgetError": "Error generating question",
+      "predict": {
+        "mockMode": "System Prediction: {{difficulty}} (Mock Mode - Untrained)",
+        "success": "System predicted difficulty: {{difficulty}}",
+        "errorNoResult": "Did not receive prediction result from the system.",
+        "errorConnection": "Error connecting to the prediction service.",
+        "warningEmpty": "Please enter question content before predicting!"
+      },
+      "train": {
+        "loading": "Syncing data and training model... Please wait!",
+        "success": "Sync and training successful! Error (MSE): {{mse}}",
+        "errorBackend": "Sync failed or an error occurred.",
+        "errorConnection": "Error connecting to the server."
+      }
     },
     "form": {
       "addTitle": "Create Question",

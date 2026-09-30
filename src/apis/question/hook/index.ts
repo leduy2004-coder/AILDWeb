@@ -6,3 +6,5 @@ export * from './useDeleteQuestion';
 export * from './useBulkDeleteQuestion';
 export * from './useGenerateQuestionAI';
 export * from './useSyncDifficulty';
+export * from './usePredictDifficulty';
+export * from './useTriggerMLTrain';

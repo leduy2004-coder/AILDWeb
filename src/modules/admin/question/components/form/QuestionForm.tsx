@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuestion, useCreateQuestion, useUpdateQuestion } from '@/apis/question/hook';
+import { useQuestion, useCreateQuestion, useUpdateQuestion, usePredictDifficulty } from '@/apis/question/hook';
 import { toast } from 'react-toastify';
 import { getQuestionSchema, QuestionFormValues } from '../../schema/question.schema';
 import AIGenerateDialog from '../modal/AIGenerateDialog';
@@ -84,6 +84,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
   const { data: detailData, isLoading: isLoadingDetail } = useQuestion(questionId as number);
   const createMutation = useCreateQuestion();
   const updateMutation = useUpdateQuestion();
+  const predictMutation = usePredictDifficulty();
 
   useEffect(() => {
     if (open) {
@@ -210,6 +211,30 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
       setAiDialogOpen(false);
       onClose(); // Close the form while generating
     }
+  };
+
+  const handlePredictDifficulty = () => {
+    const currentValues = getValues();
+    if (!currentValues.content) {
+      toast.warning(t('ai.predict.warningEmpty'));
+      return;
+    }
+    
+    predictMutation.mutate(currentValues as any, {
+      onSuccess: (res) => {
+        if (res.result && res.result.difficulty_index !== undefined) {
+          setValue('difficultyIndex', res.result.difficulty_index, { shouldValidate: true });
+          if (res.result.status === 'untrained_mock_mode') {
+            toast.info(t('ai.predict.mockMode', { difficulty: res.result.difficulty_index }));
+          } else {
+            toast.success(t('ai.predict.success', { difficulty: res.result.difficulty_index }));
+          }
+        } else {
+          toast.error(t('ai.predict.errorNoResult'));
+        }
+      },
+      onError: () => toast.error(t('ai.predict.errorConnection'))
+    });
   };
 
   const handleCloseRequest = () => {
@@ -356,7 +381,25 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
 
               {/* Difficulty Index */}
               <Box>
-                <Typography variant="subtitle2" fontWeight={600} mb={1}>{t('form.difficultyIndex')}</Typography>
+                <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                  <Typography variant="subtitle2" fontWeight={600}>{t('form.difficultyIndex')}</Typography>
+                  <Button 
+                    variant="contained" 
+                    size="small" 
+                    startIcon={predictMutation.isPending ? <CircularProgress size={16} color="inherit" /> : <Icon icon="solar:magic-stick-3-bold-duotone" />}
+                    onClick={handlePredictDifficulty}
+                    disabled={predictMutation.isPending}
+                    sx={{ 
+                      borderRadius: 8, 
+                      textTransform: 'none', 
+                      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', 
+                      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+                      color: 'white'
+                    }}
+                  >
+                    {t('ai.predict.button', '✨ AI Dự đoán')}
+                  </Button>
+                </Box>
                 <Controller
                   name="difficultyIndex"
                   control={control}
@@ -373,7 +416,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                         field.onChange(val === '' ? undefined : Number(val));
                       }}
                       error={!!error}
-                      helperText={error?.message || "(0.0 = Cực khó, 1.0 = Cực dễ)"}
+                      helperText={error?.message || t('form.difficultyHint', "(0.0 = Cực khó, 1.0 = Cực dễ)")}
                     />
                   )}
                 />

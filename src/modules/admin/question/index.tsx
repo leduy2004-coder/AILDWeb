@@ -18,7 +18,7 @@ import { useGenerateQuestionAI } from '@/apis/question/hook/useGenerateQuestionA
 import { useBulkDeleteQuestion } from '@/apis/question/hook/useBulkDeleteQuestion';
 import ConfirmBulkDeleteModal from './components/modal/ConfirmBulkDeleteModal';
 import { TestConfigModal } from './components/modal/TestConfigModal';
-import { useSyncDifficulty } from '@/apis/question/hook/useSyncDifficulty';
+import { useTriggerMLTrain } from '@/apis/question/hook/useTriggerMLTrain';
 
 export default function QuestionBankPage() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_question' });
@@ -43,7 +43,7 @@ export default function QuestionBankPage() {
   const [isBulkDeleteOpen, setIsBulkDeleteOpen] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
 
-  const syncDifficultyMutation = useSyncDifficulty();
+  const trainMLMutation = useTriggerMLTrain();
 
   const { data, isLoading, isError } = useQuestions(filter);
   
@@ -153,14 +153,17 @@ export default function QuestionBankPage() {
     }
   };
 
-  const handleSyncDifficulty = () => {
-    syncDifficultyMutation.mutate(undefined, {
-      onSuccess: () => {
-        toast.success(t('syncDifficultySuccess', 'Đã đồng bộ độ khó thành công!'));
+  const handleTriggerTrain = () => {
+    toast.info(t('ai.train.loading'));
+    trainMLMutation.mutate(undefined, {
+      onSuccess: (res) => {
+        if (res.result && res.result.status === 'success') {
+          toast.success(t('ai.train.success', { mse: res.result.mse }));
+        } else {
+          toast.error(t('ai.train.errorBackend'));
+        }
       },
-      onError: () => {
-        toast.error(t('syncDifficultyError', 'Lỗi khi đồng bộ độ khó!'));
-      }
+      onError: () => toast.error(t('ai.train.errorConnection'))
     });
   };
 
@@ -191,9 +194,9 @@ export default function QuestionBankPage() {
             <Button
               variant="outlined"
               color="secondary"
-              startIcon={syncDifficultyMutation.isPending ? <CircularProgress size={20} color="inherit" /> : <Icon icon="solar:refresh-circle-bold" />}
-              onClick={handleSyncDifficulty}
-              disabled={syncDifficultyMutation.isPending}
+              startIcon={trainMLMutation.isPending ? <CircularProgress size={20} color="inherit" /> : <Icon icon="solar:refresh-circle-bold" />}
+              onClick={handleTriggerTrain}
+              disabled={trainMLMutation.isPending}
               sx={{ borderRadius: '8px', textTransform: 'none', px: 3, py: 1 }}
             >
               {t('syncDifficultyButton', 'Đồng bộ độ khó')}
