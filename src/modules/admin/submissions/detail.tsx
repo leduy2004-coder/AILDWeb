@@ -6,6 +6,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAssessmentDetail } from '@/apis/assessment/hook/index';
 import dayjs from 'dayjs';
 import SubmissionDetailAnswers from './components/SubmissionDetailAnswers';
+import { Tabs, Tab, Avatar } from '@mui/material';
+import { IconUser, IconRobot } from '@tabler/icons-react';
 
 interface SubmissionDetailModuleProps {
   id: number;
@@ -14,6 +16,7 @@ interface SubmissionDetailModuleProps {
 export default function SubmissionDetailModule({ id }: SubmissionDetailModuleProps) {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_submission' });
   const router = useRouter();
+  const [tabValue, setTabValue] = React.useState(0);
 
   const { data: detailData, isLoading } = useAssessmentDetail(id);
   const detail = detailData?.result;
@@ -123,7 +126,63 @@ export default function SubmissionDetailModule({ id }: SubmissionDetailModulePro
         </Paper>
       )}
 
-      <SubmissionDetailAnswers answers={answers} />
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+        <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)}>
+          <Tab label={t('detail.tabMcq', 'Chi tiết Trắc nghiệm')} />
+          <Tab label={t('detail.tabChat', 'Lịch sử Phỏng vấn AI')} />
+        </Tabs>
+      </Box>
+
+      {tabValue === 0 && (
+        <SubmissionDetailAnswers answers={answers} />
+      )}
+
+      {tabValue === 1 && (
+        <Paper sx={{ p: 3, borderRadius: 1 }} elevation={0} variant="outlined">
+          {!detail.chatHistory || detail.chatHistory.length === 0 ? (
+            <Typography color="text.secondary" align="center">{t('detail.noChatHistory', 'Không có lịch sử phỏng vấn AI.')}</Typography>
+          ) : (
+            <Box display="flex" flexDirection="column" gap={2}>
+              {detail.chatHistory
+                .filter(msg => !msg.content.startsWith('Bắt đầu phỏng vấn. Hãy chào tôi'))
+                .map((msg) => {
+                const isUser = msg.role === 'USER';
+                return (
+                  <Box key={msg.id} display="flex" justifyContent={isUser ? 'flex-end' : 'flex-start'} gap={1.5}>
+                    {!isUser && (
+                      <Avatar sx={{ bgcolor: '#EFF6FF', color: '#1E3A8A', width: 32, height: 32 }}>
+                        <IconRobot size={20} />
+                      </Avatar>
+                    )}
+                    <Box
+                      sx={{
+                        maxWidth: '75%',
+                        p: 2,
+                        borderRadius: '16px',
+                        borderTopRightRadius: isUser ? 0 : '16px',
+                        borderTopLeftRadius: !isUser ? 0 : '16px',
+                        backgroundColor: isUser ? '#1E3A8A' : '#F8FAFC',
+                        color: isUser ? 'white' : 'text.primary',
+                        border: isUser ? 'none' : '1px solid #E2E8F0',
+                        wordBreak: 'break-word',
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
+                        {msg.content}
+                      </Typography>
+                    </Box>
+                    {isUser && (
+                      <Avatar sx={{ bgcolor: '#1E3A8A', width: 32, height: 32 }}>
+                        <IconUser size={20} />
+                      </Avatar>
+                    )}
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
+        </Paper>
+      )}
     </Box>
   );
 }

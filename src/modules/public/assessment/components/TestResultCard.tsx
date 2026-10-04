@@ -157,29 +157,78 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
 
         {/* Final Score Badge */}
         {summaryData?.finalScore !== undefined && summaryData.finalScore !== null && (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mb: 4,
-              p: 3,
-              borderRadius: '20px',
-              background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
-              border: '1px solid #FDE68A',
-              boxShadow: '0 10px 30px rgba(245, 158, 11, 0.15)',
-              width: '100%',
-              maxWidth: '300px',
-            }}
-          >
-            <Typography variant="subtitle1" fontWeight={700} color="#D97706" mb={1}>
-              {t('assessment.finalScoreTitle', 'ĐIỂM TỔNG KẾT')}
-            </Typography>
-            <Typography variant="h2" fontWeight={900} color="#B45309" sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-              {Math.round(summaryData.finalScore * 100) / 100}
-              <Typography variant="h5" fontWeight={700} color="#D97706" sx={{ opacity: 0.8 }}>/ 10</Typography>
-            </Typography>
+          <Box display="flex" gap={2} mb={4} justifyContent="center" width="100%" flexWrap="wrap">
+            {/* MCQ Score */}
+            {summaryData.mcqScore !== undefined && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  p: 2,
+                  borderRadius: '16px',
+                  background: '#F0F9FF',
+                  border: '1px solid #BAE6FD',
+                  minWidth: '140px',
+                }}
+              >
+                <Typography variant="caption" fontWeight={700} color="#0369A1" mb={0.5}>
+                  {t('assessment.mcqScoreTitle', 'TRẮC NGHIỆM')}
+                </Typography>
+                <Typography variant="h4" fontWeight={800} color="#0284C7">
+                  {Math.round(summaryData.mcqScore * 100) / 100} <span style={{ fontSize: '14px', opacity: 0.7 }}>/10</span>
+                </Typography>
+              </Box>
+            )}
+
+            {/* Interview Score */}
+            {summaryData.interviewScore !== undefined && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  p: 2,
+                  borderRadius: '16px',
+                  background: '#ECFDF5',
+                  border: '1px solid #A7F3D0',
+                  minWidth: '140px',
+                }}
+              >
+                <Typography variant="caption" fontWeight={700} color="#047857" mb={0.5}>
+                  {t('assessment.interviewScoreTitle', 'PHỎNG VẤN')}
+                </Typography>
+                <Typography variant="h4" fontWeight={800} color="#059669">
+                  {Math.round(summaryData.interviewScore * 100) / 100} <span style={{ fontSize: '14px', opacity: 0.7 }}>/10</span>
+                </Typography>
+              </Box>
+            )}
+
+            {/* Final Score */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                p: 2,
+                borderRadius: '16px',
+                background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
+                border: '1px solid #FDE68A',
+                boxShadow: '0 4px 14px rgba(245, 158, 11, 0.1)',
+                minWidth: '160px',
+              }}
+            >
+              <Typography variant="subtitle2" fontWeight={800} color="#D97706" mb={0.5}>
+                {t('assessment.finalScoreTitle', 'ĐIỂM TỔNG KẾT')}
+              </Typography>
+              <Typography variant="h3" fontWeight={900} color="#B45309" sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5 }}>
+                {Math.round(summaryData.finalScore * 100) / 100}
+                <Typography variant="body1" fontWeight={700} color="#D97706" sx={{ opacity: 0.8 }}>/ 10</Typography>
+              </Typography>
+            </Box>
           </Box>
         )}
 

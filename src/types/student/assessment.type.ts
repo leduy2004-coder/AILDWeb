@@ -2,6 +2,7 @@ export interface IAssessmentStartResponse {
   assessmentId: number;
   totalQuestions: number;
   durationMinutes: number;
+  chatMaxTurns: number;
   startedAt: string;
 }
 
@@ -41,5 +42,18 @@ export interface IAssessmentSummaryResponse {
   assessmentId: number;
   status: string;
   finalScore?: number;
+  mcqScore?: number;
+  interviewScore?: number;
   domainScores: IDomainScoreDto[];
+}
+
+export interface IChatRequest {
+  message: string;
+}
+
+export interface IChatResponse {
+  reply: string;
+  isFinished: boolean;
+  finalScore?: number;
+  interviewScore?: number;
 }

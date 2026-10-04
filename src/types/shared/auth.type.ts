@@ -35,6 +35,8 @@ export interface IDetailUserResponse {
   name?: string;
   id?: number;
   userId?: number;
+  age?: number;
+  major?: string;
 }
 
 export interface IDetailMail {

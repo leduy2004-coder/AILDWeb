@@ -20,11 +20,14 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
   const router = useRouter();
   const [userName, setUserName] = useState<string>('Học viên');
 
+  const [userInfo, setUserInfo] = useState<any>(null);
+
   useEffect(() => {
     const userInfoStr = getLocalStorageItem<string>(AuthActionTypes.USER_INFO);
     if (userInfoStr) {
       try {
         const user = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+        setUserInfo(user);
         const name = user?.fullName || user?.name || user?.email?.split('@')[0] || 'Học viên';
         setUserName(name);
       } catch (e) {
@@ -46,7 +49,21 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
     if (!token) {
       router.push('/auth/login');
     } else {
-      router.push('/assessment');
+      // Fetch latest userInfo directly to avoid stale state from Next.js caching
+      const userInfoStr = getLocalStorageItem<string>(AuthActionTypes.USER_INFO);
+      let latestUserInfo = userInfo;
+      if (userInfoStr) {
+        try {
+          latestUserInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+        } catch (e) {}
+      }
+
+      if (!latestUserInfo?.age || !latestUserInfo?.major) {
+        sessionStorage.setItem('redirectAfterProfileUpdate', '/assessment');
+        router.push('/profile');
+      } else {
+        router.push('/assessment');
+      }
     }
   };
 

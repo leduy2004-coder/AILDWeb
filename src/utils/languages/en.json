@@ -247,7 +247,8 @@
     "user": "Users",
     "submission": "Submissions",
     "question": "Question Bank",
-    "resource": "Resources"
+    "resource": "Resources",
+    "settings": "System Settings"
   },
   "admin_submission": {
     "title": "Submissions List",
@@ -308,7 +309,10 @@
       "rubric": "Evaluation Rubric / Correct Answer:",
       "aiFeedback": "AI Evaluation & Feedback",
       "score": "Score:",
-      "noAIFeedback": "(No feedback from AI)"
+      "noAIFeedback": "(No feedback from AI)",
+      "tabMcq": "Multiple Choice",
+      "tabChat": "AI Interview History",
+      "noChatHistory": "No AI interview history."
     }
   },
   "admin_overview": {
@@ -570,6 +574,7 @@
       "widgetSuccess": "Question generated successfully (Click to view)",
       "widgetError": "Error generating question",
       "predict": {
+        "button": "✨ System Predict",
         "mockMode": "System Prediction: {{difficulty}} (Mock Mode - Untrained)",
         "success": "System predicted difficulty: {{difficulty}}",
         "errorNoResult": "Did not receive prediction result from the system.",
@@ -649,6 +654,114 @@
       "ETHICS": "AI Ethics",
       "TECH": "AI Techniques & Applications",
       "DESIGN": "AI System Design"
+    },
+    "chatInitMsg": "Hello. Based on your multiple-choice results, I have a few short interview questions to further evaluate your competency. Are you ready?",
+    "chatError": "Connection error. Please try again.",
+    "aiInterviewer": "AI Interviewer",
+    "aiInterviewerDesc": "Answer the questions to complete the assessment",
+    "chatPlaceholder": "Type your message...",
+    "continueToChat": "Continue to Interview",
+    "chatFinishSuccess": "Great job, you have completed the interview!",
+    "mcqScoreTitle": "MULTIPLE CHOICE",
+    "interviewScoreTitle": "INTERVIEW",
+    "finalScoreTitle": "FINAL SCORE"
+  },
+  "admin_settings": {
+    "title": "System Settings",
+    "subtitle": "Manage core system configurations, including AI assessment and scoring weights.",
+    "save": "Save Settings",
+    "saving": "Saving...",
+    "success": "System settings saved successfully!",
+    "error": "Error saving settings.",
+    "errorFetch": "Error fetching settings.",
+    "group": {
+      "ai_assessment": "AI Interview Configuration",
+      "scoring": "Scoring Configuration",
+      "test_config": "General Test Configuration"
+    },
+    "fields": {
+      "chat_max_turns": {
+        "label": "Max Turns (AI Chat)",
+        "description": "Maximum number of questions the AI will ask during the interview."
+      },
+      "chat_system_prompt": {
+        "label": "AI System Prompt",
+        "description": "Instructions defining how the AI evaluates and interviews the student."
+      },
+      "mcq_weight": {
+        "label": "Multiple Choice Weight (e.g. 0.6 = 60%)",
+        "description": "Percentage contribution of the MCQ score to the final score."
+      },
+      "interview_weight": {
+        "label": "Interview Weight (e.g. 0.4 = 40%)",
+        "description": "Percentage contribution of the AI interview score to the final score."
+      },
+      "question_count": {
+        "label": "Total Questions",
+        "description": "Number of multiple-choice questions in the assessment."
+      },
+      "duration_minutes": {
+        "label": "Duration (Minutes)",
+        "description": "Maximum time allowed to complete the multiple-choice test."
+      }
+    },
+    "validation": {
+      "chat_max_turns": {
+        "invalid": "Max turns must be a number.",
+        "min": "Max turns must be at least 1.",
+        "max": "Max turns cannot exceed 20."
+      },
+      "chat_system_prompt": {
+        "required": "System prompt is required.",
+        "maxLength": "System prompt cannot exceed 2000 characters."
+      },
+      "mcq_weight": {
+        "invalid": "MCQ weight must be a number.",
+        "min": "MCQ weight must be at least 0.",
+        "max": "MCQ weight cannot exceed 1."
+      },
+      "interview_weight": {
+        "invalid": "Interview weight must be a number.",
+        "min": "Interview weight must be at least 0.",
+        "max": "Interview weight cannot exceed 1."
+      },
+      "question_count": {
+        "invalid": "Question count must be a number.",
+        "min": "Question count must be at least 5.",
+        "max": "Question count cannot exceed 50."
+      },
+      "duration_minutes": {
+        "invalid": "Duration must be a number.",
+        "min": "Duration must be at least 5 minutes.",
+        "max": "Duration cannot exceed 180 minutes."
+      }
+    }
+  },
+  "profile": {
+    "title": "Personal Profile",
+    "subtitle": "Please update your personal information so the system can customize the assessment to suit you.",
+    "save": "Save Information",
+    "saving": "Saving...",
+    "success": "Profile updated successfully",
+    "error": "An error occurred while updating the profile",
+    "fields": {
+      "name": {
+        "label": "Full Name"
+      },
+      "age": {
+        "label": "Age",
+        "description": "Helps the system personalize questions for you"
+      },
+      "major": {
+        "label": "Major / Field",
+        "description": "e.g. IT, Accounting, Student..."
+      }
+    },
+    "validation": {
+      "nameRequired": "Please enter your full name",
+      "ageInvalid": "Please enter a valid age",
+      "ageMin": "Age is not valid",
+      "ageMax": "Age is not valid"
     }
   }
 }

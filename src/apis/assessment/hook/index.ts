@@ -5,3 +5,4 @@ export * from './useFinishAssessment';
 export * from './useSearchAssessments';
 export * from './useAssessmentDetail';
 export * from './useDeleteAssessments';
+export * from './useChatWithAI';

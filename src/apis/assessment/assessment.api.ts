@@ -6,6 +6,8 @@ import {
   INextQuestionResponse,
   ISubmitAnswerRequest,
   IAssessmentSummaryResponse,
+  IChatRequest,
+  IChatResponse,
 } from '@/types/student/assessment.type';
 
 export * from '@/types/student/assessment.type';
@@ -43,9 +45,18 @@ export async function finishAssessment(
   return payload;
 }
 
+export async function chatWithAI(
+  assessmentId: number,
+  data: IChatRequest
+): Promise<IApiResponse<IChatResponse>> {
+  const { payload } = await http.post<IApiResponse<IChatResponse>>(`${BASE_URL}/${assessmentId}/chat`, data);
+  return payload;
+}
+
 export const AssessmentApi = {
   startAssessment,
   getNextQuestion,
   submitAnswer,
   finishAssessment,
+  chatWithAI,
 };

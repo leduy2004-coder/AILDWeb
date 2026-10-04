@@ -252,7 +252,8 @@
     "user": "Quản lý người dùng",
     "submission": "Danh sách bài làm",
     "question": "Danh sách câu hỏi",
-    "resource": "Quản lý tài nguyên"
+    "resource": "Quản lý tài nguyên",
+    "settings": "Cài đặt hệ thống"
   },
   "admin_submission": {
     "title": "Danh sách Bài làm",
@@ -313,7 +314,10 @@
       "rubric": "Tiêu chí chấm / Đáp án đúng:",
       "aiFeedback": "AI Chấm điểm & Nhận xét",
       "score": "Điểm:",
-      "noAIFeedback": "(Không có nhận xét từ AI)"
+      "noAIFeedback": "(Không có nhận xét từ AI)",
+      "tabMcq": "Chi tiết Trắc nghiệm",
+      "tabChat": "Lịch sử Phỏng vấn AI",
+      "noChatHistory": "Không có lịch sử phỏng vấn AI."
     }
   },
   "admin_overview": {
@@ -581,6 +585,7 @@
       "widgetSuccess": "Tạo câu hỏi thành công (Click để xem)",
       "widgetError": "Lỗi khi tạo câu hỏi",
       "predict": {
+        "button": "✨ Hệ thống dự đoán",
         "mockMode": "Hệ thống dự đoán: {{difficulty}} (Chế độ Mock - Chưa train mô hình)",
         "success": "Hệ thống đã dự đoán độ khó: {{difficulty}}",
         "errorNoResult": "Không nhận được kết quả dự đoán từ hệ thống.",
@@ -660,6 +665,114 @@
       "ETHICS": "Đạo đức AI",
       "TECH": "Kỹ thuật và Ứng dụng AI",
       "DESIGN": "Thiết kế Hệ thống AI"
+    },
+    "chatInitMsg": "Chào bạn. Dựa trên kết quả phần trắc nghiệm, tôi có một số câu hỏi phỏng vấn ngắn để đánh giá kỹ hơn năng lực của bạn. Bạn đã sẵn sàng chưa?",
+    "chatError": "Lỗi kết nối. Vui lòng thử lại.",
+    "aiInterviewer": "Giám khảo AI",
+    "aiInterviewerDesc": "Trả lời các câu hỏi để hoàn tất bài thi",
+    "chatPlaceholder": "Nhập tin nhắn...",
+    "continueToChat": "Chuyển sang Phỏng vấn",
+    "chatFinishSuccess": "Tuyệt vời, bạn đã hoàn thành phần phỏng vấn!",
+    "mcqScoreTitle": "TRẮC NGHIỆM",
+    "interviewScoreTitle": "PHỎNG VẤN",
+    "finalScoreTitle": "ĐIỂM TỔNG KẾT"
+  },
+  "admin_settings": {
+    "title": "Cài đặt Hệ thống",
+    "subtitle": "Quản lý các cấu hình cốt lõi của hệ thống, bao gồm đánh giá AI và trọng số điểm.",
+    "save": "Lưu cài đặt",
+    "saving": "Đang lưu...",
+    "success": "Đã lưu cài đặt hệ thống thành công!",
+    "error": "Lỗi khi lưu cài đặt.",
+    "errorFetch": "Lỗi khi tải cài đặt.",
+    "group": {
+      "ai_assessment": "Cấu hình Phỏng vấn AI",
+      "scoring": "Cấu hình Điểm số",
+      "test_config": "Cấu hình chung Bài thi"
+    },
+    "fields": {
+      "chat_max_turns": {
+        "label": "Số lượt hỏi tối đa (AI Chat)",
+        "description": "Số câu hỏi tối đa AI sẽ đưa ra trong phần phỏng vấn."
+      },
+      "chat_system_prompt": {
+        "label": "Prompt Hệ thống AI (System Prompt)",
+        "description": "Chỉ dẫn định dạng cách AI đánh giá và phỏng vấn sinh viên."
+      },
+      "mcq_weight": {
+        "label": "Trọng số phần Trắc nghiệm (VD: 0.6 = 60%)",
+        "description": "Phần trăm điểm trắc nghiệm đóng góp vào điểm tổng."
+      },
+      "interview_weight": {
+        "label": "Trọng số phần Phỏng vấn (VD: 0.4 = 40%)",
+        "description": "Phần trăm điểm phỏng vấn AI đóng góp vào điểm tổng."
+      },
+      "question_count": {
+        "label": "Tổng số câu hỏi",
+        "description": "Số câu hỏi trắc nghiệm của bài thi đánh giá năng lực."
+      },
+      "duration_minutes": {
+        "label": "Thời gian làm bài (Phút)",
+        "description": "Thời gian tối đa để hoàn thành phần thi trắc nghiệm."
+      }
+    },
+    "validation": {
+      "chat_max_turns": {
+        "invalid": "Số lượt hỏi phải là một số.",
+        "min": "Số lượt hỏi tối thiểu là 1.",
+        "max": "Số lượt hỏi tối đa là 20."
+      },
+      "chat_system_prompt": {
+        "required": "Vui lòng nhập chỉ dẫn hệ thống (System Prompt).",
+        "maxLength": "Chỉ dẫn hệ thống không được vượt quá 2000 ký tự."
+      },
+      "mcq_weight": {
+        "invalid": "Trọng số trắc nghiệm phải là một số.",
+        "min": "Trọng số trắc nghiệm tối thiểu là 0.",
+        "max": "Trọng số trắc nghiệm tối đa là 1."
+      },
+      "interview_weight": {
+        "invalid": "Trọng số phỏng vấn phải là một số.",
+        "min": "Trọng số phỏng vấn tối thiểu là 0.",
+        "max": "Trọng số phỏng vấn tối đa là 1."
+      },
+      "question_count": {
+        "invalid": "Số câu hỏi phải là một số.",
+        "min": "Số câu hỏi tối thiểu là 5.",
+        "max": "Số câu hỏi tối đa là 50."
+      },
+      "duration_minutes": {
+        "invalid": "Thời gian làm bài phải là một số.",
+        "min": "Thời gian tối thiểu là 5 phút.",
+        "max": "Thời gian tối đa là 180 phút."
+      }
+    }
+  },
+  "profile": {
+    "title": "Hồ sơ cá nhân",
+    "subtitle": "Vui lòng cập nhật thông tin cá nhân để hệ thống có thể tùy chỉnh bài đánh giá phù hợp với bạn.",
+    "save": "Lưu thông tin",
+    "saving": "Đang lưu...",
+    "success": "Cập nhật hồ sơ thành công",
+    "error": "Có lỗi xảy ra khi cập nhật hồ sơ",
+    "fields": {
+      "name": {
+        "label": "Họ và tên"
+      },
+      "age": {
+        "label": "Độ tuổi",
+        "description": "Giúp hệ thống cá nhân hóa câu hỏi"
+      },
+      "major": {
+        "label": "Ngành nghề / Lĩnh vực",
+        "description": "Ví dụ: IT, Kế toán, Sinh viên..."
+      }
+    },
+    "validation": {
+      "nameRequired": "Vui lòng nhập họ và tên",
+      "ageInvalid": "Vui lòng nhập tuổi hợp lệ",
+      "ageMin": "Tuổi không hợp lệ",
+      "ageMax": "Tuổi không hợp lệ"
     }
   }
 }

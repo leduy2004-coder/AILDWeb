@@ -19,7 +19,7 @@ export default function ResourceLikesModal({ open, onClose, resourceId, resource
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h6">{t('title', { title: resourceTitle, defaultValue: `Lượt thích: ${resourceTitle}` })}</Typography>
+        <Typography variant="h6" component="div">{t('title', { title: resourceTitle, defaultValue: `Lượt thích: ${resourceTitle}` })}</Typography>
         <IconButton onClick={onClose} size="small">
           <IconX />
         </IconButton>

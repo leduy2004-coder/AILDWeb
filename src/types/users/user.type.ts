@@ -12,6 +12,8 @@ export interface IUserRequest {
   name?: string;
   email?: string;
   address?: string;
+  age?: number;
+  major?: string;
   role?: IRoleRequest;
   code?: string;
   phone?: string;
@@ -28,6 +30,8 @@ export interface IUserUpdateRequest {
   id?: number;
   name?: string;
   email?: string;
+  age?: number;
+  major?: string;
   status?: boolean;
   password?: string;
   role?: IRoleRequest;
@@ -47,6 +51,8 @@ export interface IUser {
   role: { id?: number; code: string; name?: string } | RoleType;
   name: string;
   email: string;
+  age?: number;
+  major?: string;
   status?: boolean;
   createdDate?: string;
   modifiedDate?: string;

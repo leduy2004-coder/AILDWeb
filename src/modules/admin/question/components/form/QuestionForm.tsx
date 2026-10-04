@@ -19,7 +19,8 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  Chip
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { useTranslation } from 'react-i18next';
@@ -105,7 +106,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
           content: q.content,
           domainId: q.domainId,
           levelId: q.levelId,
-          type: q.type as 'MULTIPLE_CHOICE' | 'PRACTICAL',
+          type: q.type as 'MULTIPLE_CHOICE',
           status: q.status,
           rubric: q.rubric || '',
           options: mappedOptions,
@@ -359,23 +360,13 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
 
 
               {/* Type */}
-              <Box>
-                <Typography variant="subtitle2" fontWeight={600} mb={1}>{t('form.type')}</Typography>
-                <Controller
-                  name="type"
-                  control={control}
-                  render={({ field }) => (
-                    <ToggleButtonGroup
-                      color="primary"
-                      value={field.value}
-                      exclusive
-                      onChange={(_, newVal) => { if (newVal !== null) field.onChange(newVal) }}
-                      fullWidth
-                    >
-                      <ToggleButton value="MULTIPLE_CHOICE">{t('types.MULTIPLE_CHOICE')}</ToggleButton>
-                      <ToggleButton value="PRACTICAL">{t('types.PRACTICAL')}</ToggleButton>
-                    </ToggleButtonGroup>
-                  )}
+              <Box display="flex" alignItems="center" gap={2}>
+                <Typography variant="subtitle2" fontWeight={600}>{t('form.type')}</Typography>
+                <Chip 
+                  label={t('types.MULTIPLE_CHOICE')} 
+                  color="primary" 
+                  size="small" 
+                  sx={{ fontWeight: 600, borderRadius: 1 }}
                 />
               </Box>
 
@@ -386,18 +377,17 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                   <Button 
                     variant="contained" 
                     size="small" 
-                    startIcon={predictMutation.isPending ? <CircularProgress size={16} color="inherit" /> : <Icon icon="solar:magic-stick-3-bold-duotone" />}
                     onClick={handlePredictDifficulty}
                     disabled={predictMutation.isPending}
                     sx={{ 
                       borderRadius: 8, 
                       textTransform: 'none', 
                       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', 
-                      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+                      boxShadow: 'none',
                       color: 'white'
                     }}
                   >
-                    {t('ai.predict.button', '✨ AI Dự đoán')}
+                    {t('ai.predict.button', '✨ Hệ thống dự đoán')}
                   </Button>
                 </Box>
                 <Controller
@@ -472,33 +462,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                 </Box>
               )}
 
-              {/* Rubric for PRACTICAL */}
-              {watchType === 'PRACTICAL' && (
-                <Box>
-                  <Box display="flex" alignItems="center" gap={1} mb={1}>
-                    <Typography variant="subtitle2" fontWeight={600}>{t('form.rubric')}</Typography>
-                    <IconButton size="small" onClick={() => setExpandModalField('rubric')}>
-                      <Icon icon="solar:maximize-square-line-duotone" width={18} />
-                    </IconButton>
-                  </Box>
-                  <Controller
-                    name="rubric"
-                    control={control}
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        multiline
-                        rows={4}
-                        placeholder={t('form.rubricPlaceholder')}
-                        InputProps={{ sx: { p: 1 } }}
-                        error={!!error}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Box>
-              )}
+
 
               {/* Status */}
               <Box>

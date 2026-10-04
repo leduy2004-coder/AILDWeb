@@ -37,7 +37,7 @@ export const signingSlice = createAsyncThunk(
         window.location.replace(redirectPath);
       }
     } catch (e: any) {
-      showErrorToast(t('login.failed.title'), e?.payload?.message || t('login.failed.message'));
+      showErrorToast(t('login.failed.title'), t('login.failed.message'));
       return rejectWithValue(e?.payload?.message || 'Login failed');
     }
   },

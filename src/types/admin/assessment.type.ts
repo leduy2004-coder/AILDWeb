@@ -48,9 +48,17 @@ export interface IResourceResponseDto {
   modifiedDate: string;
 }
 
+export interface IChatHistoryDto {
+  id: number;
+  role: string;
+  content: string;
+  createdAt: string;
+}
+
 export interface IAdminAssessmentDetailDto {
   info: IAdminAssessmentListDto;
   aiFeedback: string | null;
   recommendedResources: IResourceResponseDto[];
   answers: IAdminAssessmentAnswerDto[];
+  chatHistory: IChatHistoryDto[];
 }

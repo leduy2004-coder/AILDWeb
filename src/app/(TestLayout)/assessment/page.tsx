@@ -7,6 +7,7 @@ import { IconClock, IconPlayerPause } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { TestQuestionCard } from '@/modules/public/assessment/components/TestQuestionCard';
+import { TestChatRoom } from '@/modules/public/assessment/components/TestChatRoom';
 import { TestResultCard } from '@/modules/public/assessment/components/TestResultCard';
 import Logo from '@/app/(DashboardLayout)/layout/shared/logo/Logo';
 import {
@@ -23,6 +24,7 @@ export default function AssessmentPage() {
   const router = useRouter();
 
   const [assessmentId, setAssessmentId] = useState<number | null>(null);
+  const [chatMaxTurns, setChatMaxTurns] = useState<number>(4);
   const [currentQuestion, setCurrentQuestion] = useState<INextQuestionResponse | null>(null);
   const [summaryData, setSummaryData] = useState<IAssessmentSummaryResponse | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(0);
@@ -42,6 +44,7 @@ export default function AssessmentPage() {
         const startRes = await startAssessment();
         if (startRes.result) {
           setAssessmentId(startRes.result.assessmentId);
+          setChatMaxTurns(startRes.result.chatMaxTurns || 4);
           setTimeLeft(startRes.result.durationMinutes * 60);
           setIsStarted(true);
           fetchNextQuestion(startRes.result.assessmentId);
@@ -56,20 +59,20 @@ export default function AssessmentPage() {
 
   // Timer logic
   useEffect(() => {
-    if (!isStarted || timeLeft <= 0 || isFinishing) return;
+    if (!isStarted || isFinishing) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleTimeUp();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
     return () => clearInterval(timer);
+  }, [isStarted, isFinishing]);
+
+  // Time up trigger
+  useEffect(() => {
+    if (isStarted && timeLeft === 0 && !isFinishing) {
+      handleTimeUp();
+    }
   }, [isStarted, timeLeft, isFinishing]);
 
   const fetchNextQuestion = async (id: number) => {
@@ -96,7 +99,6 @@ export default function AssessmentPage() {
       await submitAnswer(assessmentId, {
         questionId: currentQuestion.questionId,
         selectedOptionId: selectedOptionId || undefined,
-        answerText: answerText?.trim(),
       });
       await fetchNextQuestion(assessmentId);
     } catch (error) {
@@ -121,6 +123,19 @@ export default function AssessmentPage() {
     }
   };
 
+  const handleChatFinish = async (finalScore?: number, interviewScore?: number) => {
+    // If we need to refetch summary from server, we can do it here. 
+    // Or just trust that backend status is COMPLETED now and refetch the detail.
+    // However, we already have summaryData, we can just update its status and scores
+    setSummaryData(prev => prev ? {
+      ...prev,
+      status: 'COMPLETED',
+      finalScore: finalScore,
+      interviewScore: interviewScore,
+    } : null);
+    toast.success(t('assessment.chatFinishSuccess', 'Tuyệt vời, bạn đã hoàn thành phần phỏng vấn!'));
+  };
+
   const handleTimeUp = () => {
     toast.warning(t('assessment.timeUp', 'Hết thời gian làm bài!'));
     if (assessmentId) {
@@ -143,7 +158,7 @@ export default function AssessmentPage() {
   }
 
   const progressPercent = currentQuestion.currentIndex && currentQuestion.totalQuestions
-    ? ((currentQuestion.currentIndex - 1) / currentQuestion.totalQuestions) * 100
+    ? (currentQuestion.currentIndex / currentQuestion.totalQuestions) * 100
     : 0;
 
   return (
@@ -158,15 +173,15 @@ export default function AssessmentPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: { xs: 2, md: 3, lg: 4 },
+          px: { xs: 2, md: 8, lg: 10 },
           boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
         }}
       >
-        <Box display="flex" alignItems="center">
+        <Box flex={1} display="flex" alignItems="center" justifyContent="flex-start">
           <Logo margin="0" />
         </Box>
 
-        <Box flex={1} display="flex" flexDirection="column" alignItems="center" maxWidth="400px" mx={2}>
+        <Box flex={2} display="flex" flexDirection="column" alignItems="center" maxWidth="400px" mx={2}>
           <Typography variant="caption" fontWeight={600} color="text.secondary" mb={0.5}>
             {t('assessment.progress', {
               current: currentQuestion.currentIndex,
@@ -181,24 +196,25 @@ export default function AssessmentPage() {
           />
         </Box>
 
-        <Box display="flex" alignItems="center" gap={3}>
+        <Box flex={1} display="flex" alignItems="center" justifyContent="flex-end" gap={3}>
           <Box display="flex" alignItems="center" gap={1}>
             <IconClock size={20} color={timeLeft < 60 ? '#EF4444' : '#64748B'} />
             <Typography variant="body1" fontWeight={700} color={timeLeft < 60 ? '#EF4444' : 'text.primary'}>
               {formatTime(timeLeft)}
             </Typography>
           </Box>
-          {/* <IconPlayerPause size={24} color="#94A3B8" style={{ cursor: 'pointer' }} /> */}
         </Box>
       </Box>
 
       {/* MAIN CONTENT */}
-      <Box flex={1} display="flex" justifyContent="center" alignItems="flex-start" px={{ xs: 2, md: 3, lg: 4 }} py={{ xs: 2, md: 4 }}>
+      <Box flex={1} display="flex" justifyContent="center" alignItems={isFinishing ? "center" : "flex-start"} px={{ xs: 2, md: 3, lg: 4 }} py={{ xs: 2, md: 4 }}>
         {isFinishing ? (
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
             <CircularProgress size={60} />
             <Typography mt={3} variant="h6">{t('assessment.processingResult', 'Đang xử lý kết quả...')}</Typography>
           </Box>
+        ) : summaryData?.status === 'INTERVIEWING' ? (
+          <TestChatRoom assessmentId={assessmentId!} chatMaxTurns={chatMaxTurns} onFinish={handleChatFinish} />
         ) : summaryData ? (
           <TestResultCard summaryData={summaryData} />
         ) : (

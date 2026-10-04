@@ -17,7 +17,6 @@ import { IAIGenerateQuestionRequest } from '@/types/admin/question.type';
 import { useGenerateQuestionAI } from '@/apis/question/hook/useGenerateQuestionAI';
 import { useBulkDeleteQuestion } from '@/apis/question/hook/useBulkDeleteQuestion';
 import ConfirmBulkDeleteModal from './components/modal/ConfirmBulkDeleteModal';
-import { TestConfigModal } from './components/modal/TestConfigModal';
 import { useTriggerMLTrain } from '@/apis/question/hook/useTriggerMLTrain';
 
 export default function QuestionBankPage() {
@@ -41,8 +40,6 @@ export default function QuestionBankPage() {
   const bulkDeleteMutation = useBulkDeleteQuestion();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isBulkDeleteOpen, setIsBulkDeleteOpen] = useState(false);
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
-
   const trainMLMutation = useTriggerMLTrain();
 
   const { data, isLoading, isError } = useQuestions(filter);
@@ -202,15 +199,6 @@ export default function QuestionBankPage() {
               {t('syncDifficultyButton', 'Đồng bộ độ khó')}
             </Button>
             <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<Icon icon="solar:settings-bold" />}
-              onClick={() => setIsConfigOpen(true)}
-              sx={{ borderRadius: '8px', textTransform: 'none', px: 3, py: 1 }}
-            >
-              {t('configButton', 'Cấu hình')}
-            </Button>
-            <Button
               variant="contained"
               color="primary"
               startIcon={<Icon icon="solar:add-circle-bold" />}
@@ -267,11 +255,6 @@ export default function QuestionBankPage() {
           onClose={() => setIsBulkDeleteOpen(false)}
           selectedIds={selectedIds}
           onSuccess={() => setSelectedIds([])}
-        />
-
-        <TestConfigModal 
-          open={isConfigOpen} 
-          onClose={() => setIsConfigOpen(false)} 
         />
 
         <AIGenerationWidget 

@@ -21,7 +21,7 @@ interface TestQuestionCardProps {
   content: string;
   type?: string;
   options: IOptionDto[];
-  onNext: (selectedOptionId: number | null, answerText?: string) => void;
+  onNext: (selectedOptionId: number | null) => void;
   isSubmitting: boolean;
   isLastQuestion?: boolean;
 }
@@ -38,15 +38,12 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
 }) => {
   const { t } = useTranslation();
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
-  const [answerText, setAnswerText] = useState<string>('');
-
   const handleNextClick = () => {
-    onNext(selectedValue, answerText);
+    onNext(selectedValue);
     setSelectedValue(null); // Reset for next question
-    setAnswerText('');
   };
 
-  const isNextDisabled = isSubmitting || (type === 'PRACTICAL' ? !answerText.trim() : !selectedValue);
+  const isNextDisabled = isSubmitting || !selectedValue;
 
   return (
     <Paper
@@ -81,24 +78,6 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
         {content}
       </Typography>
 
-      {type === 'PRACTICAL' ? (
-        <TextField
-          fullWidth
-          multiline
-          minRows={4}
-          variant="outlined"
-          placeholder={t('assessment.essayPlaceholder', 'Nhập câu trả lời của bạn vào đây...')}
-          value={answerText}
-          onChange={(e) => setAnswerText(e.target.value)}
-          sx={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '12px',
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '12px',
-            },
-          }}
-        />
-      ) : (
         <FormControl component="fieldset" sx={{ width: '100%' }}>
           <RadioGroup
             value={selectedValue}
@@ -138,7 +117,6 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
             ))}
           </RadioGroup>
         </FormControl>
-      )}
 
       <Box display="flex" justifyContent="flex-end" mt={4}>
         <Button
@@ -149,7 +127,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
           sx={{ px: 4, py: 1.2, borderRadius: '8px', fontWeight: 700, textTransform: 'none' }}
         >
           {isLastQuestion
-            ? t('assessment.finish', 'Nộp bài')
+            ? t('assessment.continueToChat', 'Chuyển sang Phỏng vấn')
             : t('assessment.nextQuestion', 'Câu tiếp theo')}
         </Button>
       </Box>

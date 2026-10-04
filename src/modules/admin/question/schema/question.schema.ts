@@ -5,7 +5,7 @@ export const getQuestionSchema = (t: (key: string, options?: any) => string) => 
     content: z.string().optional(),
     domainId: z.number({ message: t('form.validation.domainRequired') }),
     levelId: z.number({ message: t('form.validation.levelRequired') }),
-    type: z.enum(['MULTIPLE_CHOICE', 'PRACTICAL']),
+    type: z.enum(['MULTIPLE_CHOICE']),
     rubric: z.string().optional(),
     status: z.string(),
     options: z.array(
@@ -42,11 +42,6 @@ export const getQuestionSchema = (t: (key: string, options?: any) => string) => 
         }
         if (data.correctOptionIndex === null || data.correctOptionIndex === undefined) {
           ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.oneCorrectRequired'), path: ['correctOptionIndex'] });
-        }
-      }
-      if (data.type === 'PRACTICAL') {
-        if (!data.rubric || data.rubric.trim() === '') {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.contentRequired'), path: ['rubric'] });
         }
       }
     }

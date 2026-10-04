@@ -132,7 +132,16 @@ const Profile = () => {
           },
         }}
       >
-        <Typography variant="h5">{t('header.profile.title')}</Typography>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Typography variant="h5">{t('header.profile.title')}</Typography>
+          {(userInfo as any)?.role?.code !== 'ADMIN' && (userInfo as any)?.role !== 'ADMIN' && (
+            <Tooltip title={t('header.profile.personalInfo', 'Hồ sơ cá nhân')} arrow>
+              <IconButton size="small" onClick={() => { setAnchorEl2(null); router.push('/profile'); }}>
+                <Icon icon="solar:user-id-linear" width="22" height="22" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
         <Stack direction="row" py={2.5} spacing={2} alignItems="center">
           <Box
             display="flex"
@@ -216,6 +225,7 @@ const Profile = () => {
                 {t('header.profile.changePassword')}
               </ActionButton>
             </Grid>
+
             <Grid size={6}>
               <Button
                 variant="contained"

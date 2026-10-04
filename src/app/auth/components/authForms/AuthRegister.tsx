@@ -183,7 +183,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
             loading={isRegistering}
             sx={{ py: 1.5, borderRadius: '25px', textTransform: 'none', fontSize: '16px', fontWeight: '600', mt: 2 }}
           >
-            {t('registerButton', { ns: 'translation' }) || 'Đăng ký tài khoản'}
+            {t('login.registerButton')}
           </LoadingButton>
         </Stack>
       </form>
