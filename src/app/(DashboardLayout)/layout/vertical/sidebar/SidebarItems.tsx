@@ -57,7 +57,7 @@ const SidebarItems = () => {
         width="90%"
         className="mb-4"
       >
-        <List sx={{ pt: 0 }} className="sidebarNav">
+        <List sx={{ pt: 0, pb: 0 }} className="sidebarNav">
           {menuItems.map((item) => {
             // {/********SubHeader**********/}
             if (item.isHidden) {

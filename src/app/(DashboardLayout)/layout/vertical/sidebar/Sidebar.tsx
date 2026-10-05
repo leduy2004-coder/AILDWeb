@@ -80,6 +80,8 @@ export default function Sidebar() {
           <Box
             sx={{
               height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
             {/* ------------------------------------------- */}
@@ -88,18 +90,14 @@ export default function Sidebar() {
             <Box px={2} pt={2} pb={1}>
               <Logo isSidebar />
             </Box>
-            <Scrollbar
-              sx={{
-                height: menuState.isCollapse
-                  ? 'calc(100% - 90px)'
-                  : 'calc(100% - 120px)',
-              }}
-            >
-              {/* ------------------------------------------- */}
-              {/* Sidebar Items */}
-              {/* ------------------------------------------- */}
-              <SidebarItems />
-            </Scrollbar>
+            <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+              <Scrollbar sx={{ height: '100%' }}>
+                {/* ------------------------------------------- */}
+                {/* Sidebar Items */}
+                {/* ------------------------------------------- */}
+                <SidebarItems />
+              </Scrollbar>
+            </Box>
           </Box>
         </Drawer>
       </Box>

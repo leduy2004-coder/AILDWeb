@@ -253,6 +253,7 @@
     "submission": "Danh sách bài làm",
     "question": "Danh sách câu hỏi",
     "resource": "Quản lý tài nguyên",
+    "configs": "Cấu hình",
     "settings": "Cài đặt hệ thống"
   },
   "admin_submission": {
@@ -676,6 +677,53 @@
     "mcqScoreTitle": "TRẮC NGHIỆM",
     "interviewScoreTitle": "PHỎNG VẤN",
     "finalScoreTitle": "ĐIỂM TỔNG KẾT"
+  },
+  "admin_configs": {
+    "title": "Quản lý Cấu hình",
+    "subtitle": "Quản lý Lĩnh vực và Cấp độ của hệ thống",
+    "tabs": {
+      "domains": "Lĩnh vực",
+      "levels": "Cấp độ"
+    },
+    "domains": {
+      "add": "Thêm Lĩnh vực",
+      "delete": "Xóa",
+      "confirmDelete": "Bạn có chắc chắn muốn xóa lĩnh vực này không?",
+      "code": "Mã",
+      "name": "Tên lĩnh vực",
+      "description": "Mô tả",
+      "displayOrder": "Thứ tự",
+      "actions": "Thao tác"
+    },
+    "levels": {
+      "add": "Thêm Cấp độ",
+      "delete": "Xóa",
+      "confirmDelete": "Bạn có chắc chắn muốn xóa cấp độ này không?",
+      "code": "Mã",
+      "name": "Tên cấp độ",
+      "displayOrder": "Thứ tự",
+      "actions": "Thao tác"
+    },
+    "modal": {
+      "addDomain": "Thêm Lĩnh vực mới",
+      "addLevel": "Thêm Cấp độ mới",
+      "cancel": "Hủy",
+      "save": "Lưu"
+    },
+    "validation": {
+      "codeRequired": "Vui lòng nhập mã",
+      "nameRequired": "Vui lòng nhập tên",
+      "orderRequired": "Vui lòng nhập thứ tự hiển thị"
+    },
+    "toast": {
+      "addSuccess": "Thêm thành công!",
+      "deleteSuccess": "Xóa thành công!",
+      "error": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "table": {
+      "loading": "Đang tải...",
+      "noData": "Không có dữ liệu"
+    }
   },
   "admin_settings": {
     "title": "Cài đặt Hệ thống",

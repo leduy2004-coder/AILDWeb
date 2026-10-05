@@ -248,6 +248,7 @@
     "submission": "Submissions",
     "question": "Question Bank",
     "resource": "Resources",
+    "configs": "Configurations",
     "settings": "System Settings"
   },
   "admin_submission": {
@@ -665,6 +666,53 @@
     "mcqScoreTitle": "MULTIPLE CHOICE",
     "interviewScoreTitle": "INTERVIEW",
     "finalScoreTitle": "FINAL SCORE"
+  },
+  "admin_configs": {
+    "title": "Configuration Management",
+    "subtitle": "Manage system Domains and Levels",
+    "tabs": {
+      "domains": "Domains",
+      "levels": "Levels"
+    },
+    "domains": {
+      "add": "Add Domain",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to delete this domain?",
+      "code": "Code",
+      "name": "Domain Name",
+      "description": "Description",
+      "displayOrder": "Order",
+      "actions": "Actions"
+    },
+    "levels": {
+      "add": "Add Level",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to delete this level?",
+      "code": "Code",
+      "name": "Level Name",
+      "displayOrder": "Order",
+      "actions": "Actions"
+    },
+    "modal": {
+      "addDomain": "Add New Domain",
+      "addLevel": "Add New Level",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "validation": {
+      "codeRequired": "Code is required",
+      "nameRequired": "Name is required",
+      "orderRequired": "Display order is required"
+    },
+    "toast": {
+      "addSuccess": "Added successfully!",
+      "deleteSuccess": "Deleted successfully!",
+      "error": "An error occurred, please try again."
+    },
+    "table": {
+      "loading": "Loading...",
+      "noData": "No data available"
+    }
   },
   "admin_settings": {
     "title": "System Settings",
