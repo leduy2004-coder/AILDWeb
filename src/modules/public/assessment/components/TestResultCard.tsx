@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Typography, Button, Paper, Grid, Chip, LinearProgress } from '@mui/material';
+import { Box, Typography, Button, Paper, Grid, Chip, LinearProgress, CircularProgress, Divider } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
@@ -73,7 +73,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
       justifyContent="center"
       alignItems="center"
       width="100%"
-      py={4}
+      py={{ xs: 2, md: 4 }}
       px={2}
     >
       <Paper
@@ -81,7 +81,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
         sx={{
           maxWidth: 680,
           width: '100%',
-          p: { xs: 3, sm: 5 },
+          p: { xs: 2, sm: 5 },
           borderRadius: '24px',
           border: '1px solid #E2E8F0',
           backgroundColor: '#FFFFFF',
@@ -110,9 +110,9 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
         <Box
           sx={{
             position: 'relative',
-            width: 130,
-            height: 130,
-            mb: 2,
+            width: { xs: 100, sm: 130 },
+            height: { xs: 100, sm: 130 },
+            mb: { xs: 1, sm: 2 },
             filter: 'drop-shadow(0 8px 16px rgba(59, 130, 246, 0.2))',
             animation: 'bounce 2s infinite ease-in-out',
             '@keyframes bounce': {
@@ -137,7 +137,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
           sx={{
             color: '#1E3A8A',
             mb: 1,
-            fontSize: { xs: '22px', sm: '28px' },
+            fontSize: { xs: '18px', sm: '28px' },
             letterSpacing: '-0.5px',
           }}
         >
@@ -147,7 +147,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
         <Typography
           variant="body1"
           color="text.secondary"
-          sx={{ maxWidth: 520, mb: 4, fontSize: '15px', lineHeight: 1.6 }}
+          sx={{ maxWidth: 520, mb: { xs: 3, sm: 4 }, fontSize: { xs: '13px', sm: '15px' }, lineHeight: 1.6 }}
         >
           {t(
             'assessment.finishDesc',
@@ -155,79 +155,84 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
           )}
         </Typography>
 
-        {/* Final Score Badge */}
-        {summaryData?.finalScore !== undefined && summaryData.finalScore !== null && (
-          <Box display="flex" gap={2} mb={4} justifyContent="center" width="100%" flexWrap="wrap">
-            {/* MCQ Score */}
-            {summaryData.mcqScore !== undefined && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  p: 2,
-                  borderRadius: '16px',
-                  background: '#F0F9FF',
-                  border: '1px solid #BAE6FD',
-                  minWidth: '140px',
-                }}
-              >
-                <Typography variant="caption" fontWeight={700} color="#0369A1" mb={0.5}>
-                  {t('assessment.mcqScoreTitle', 'TRẮC NGHIỆM')}
-                </Typography>
-                <Typography variant="h4" fontWeight={800} color="#0284C7">
-                  {Math.round(summaryData.mcqScore * 100) / 100} <span style={{ fontSize: '14px', opacity: 0.7 }}>/10</span>
-                </Typography>
+        {(summaryData?.mcqScore !== undefined || summaryData?.interviewScore !== undefined || summaryData?.finalScore !== undefined) && (
+          <Box display="flex" flexDirection="column" alignItems="center" gap={3} mb={5} width="100%">
+            
+            {/* Final Score Circular Indicator */}
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Box position="relative" display="inline-flex" mb={1.5}>
+                {/* Background Track */}
+                <CircularProgress
+                  variant="determinate"
+                  value={100}
+                  size={120}
+                  thickness={4}
+                  sx={{ color: '#FEF3C7', width: { xs: '100px !important', sm: '130px !important' }, height: { xs: '100px !important', sm: '130px !important' } }}
+                />
+                {/* Active Progress */}
+                <CircularProgress
+                  variant="determinate"
+                  value={((summaryData.finalScore || 0) / 10) * 100}
+                  size={120}
+                  thickness={4}
+                  sx={{
+                    color: '#F59E0B',
+                    position: 'absolute',
+                    left: 0,
+                    width: { xs: '100px !important', sm: '130px !important' },
+                    height: { xs: '100px !important', sm: '130px !important' },
+                    '& .MuiCircularProgress-circle': { strokeLinecap: 'round' }
+                  }}
+                />
+                {/* Score Text inside circle */}
+                <Box
+                  sx={{
+                    top: 0, left: 0, bottom: 0, right: 0,
+                    position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'
+                  }}
+                >
+                  <Typography variant="h3" fontWeight={900} color="#B45309" sx={{ lineHeight: 1, fontSize: { xs: '2rem', sm: '2.5rem' } }}>
+                    {Math.round((summaryData.finalScore || 0) * 100) / 100}
+                  </Typography>
+                  <Typography variant="caption" fontWeight={700} color="#D97706" sx={{ fontSize: { xs: '10px', sm: '12px' }, mt: 0.5 }}>
+                    / 10
+                  </Typography>
+                </Box>
               </Box>
-            )}
-
-            {/* Interview Score */}
-            {summaryData.interviewScore !== undefined && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  p: 2,
-                  borderRadius: '16px',
-                  background: '#ECFDF5',
-                  border: '1px solid #A7F3D0',
-                  minWidth: '140px',
-                }}
-              >
-                <Typography variant="caption" fontWeight={700} color="#047857" mb={0.5}>
-                  {t('assessment.interviewScoreTitle', 'PHỎNG VẤN')}
-                </Typography>
-                <Typography variant="h4" fontWeight={800} color="#059669">
-                  {Math.round(summaryData.interviewScore * 100) / 100} <span style={{ fontSize: '14px', opacity: 0.7 }}>/10</span>
-                </Typography>
-              </Box>
-            )}
-
-            {/* Final Score */}
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                p: 2,
-                borderRadius: '16px',
-                background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
-                border: '1px solid #FDE68A',
-                boxShadow: '0 4px 14px rgba(245, 158, 11, 0.1)',
-                minWidth: '160px',
-              }}
-            >
-              <Typography variant="subtitle2" fontWeight={800} color="#D97706" mb={0.5}>
+              <Typography variant="subtitle1" fontWeight={800} color="#D97706" sx={{ fontSize: { xs: '14px', sm: '16px' }, letterSpacing: '0.5px' }}>
                 {t('assessment.finalScoreTitle', 'ĐIỂM TỔNG KẾT')}
               </Typography>
-              <Typography variant="h3" fontWeight={900} color="#B45309" sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5 }}>
-                {Math.round(summaryData.finalScore * 100) / 100}
-                <Typography variant="body1" fontWeight={700} color="#D97706" sx={{ opacity: 0.8 }}>/ 10</Typography>
-              </Typography>
+            </Box>
+
+            {/* Sub Scores minimal layout */}
+            <Box display="flex" justifyContent="center" alignItems="center" gap={{ xs: 3, sm: 6 }} mt={1} width="100%">
+              {/* MCQ Score */}
+              {summaryData.mcqScore !== undefined && (
+                <Box display="flex" flexDirection="column" alignItems="center">
+                  <Typography variant="h4" fontWeight={800} color="#1E293B" sx={{ fontSize: { xs: '1.5rem', sm: '2rem' }, lineHeight: 1.2 }}>
+                    {Math.round(summaryData.mcqScore * 100) / 100}
+                  </Typography>
+                  <Typography variant="caption" fontWeight={700} color="#64748B" sx={{ fontSize: { xs: '10px', sm: '12px' }, mt: 0.5, opacity: 0.8 }}>
+                    {t('assessment.mcqScoreTitle', 'TRẮC NGHIỆM')}
+                  </Typography>
+                </Box>
+              )}
+
+              {summaryData.mcqScore !== undefined && summaryData.interviewScore !== undefined && (
+                <Divider orientation="vertical" flexItem sx={{ borderColor: '#E2E8F0', borderWidth: '1px', borderRadius: '4px' }} />
+              )}
+
+              {/* Interview Score */}
+              {summaryData.interviewScore !== undefined && (
+                <Box display="flex" flexDirection="column" alignItems="center">
+                  <Typography variant="h4" fontWeight={800} color="#1E293B" sx={{ fontSize: { xs: '1.5rem', sm: '2rem' }, lineHeight: 1.2 }}>
+                    {Math.round(summaryData.interviewScore * 100) / 100}
+                  </Typography>
+                  <Typography variant="caption" fontWeight={700} color="#64748B" sx={{ fontSize: { xs: '10px', sm: '12px' }, mt: 0.5, opacity: 0.8 }}>
+                    {t('assessment.interviewScoreTitle', 'PHỎNG VẤN')}
+                  </Typography>
+                </Box>
+              )}
             </Box>
           </Box>
         )}
@@ -235,8 +240,8 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
         {/* Domain Scores List */}
         {domainScores.length > 0 && (
           <Box width="100%" mb={4}>
-            <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
-              <Typography variant="subtitle2" fontWeight={700} color="text.secondary">
+            <Box display="flex" alignItems="center" justifyContent={{ xs: 'center', sm: 'space-between' }} mb={2}>
+              <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ fontSize: { xs: '13px', sm: '0.875rem' } }}>
                 {t('assessment.domainResultTitle', 'Kết quả đánh giá theo Miền năng lực:')}
               </Typography>
             </Box>
@@ -250,7 +255,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
                     <Paper
                       elevation={0}
                       sx={{
-                        p: 2,
+                        p: { xs: 1.5, sm: 2 },
                         borderRadius: '14px',
                         backgroundColor: info.bg,
                         border: `1px solid ${info.color}30`,
@@ -258,7 +263,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
                       }}
                     >
                       <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                        <Typography variant="subtitle2" fontWeight={700} color={info.color}>
+                        <Typography variant="subtitle2" fontWeight={700} color={info.color} sx={{ fontSize: { xs: '13px', sm: '14px' } }}>
                           {info.code}
                         </Typography>
                         <Chip
@@ -266,10 +271,10 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
                           size="small"
                           sx={{
                             fontWeight: 800,
-                            fontSize: '12px',
+                            fontSize: { xs: '10px', sm: '12px' },
                             backgroundColor: info.color,
                             color: '#FFF',
-                            height: '24px',
+                            height: { xs: '20px', sm: '24px' },
                           }}
                         />
                       </Box>
@@ -279,7 +284,7 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
                         color="text.secondary"
                         display="block"
                         mb={1.5}
-                        sx={{ fontSize: '11px', minHeight: '32px', lineHeight: 1.3 }}
+                        sx={{ fontSize: { xs: '10px', sm: '11px' }, minHeight: '32px', lineHeight: 1.3 }}
                       >
                         {info.label}
                       </Typography>
@@ -314,12 +319,13 @@ export const TestResultCard: React.FC<TestResultCardProps> = ({ summaryData }) =
           sx={{
             background: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)',
             color: '#FFFFFF',
-            px: 4,
-            py: 1.8,
+            px: { xs: 2, sm: 4 },
+            py: { xs: 1.2, sm: 1.8 },
             borderRadius: '12px',
             fontWeight: 700,
-            fontSize: '16px',
+            fontSize: { xs: '14px', sm: '16px' },
             textTransform: 'none',
+            width: { xs: '100%', sm: 'auto' },
             boxShadow: '0 8px 25px rgba(37, 99, 235, 0.35)',
             transition: 'all 0.2s ease-in-out',
             '&:hover': {

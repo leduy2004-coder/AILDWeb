@@ -90,8 +90,8 @@ export default function ProfileModule() {
   }
 
   return (
-    <Box maxWidth="md" mx="auto" py={6} px={3}>
-      <Typography variant="h4" fontWeight={700} mb={4} textAlign="center" color="primary.main">
+    <Box maxWidth="md" mx="auto" py={{ xs: 4, md: 6 }} px={{ xs: 2, md: 3 }}>
+      <Typography variant="h4" fontWeight={700} mb={4} textAlign="center" color="primary.main" sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
         {t('profile.title', 'Hồ sơ cá nhân')}
       </Typography>
 

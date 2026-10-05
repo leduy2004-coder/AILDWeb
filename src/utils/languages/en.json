@@ -323,7 +323,7 @@
     "totalStudents": "Total Students",
     "completedAssessments": "Completed Assessments",
     "avgScore": "Average Competency Score",
-    "questionsNeedingAttention": "Questions Needing Attention",
+    "totalQuestionsKey": "Total Questions",
     "scoreByDomain": "Average Score by Domain",
     "proficiencyDistribution": "Proficiency Distribution",
     "recentActivity": "Top 5 Highest Scoring Submissions",

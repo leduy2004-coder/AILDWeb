@@ -23,6 +23,7 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const chatMutation = useChatWithAI({ assessmentId });
   const initTriggered = useRef(false);
@@ -57,6 +58,11 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
 
     const userMsg = inputValue.trim();
     setInputValue('');
+    
+    // Focus back immediately
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
     
     // Optimistic UI update
     const newUserMsg: Message = { id: Date.now().toString(), role: 'USER', content: userMsg };
@@ -101,7 +107,7 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
     <Paper
       elevation={0}
       sx={{
-        p: { xs: 2, md: 3 },
+        p: { xs: 1.5, md: 2 },
         borderRadius: '16px',
         border: '1px solid #E2E8F0',
         backgroundColor: '#FFFFFF',
@@ -110,16 +116,16 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        height: '700px', // Fixed height for chat window
+        height: { xs: '85vh', md: '680px' }, // Responsive height
       }}
     >
       <Box display="flex" alignItems="center" gap={2} mb={3} pb={2} borderBottom="1px solid #F1F5F9">
-        <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: 48, height: 48, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
+        <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: { xs: 40, md: 42 }, height: { xs: 40, md: 42 }, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
         <Box>
-          <Typography variant="h6" fontWeight={700} color="text.primary">
+          <Typography variant="h6" fontWeight={700} color="text.primary" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
             {t('assessment.aiInterviewer', 'Giám khảo AI')}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.75rem', md: '0.8rem' } }}>
             {t('assessment.aiInterviewerDesc', 'Trả lời các câu hỏi để hoàn tất bài thi')} • Lượt trả lời: {messages.filter(m => m.role === 'USER').length} / {chatMaxTurns}
           </Typography>
         </Box>
@@ -159,13 +165,13 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
             gap={1.5}
           >
             {msg.role === 'AI' && (
-              <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: 42, height: 42, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
+              <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: { xs: 32, md: 36 }, height: { xs: 32, md: 36 }, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
             )}
             
             <Box
               sx={{
-                maxWidth: '75%',
-                p: 2,
+                maxWidth: { xs: '85%', md: '75%' },
+                p: { xs: 1.5, md: 2 },
                 borderRadius: '16px',
                 borderTopLeftRadius: msg.role === 'AI' ? 0 : '16px',
                 borderTopRightRadius: msg.role === 'USER' ? 0 : '16px',
@@ -174,14 +180,14 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
                 boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
               }}
             >
-              <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
+              <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, fontSize: { xs: '0.85rem', md: '0.9rem' } }}>
                 {msg.content}
               </Typography>
             </Box>
 
             {msg.role === 'USER' && (
-              <Avatar sx={{ bgcolor: '#F1F5F9', color: '#64748B', width: 32, height: 32 }}>
-                <IconUser size={20} />
+              <Avatar sx={{ bgcolor: '#F1F5F9', color: '#64748B', width: { xs: 28, md: 30 }, height: { xs: 28, md: 30 } }}>
+                <IconUser size={18} />
               </Avatar>
             )}
           </Box>
@@ -189,7 +195,7 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
         
         {chatMutation.isPending && (
           <Box display="flex" justifyContent="flex-start" alignItems="flex-start" gap={1.5}>
-            <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: 42, height: 42, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
+            <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: { xs: 32, md: 36 }, height: { xs: 32, md: 36 }, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
             <Box sx={{ p: 2, borderRadius: '16px', borderTopLeftRadius: 0, backgroundColor: '#EFF6FF' }}>
               <CircularProgress size={20} />
             </Box>
@@ -209,7 +215,12 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyPress}
-          disabled={chatMutation.isPending}
+          inputRef={inputRef}
+          slotProps={{
+            input: {
+              readOnly: chatMutation.isPending,
+            }
+          }}
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: '12px',
@@ -224,8 +235,8 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
           sx={{
             backgroundColor: '#1E3A8A',
             color: 'white',
-            width: 42,
-            height: 42,
+            width: { xs: 36, md: 40 },
+            height: { xs: 36, md: 40 },
             borderRadius: '12px',
             '&:hover': {
               backgroundColor: '#172554',

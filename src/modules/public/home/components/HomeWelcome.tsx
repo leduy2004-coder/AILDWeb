@@ -79,12 +79,12 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
       }}
     >
       <Box>
-        <Typography variant="h3" fontWeight={700} color="text.primary" gutterBottom>
+        <Typography variant="h3" fontWeight={700} color="text.primary" gutterBottom sx={{ '@media (max-width:600px)': { fontSize: '1.5rem' } }}>
           {t('home.welcome', 'Chào mừng trở lại')}, {userName}
         </Typography>
         
         <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="body1" color="text.secondary" sx={{ '@media (max-width:600px)': { fontSize: '0.9rem' } }}>
             {t('home.lastEvaluation', 'Đánh giá lần cuối')}: {formattedDate}
           </Typography>
           
@@ -124,7 +124,11 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
           fontWeight: 700,
           borderRadius: '10px',
           textTransform: 'none',
-          fontSize: '15px',
+          '@media (max-width:600px)': {
+            fontSize: '13px',
+            px: 2,
+            py: 1,
+          },
           boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
           transition: 'all 0.2s ease-in-out',
           '&:hover': {

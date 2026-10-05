@@ -176,7 +176,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
             <IconChartRadar size={26} />
           </Box>
           <Box>
-            <Typography variant="h4" fontWeight={700} color="text.primary">
+            <Typography variant="h4" fontWeight={700} color="text.primary" sx={{ '@media (max-width:600px)': { fontSize: '1.25rem' } }}>
               {t('home.currentProgress', 'Năng lực & Cây kỹ năng AI')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -209,7 +209,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, md: 3 },
               borderRadius: '16px',
               border: '1px solid',
               borderColor: 'grey.200',
@@ -221,7 +221,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
             }}
           >
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-              <Typography variant="h5" fontWeight={700} color="text.primary">
+              <Typography variant="h5" fontWeight={700} color="text.primary" sx={{ fontSize: { xs: '1.1rem', md: '1.5rem' } }}>
                 {t('home.radar.title', 'Biểu đồ Năng lực AI')}
               </Typography>
               <Chip
@@ -338,7 +338,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 1.5, sm: 3 },
               borderRadius: '16px',
               border: '1px solid',
               borderColor: 'grey.200',
@@ -349,9 +349,9 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
               boxShadow: '0px 4px 20px rgba(0,0,0,0.05)',
             }}
           >
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+            <Box display="flex" justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} mb={2} flexDirection={{ xs: 'column', sm: 'row' }} gap={1.5}>
               <Box>
-                <Typography variant="h5" fontWeight={700} color="text.primary">
+                <Typography variant="h5" fontWeight={700} color="text.primary" sx={{ '@media (max-width:600px)': { fontSize: '15px' } }}>
                   {t('home.skillTree.title', 'Cây Kỹ Năng AI (12 Node)')}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
@@ -385,7 +385,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                   <Grid size={{ xs: 6, sm: 3 }} key={domainCode}>
                     <Box
                       sx={{
-                        p: 1.5,
+                        p: { xs: 1, sm: 1.5 },
                         borderRadius: '14px',
                         backgroundColor: '#F8FAFC',
                         border: `1.5px solid ${theme.border}`,
@@ -399,7 +399,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                       <Box
                         sx={{
                           width: '100%',
-                          py: 1,
+                          py: { xs: 0.5, sm: 1 },
                           px: 0.5,
                           borderRadius: '10px',
                           background: theme.bgGradient,
@@ -416,7 +416,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                           variant="caption"
                           fontWeight={700}
                           display="block"
-                          sx={{ fontSize: '11px', lineHeight: 1.2 }}
+                          sx={{ '@media (max-width:600px)': { fontSize: '9px' }, lineHeight: 1.2 }}
                         >
                           {shortDomainTitleMap[domainCode] || domainCode}
                         </Typography>
@@ -460,6 +460,10 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                     width: '100%',
                                     py: 1.2,
                                     px: 0.8,
+                                    '@media (max-width:600px)': {
+                                      py: 0.8,
+                                      px: 0.4,
+                                    },
                                     borderRadius: '12px',
                                     border: '2px solid',
                                     borderColor: needsReview
@@ -498,6 +502,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                     sx={{
                                       width: 36,
                                       height: 36,
+                                      '@media (max-width:600px)': { width: 28, height: 28 },
                                       borderRadius: '50%',
                                       display: 'flex',
                                       alignItems: 'center',
@@ -540,7 +545,7 @@ export const HomeProgress: React.FC<HomeProgressProps> = ({
                                           : isUnlocked
                                             ? '#1E40AF'
                                             : '#64748B',
-                                      fontSize: '11px',
+                                      '@media (max-width:600px)': { fontSize: '9px' },
                                     }}
                                   >
                                     {levelTitle}

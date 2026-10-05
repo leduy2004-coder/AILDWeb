@@ -21,8 +21,12 @@ const LinkStyled = styled(Link, {
   shouldForwardProp: (prop) =>
     prop !== '$collapse' && prop !== '$topbarHeight' && prop !== 'margin',
 })<StyledProps>(
-  ({ $collapse, $topbarHeight, margin }) => ({
+  ({ theme, $collapse, $topbarHeight, margin }) => ({
     height: $collapse ? '50px' : $topbarHeight,
+    [theme.breakpoints.down('md')]: {
+      height: '40px',
+      width: $collapse ? '100%' : 'auto',
+    },
     width: $collapse ? '100%' : '200px',
     overflow: 'hidden',
     display: 'flex',
@@ -54,13 +58,14 @@ export default function Logo({ margin, isSidebar }: LogoProps) {
           component="img"
           src={logoTutor.src}
           alt="AILD Logo"
-          sx={{ height: 50, width: 'auto', borderRadius: '8px', flexShrink: 0, objectFit: 'contain' }}
+          sx={{ height: { xs: 36, md: 50 }, width: 'auto', borderRadius: '8px', flexShrink: 0, objectFit: 'contain' }}
         />
         {!isCollapsed && (
           <Typography
             variant="h5"
             fontWeight={800}
             sx={{
+              fontSize: { xs: '1.1rem', md: '1.5rem' },
               color: '#1E3A8A',
               letterSpacing: '1px',
               fontFamily: '"Inter", "Outfit", sans-serif',

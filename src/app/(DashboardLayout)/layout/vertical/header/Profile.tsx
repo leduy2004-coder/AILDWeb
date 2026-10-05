@@ -103,8 +103,8 @@ const Profile = () => {
           justifyContent="center"
           alignItems="center"
           sx={{
-            width: 36,
-            height: 36,
+            width: { xs: 32, sm: 36 },
+            height: { xs: 32, sm: 36 },
             borderRadius: '50%',
             backgroundColor: '#0084E5',
           }}
@@ -127,13 +127,14 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         sx={{
           '& .MuiMenu-paper': {
-            width: '360px',
-            p: 3,
+            width: { xs: '260px', sm: '360px' },
+            maxWidth: '100vw',
+            p: { xs: 1.5, sm: 3 },
           },
         }}
       >
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h5">{t('header.profile.title')}</Typography>
+          <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', sm: '1.5rem' } }}>{t('header.profile.title')}</Typography>
           {(userInfo as any)?.role?.code !== 'ADMIN' && (userInfo as any)?.role !== 'ADMIN' && (
             <Tooltip title={t('header.profile.personalInfo', 'Hồ sơ cá nhân')} arrow>
               <IconButton size="small" onClick={() => { setAnchorEl2(null); router.push('/profile'); }}>
@@ -142,20 +143,20 @@ const Profile = () => {
             </Tooltip>
           )}
         </Box>
-        <Stack direction="row" py={2.5} spacing={2} alignItems="center">
+        <Stack direction="row" py={{ xs: 1, sm: 2.5 }} spacing={{ xs: 1.5, sm: 2 }} alignItems="center">
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
             sx={{
-              width: 48,
-              height: 48,
+              width: { xs: 36, sm: 48 },
+              height: { xs: 36, sm: 48 },
               borderRadius: '50%',
               backgroundColor: '#0084E5',
               flexShrink: 0,
             }}
           >
-            <Typography variant="h5" color="white" fontWeight={600}>
+            <Typography variant="h5" color="white" fontWeight={600} sx={{ fontSize: { xs: '1.1rem', sm: '1.5rem' } }}>
               {userInfo?.email?.substring(0, 1).toUpperCase() || 'U'}
             </Typography>
           </Box>
@@ -213,14 +214,15 @@ const Profile = () => {
           </Box>
         </Stack>
         <Divider />
-        <Box mt={2}>
-          <Grid container spacing={2}>
+        <Box mt={{ xs: 1, sm: 2 }}>
+          <Grid container spacing={{ xs: 1, sm: 2 }}>
             <Grid size={6}>
               <ActionButton
                 variant="contained"
                 color="success"
                 onClick={handleChangePassword}
                 fullWidth
+                sx={{ fontSize: { xs: '0.7rem', sm: '0.875rem' }, px: 1, py: { xs: 0.5, sm: 1 } }}
               >
                 {t('header.profile.changePassword')}
               </ActionButton>
@@ -232,6 +234,7 @@ const Profile = () => {
                 color="primary"
                 onClick={handleLogout}
                 fullWidth
+                sx={{ fontSize: { xs: '0.7rem', sm: '0.875rem' }, px: 1, py: { xs: 0.5, sm: 1 } }}
               >
                 {t('header.profile.logout')}
               </Button>

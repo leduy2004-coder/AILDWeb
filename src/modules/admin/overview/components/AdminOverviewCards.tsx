@@ -29,8 +29,8 @@ export const AdminOverviewCards = ({ data }: Props) => {
       icon: <IconChartLine size={24} color={theme.palette.text.secondary} />,
     },
     {
-      title: t('questionsNeedingAttention'),
-      value: data?.questionsNeedingAttention?.toLocaleString() || '0',
+      title: t('totalQuestionsKey'),
+      value: data?.totalQuestions?.toLocaleString() || '0',
       icon: <IconFlag size={24} color={theme.palette.error.main} />,
     },
   ];

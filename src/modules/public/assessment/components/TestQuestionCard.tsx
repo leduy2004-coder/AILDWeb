@@ -40,8 +40,11 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
   const handleNextClick = () => {
     onNext(selectedValue);
-    setSelectedValue(null); // Reset for next question
   };
+
+  React.useEffect(() => {
+    setSelectedValue(null);
+  }, [content]);
 
   const isNextDisabled = isSubmitting || !selectedValue;
 
@@ -49,7 +52,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
     <Paper
       elevation={0}
       sx={{
-        p: { xs: 3, md: 4 },
+        p: { xs: 2, md: 4 },
         borderRadius: '16px',
         border: '1px solid #E2E8F0',
         backgroundColor: '#FFFFFF',
@@ -61,12 +64,26 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
       <Box display="flex" alignItems="center" gap={1} mb={3}>
         <Chip
           icon={<IconShieldCheck size={16} />}
-          label={`${domainName} • ${levelName}`}
+          label={
+            <>
+              {domainName}
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}> • </Box>
+              <Box component="br" sx={{ display: { xs: 'inline', sm: 'none' } }} />
+              {levelName}
+            </>
+          }
           sx={{
             backgroundColor: '#CCFBF1',
             color: '#0F766E',
             fontWeight: 700,
             borderRadius: '8px',
+            height: 'auto',
+            py: { xs: 0.5, sm: 0 },
+            '& .MuiChip-label': {
+              whiteSpace: 'normal',
+              lineHeight: 1.5,
+              py: { xs: 0.5, sm: 0 }
+            },
             '& .MuiChip-icon': {
               color: '#0F766E',
             },
@@ -74,7 +91,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
         />
       </Box>
 
-      <Typography variant="h5" fontWeight={700} color="text.primary" mb={4} sx={{ lineHeight: 1.5 }}>
+      <Typography variant="h5" fontWeight={700} color="text.primary" mb={{ xs: 3, md: 4 }} sx={{ lineHeight: 1.5, fontSize: { xs: '1.1rem', md: '1.5rem' } }}>
         {content}
       </Typography>
 
@@ -88,8 +105,8 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
                 key={option.id}
                 elevation={0}
                 sx={{
-                  mb: 2,
-                  p: 1.5,
+                  mb: { xs: 1.5, md: 2 },
+                  p: { xs: 1, md: 1.5 },
                   border: '1px solid',
                   borderColor: selectedValue === option.id ? '#1E3A8A' : '#E2E8F0',
                   backgroundColor: selectedValue === option.id ? '#EFF6FF' : '#FFFFFF',
@@ -107,7 +124,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
                   value={option.id}
                   control={<Radio color="primary" />}
                   label={
-                    <Typography variant="body1" color="text.primary" sx={{ fontWeight: selectedValue === option.id ? 600 : 400 }}>
+                    <Typography variant="body1" color="text.primary" sx={{ fontWeight: selectedValue === option.id ? 600 : 400, fontSize: { xs: '0.9rem', md: '1rem' } }}>
                       {option.content}
                     </Typography>
                   }
@@ -118,7 +135,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
           </RadioGroup>
         </FormControl>
 
-      <Box display="flex" justifyContent="flex-end" mt={4}>
+      <Box display="flex" justifyContent={{ xs: 'center', md: 'flex-end' }} mt={4}>
         <Button
           variant="contained"
           color="primary"

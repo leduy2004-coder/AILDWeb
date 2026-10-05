@@ -42,9 +42,9 @@ export default function ProfileForm({ email, initialValues, isSaving, onSave }: 
   }, [initialValues, reset]);
 
   return (
-    <Paper elevation={0} sx={{ p: 4, borderRadius: '1px', border: '1px solid #E2E8F0' }}>
+    <Paper elevation={0} sx={{ p: { xs: 2.5, md: 4 }, borderRadius: '12px', border: '1px solid #E2E8F0' }}>
       {/* Header */}
-      <Box display="flex" alignItems="center" gap={2} mb={4} pb={2} borderBottom="1px solid #E2E8F0">
+      <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} gap={{ xs: 1.5, md: 2 }} mb={4} pb={2} borderBottom="1px solid #E2E8F0">
         <Box
           sx={{
             width: 60,
@@ -55,6 +55,7 @@ export default function ProfileForm({ email, initialValues, isSaving, onSave }: 
             alignItems: 'center',
             justifyContent: 'center',
             color: 'primary.main',
+            flexShrink: 0,
           }}
         >
           <IconUser size={32} />

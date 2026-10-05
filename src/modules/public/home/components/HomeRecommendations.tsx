@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Typography, Grid, Card, CardContent, Chip, IconButton } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, Chip, IconButton, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { IconArrowUpRight, IconBrandYoutube, IconPresentation, IconFileText, IconArticle, IconHeart, IconHeartFilled, IconFlag } from '@tabler/icons-react';
 import Link from 'next/link';
@@ -77,7 +77,7 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h5" fontWeight={600} color="text.primary">
+        <Typography variant="h5" fontWeight={600} color="text.primary" sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}>
           {t('home.recommendations.title', 'Đề xuất cho bạn')}
         </Typography>
         <Typography
@@ -116,7 +116,7 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
           </Typography>
         </Box>
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={{ xs: 1.5, md: 3 }}>
           {recommendedResources.map((item) => (
             <Grid size={{ xs: 12, md: 4 }} key={item.id}>
               <Card
@@ -144,110 +144,166 @@ export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recomm
                   },
                 }}
               >
-                <CardContent sx={{ p: 2.5, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                  <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-                    <Box display="flex" alignItems="center" gap={1.5}>
-                      <Box sx={{ display: 'flex', p: 0.5, borderRadius: '8px', backgroundColor: '#F1F5F9' }}>
-                        {getResourceIcon(item.url)}
+                <CardContent sx={{ p: { xs: 1, sm: 2.5 }, '&:last-child': { pb: { xs: 1, sm: 2.5 } }, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                  
+                  {/* DESKTOP LAYOUT */}
+                  <Box display={{ xs: 'none', sm: 'flex' }} flexDirection="column" height="100%" flexGrow={1}>
+                    <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
+                      <Box display="flex" alignItems="center" gap={1.5}>
+                        <Box sx={{ display: 'flex', p: 0.5, borderRadius: '8px', backgroundColor: '#F1F5F9' }}>
+                          {getResourceIcon(item.url)}
+                        </Box>
+                        <Tooltip title={item.domainName || item.domainCode || 'AI'}>
+                          <Chip
+                            label={item.domainName || item.domainCode || 'AI'}
+                            size="small"
+                            sx={{
+                              borderRadius: '6px',
+                              backgroundColor: '#EFF6FF',
+                              color: '#1E40AF',
+                              fontWeight: 600,
+                              fontSize: '0.75rem',
+                              height: '24px',
+                              maxWidth: '140px',
+                              '& .MuiChip-label': {
+                                display: 'block',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }
+                            }}
+                          />
+                        </Tooltip>
                       </Box>
-                      <Chip
-                        label={item.domainName || item.domainCode || 'AI'}
-                        size="small"
-                        sx={{
-                          borderRadius: '6px',
-                          backgroundColor: '#EFF6FF',
-                          color: '#1E40AF',
-                          fontWeight: 600,
-                          fontSize: '0.75rem',
-                          height: '24px',
-                        }}
-                      />
-                    </Box>
-                    <Box display="flex" alignItems="center" gap={0.5}>
-                      <IconButton 
-                        size="small" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (!reportedResources[item.id]) {
-                            setSelectedResourceForReport(item);
-                          }
-                        }}
-                        disabled={reportedResources[item.id]}
+                      <Box display="flex" alignItems="center" gap={0.5}>
+                        <IconButton 
+                          size="small" 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!reportedResources[item.id]) {
+                              setSelectedResourceForReport(item);
+                            }
+                          }}
+                          disabled={reportedResources[item.id]}
+                          sx={{ 
+                            color: reportedResources[item.id] ? '#EF4444' : '#94A3B8',
+                            opacity: reportedResources[item.id] ? 0.5 : 1,
+                            transition: 'all 0.2s',
+                            '&:hover': { color: '#EF4444' }
+                          }}
+                          title={reportedResources[item.id] ? "Đã báo cáo" : "Báo cáo lỗi"}
+                        >
+                          <IconFlag size={20} />
+                        </IconButton>
+                        <IconButton 
+                          size="small" 
+                          onClick={(e) => handleToggleLike(e, item.id)}
                         sx={{ 
-                          color: reportedResources[item.id] ? '#EF4444' : '#94A3B8',
-                          opacity: reportedResources[item.id] ? 0.5 : 1,
+                          color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8',
                           transition: 'all 0.2s',
-                          '&:hover': { color: '#EF4444' }
+                          '&:hover': { color: '#EF4444', transform: 'scale(1.1)' }
                         }}
-                        title={reportedResources[item.id] ? "Đã báo cáo" : "Báo cáo lỗi"}
                       >
-                        <IconFlag size={20} />
+                        {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={20} /> : <IconHeart size={20} />}
+                      </IconButton>
+                    </Box>
+                  </Box>
+
+                    <Typography
+                      variant="h6"
+                      fontWeight={700}
+                      color="text.primary"
+                      mb={1.5}
+                      sx={{
+                        fontSize: '1.1rem',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        mb: 3,
+                        lineHeight: 1.6,
+                        fontSize: '0.875rem',
+                        flexGrow: 1,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {item.description}
+                    </Typography>
+
+                    <Box display="flex" alignItems="center" justifyContent="space-between" mt="auto" pt={2} sx={{ borderTop: '1px solid #F1F5F9' }}>
+                      <Typography
+                        sx={{
+                          color: '#2563EB',
+                          fontWeight: 600,
+                          fontSize: '0.875rem',
+                        }}
+                      >
+                        {t('home.recommendations.viewDocument', 'Xem tài liệu')}
+                      </Typography>
+                      {item.targetLevelName && (
+                        <Chip
+                          label={item.targetLevelName}
+                          size="small"
+                          variant="outlined"
+                          sx={{ fontSize: '0.7rem', height: '22px', borderRadius: '6px', color: '#64748B', borderColor: '#CBD5E1' }}
+                        />
+                      )}
+                    </Box>
+                  </Box>
+
+                  {/* MOBILE LAYOUT (HORIZONTAL COMPACT) */}
+                  <Box display={{ xs: 'flex', sm: 'none' }} alignItems="center" gap={1.5} width="100%">
+                    <Box sx={{ display: 'flex', p: 1, borderRadius: '10px', backgroundColor: '#F1F5F9', flexShrink: 0 }}>
+                      {getResourceIcon(item.url)}
+                    </Box>
+                    <Box flexGrow={1} minWidth={0} display="flex" flexDirection="column" gap={0.5}>
+                      <Typography variant="subtitle2" fontWeight={700} color="text.primary" sx={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.3 }}>
+                        {item.title}
+                      </Typography>
+                      <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
+                        <Chip
+                          label={item.domainName || item.domainCode || 'AI'}
+                          size="small"
+                          sx={{
+                            borderRadius: '4px', backgroundColor: '#EFF6FF', color: '#1E40AF',
+                            fontWeight: 600, fontSize: '9px', height: '18px', maxWidth: '140px',
+                            '& .MuiChip-label': { px: 1, display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
+                          }}
+                        />
+                        {item.targetLevelName && (
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '10px', whiteSpace: 'nowrap' }}>
+                            • {item.targetLevelName}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                    <Box display="flex" flexDirection="column" alignItems="center" gap={0.5} flexShrink={0}>
+                      <IconButton size="small" onClick={(e) => handleToggleLike(e, item.id)} sx={{ p: 0.5, color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8' }}>
+                        {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={16} /> : <IconHeart size={16} />}
                       </IconButton>
                       <IconButton 
                         size="small" 
-                        onClick={(e) => handleToggleLike(e, item.id)}
-                      sx={{ 
-                        color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8',
-                        transition: 'all 0.2s',
-                        '&:hover': { color: '#EF4444', transform: 'scale(1.1)' }
-                      }}
-                    >
-                      {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={20} /> : <IconHeart size={20} />}
-                    </IconButton>
+                        onClick={(e) => { e.stopPropagation(); if (!reportedResources[item.id]) setSelectedResourceForReport(item); }}
+                        disabled={reportedResources[item.id]}
+                        sx={{ p: 0.5, color: reportedResources[item.id] ? '#EF4444' : '#94A3B8', opacity: reportedResources[item.id] ? 0.5 : 1 }}
+                      >
+                        <IconFlag size={16} />
+                      </IconButton>
+                    </Box>
                   </Box>
-                </Box>
 
-                  <Typography
-                    variant="h6"
-                    fontWeight={700}
-                    color="text.primary"
-                    mb={1.5}
-                    sx={{
-                      fontSize: '1.1rem',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {item.title}
-                  </Typography>
-
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      mb: 3,
-                      lineHeight: 1.6,
-                      flexGrow: 1,
-                      display: '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {item.description}
-                  </Typography>
-
-                  <Box display="flex" alignItems="center" justifyContent="space-between" mt="auto" pt={2} sx={{ borderTop: '1px solid #F1F5F9' }}>
-                    <Typography
-                      sx={{
-                        color: '#2563EB',
-                        fontWeight: 600,
-                        fontSize: '0.875rem',
-                      }}
-                    >
-                      {t('home.recommendations.viewDocument', 'Xem tài liệu')}
-                    </Typography>
-                    {item.targetLevelName && (
-                      <Chip
-                        label={item.targetLevelName}
-                        size="small"
-                        variant="outlined"
-                        sx={{ fontSize: '0.7rem', height: '22px', borderRadius: '6px', color: '#64748B', borderColor: '#CBD5E1' }}
-                      />
-                    )}
-                  </Box>
                 </CardContent>
               </Card>
             </Grid>

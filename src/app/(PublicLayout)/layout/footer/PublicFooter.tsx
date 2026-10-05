@@ -9,7 +9,7 @@ export const PublicFooter: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ borderTop: '1px solid', borderColor: 'divider', bgcolor: 'background.paper', pt: 6, pb: 4, mt: 10 }}>
+    <Box sx={{ borderTop: '1px solid', borderColor: 'divider', bgcolor: 'background.paper', pt: { xs: 4, md: 6 }, pb: { xs: 3, md: 4 }, mt: { xs: 6, md: 10 } }}>
       <Container maxWidth="lg">
         <Grid container spacing={4} mb={4}>
           <Grid size={{ xs: 12, md: 4 }}>
@@ -27,7 +27,7 @@ export const PublicFooter: React.FC = () => {
             </Box>
           </Grid>
           
-          <Grid size={{ xs: 12, md: 2 }}>
+          <Grid size={{ xs: 6, md: 4 }}>
             <Typography variant="subtitle2" fontWeight={700} mb={2}>{t('footer.platform', 'Nền tảng')}</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>{t('footer.assessCompetency', 'Đánh giá năng lực')}</Typography>
@@ -36,7 +36,7 @@ export const PublicFooter: React.FC = () => {
             </Box>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 3 }}>
+          <Grid size={{ xs: 6, md: 4 }}>
             <Typography variant="subtitle2" fontWeight={700} mb={2}>{t('footer.resources', 'Tài nguyên')}</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>{t('footer.aiNews', 'Tin tức AI')}</Typography>
@@ -44,18 +44,9 @@ export const PublicFooter: React.FC = () => {
               <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>{t('footer.helpCenter', 'Trung tâm trợ giúp')}</Typography>
             </Box>
           </Grid>
-
-          <Grid size={{ xs: 12, md: 3 }}>
-            <Typography variant="subtitle2" fontWeight={700} mb={2}>{t('footer.company', 'Tổ chức')}</Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>{t('footer.aboutUs', 'Về chúng tôi')}</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>{t('footer.contact', 'Liên hệ')}</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>{t('footer.privacyPolicy', 'Chính sách bảo mật')}</Typography>
-            </Box>
-          </Grid>
         </Grid>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid', borderColor: 'divider', pt: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: { xs: 'center', md: 'space-between' }, alignItems: 'center', gap: { xs: 2, md: 0 }, borderTop: '1px solid', borderColor: 'divider', pt: 3, textAlign: { xs: 'center', md: 'left' } }}>
           <Typography variant="body2" color="text.secondary">
             {t('footer.copyright', '© 2026 AILD. Đã đăng ký bản quyền.')}
           </Typography>

@@ -46,7 +46,7 @@ export const HomeAiFeedback: React.FC<HomeAiFeedbackProps> = ({
       elevation={0}
       sx={{
         mb: 4,
-        p: 3,
+        p: { xs: 2, md: 3 },
         borderRadius: '16px',
         border: '1.5px solid',
         borderColor: '#C7D2FE',
@@ -86,7 +86,7 @@ export const HomeAiFeedback: React.FC<HomeAiFeedbackProps> = ({
             <IconSparkles size={24} />
           </Box>
           <Box>
-            <Typography variant="h5" fontWeight={700} color="#1E1B4B" display="flex" alignItems="center" gap={1}>
+            <Typography variant="h5" fontWeight={700} color="#1E1B4B" display="flex" alignItems="center" gap={1} sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}>
               {t('home.aiFeedback.title')}
             </Typography>
             <Typography variant="caption" color="text.secondary">

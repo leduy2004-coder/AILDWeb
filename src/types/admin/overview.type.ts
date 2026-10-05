@@ -24,7 +24,7 @@ export interface IOverviewResponse {
   totalStudents: number;
   completedAssessments: number;
   averageCompetencyScore: number;
-  questionsNeedingAttention: number;
+  totalQuestions: number;
   scoreByDomain: IDomainScore[];
   proficiencyDistribution: IProficiencyDistribution[];
   recentActivity: IRecentActivity[];
