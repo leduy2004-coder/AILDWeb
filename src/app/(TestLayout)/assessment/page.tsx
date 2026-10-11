@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Box, Typography, CircularProgress, LinearProgress } from '@mui/material';
+import { Box, Typography, CircularProgress, LinearProgress, Button } from '@mui/material';
 import { IconClock, IconPlayerPause } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import {
   getNextQuestion,
   submitAnswer,
   finishAssessment,
+  timeUpAssessment,
   INextQuestionResponse,
   IAssessmentSummaryResponse,
 } from '@/apis/assessment/assessment.api';
@@ -31,7 +32,12 @@ export default function AssessmentPage() {
   const [isStarted, setIsStarted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFinishing, setIsFinishing] = useState(false);
+  const [timeUpError, setTimeUpError] = useState(false);
   const initRef = React.useRef(false);
+  const timeUpHandledRef = React.useRef(false);
+  const finishingRef = React.useRef(false);
+
+  const isCompleted = summaryData?.status === 'COMPLETED';
 
   useEffect(() => {
     // Prevent double execution in React Strict Mode
@@ -59,21 +65,22 @@ export default function AssessmentPage() {
 
   // Timer logic
   useEffect(() => {
-    if (!isStarted || isFinishing) return;
+    if (!isStarted || isFinishing || isCompleted) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isStarted, isFinishing]);
+  }, [isStarted, isFinishing, isCompleted]);
 
   // Time up trigger
   useEffect(() => {
-    if (isStarted && timeLeft === 0 && !isFinishing) {
+    if (isStarted && timeLeft === 0 && !isCompleted && !timeUpHandledRef.current) {
+      timeUpHandledRef.current = true;
       handleTimeUp();
     }
-  }, [isStarted, timeLeft, isFinishing]);
+  }, [isStarted, timeLeft, isCompleted]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchNextQuestion = async (id: number) => {
     try {
@@ -109,6 +116,8 @@ export default function AssessmentPage() {
   };
 
   const handleFinish = async (id: number) => {
+    if (finishingRef.current || timeUpHandledRef.current) return;
+    finishingRef.current = true;
     setIsFinishing(true);
     try {
       const res = await finishAssessment(id);
@@ -119,6 +128,7 @@ export default function AssessmentPage() {
     } catch (error) {
       toast.error(t('assessment.submitError', 'Lỗi khi nộp bài.'));
     } finally {
+      finishingRef.current = false;
       setIsFinishing(false);
     }
   };
@@ -136,10 +146,20 @@ export default function AssessmentPage() {
     toast.success(t('assessment.chatFinishSuccess', 'Tuyệt vời, bạn đã hoàn thành phần phỏng vấn!'));
   };
 
-  const handleTimeUp = () => {
+  const handleTimeUp = async () => {
+    if (!assessmentId) return;
     toast.warning(t('assessment.timeUp', 'Hết thời gian làm bài!'));
-    if (assessmentId) {
-      handleFinish(assessmentId);
+    setTimeUpError(false);
+    setIsFinishing(true);
+    try {
+      const res = await timeUpAssessment(assessmentId);
+      if (res.result) {
+        setSummaryData(res.result);
+      }
+    } catch (error) {
+      setTimeUpError(true);
+    } finally {
+      setIsFinishing(false);
     }
   };
 
@@ -208,7 +228,12 @@ export default function AssessmentPage() {
 
       {/* MAIN CONTENT */}
       <Box flex={1} display="flex" justifyContent="center" alignItems={isFinishing ? "center" : "flex-start"} px={{ xs: 2, md: 3, lg: 4 }} py={{ xs: 2, md: 4 }}>
-        {isFinishing ? (
+        {timeUpError ? (
+          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%" gap={2}>
+            <Typography variant="h6">{t('assessment.timeUpError', 'Không thể nộp bài khi hết giờ. Vui lòng thử lại.')}</Typography>
+            <Button variant="contained" onClick={handleTimeUp}>{t('assessment.retry', 'Thử lại')}</Button>
+          </Box>
+        ) : isFinishing ? (
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
             <CircularProgress size={60} />
             <Typography mt={3} variant="h6">{t('assessment.processingResult', 'Đang xử lý kết quả...')}</Typography>

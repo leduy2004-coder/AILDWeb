@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { getLocalStorageItem } from '@/modules/shared/utils';
 import { AuthActionTypes } from '@/types/shared';
+import { UserApi } from '@/apis/user/user.api';
 
 import { IconSparkles } from '@tabler/icons-react';
 
@@ -44,26 +45,47 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
       })
     : t('home.noEvaluationYet', 'Chưa có bài đánh giá nào');
 
-  const handleStartEvaluation = () => {
+  const [isCheckingProfile, setIsCheckingProfile] = useState(false);
+
+  const handleStartEvaluation = async () => {
     const token = getLocalStorageItem<string>(AuthActionTypes.ACCESS_TOKEN);
     if (!token) {
       router.push('/auth/login');
-    } else {
-      // Fetch latest userInfo directly to avoid stale state from Next.js caching
-      const userInfoStr = getLocalStorageItem<string>(AuthActionTypes.USER_INFO);
-      let latestUserInfo = userInfo;
-      if (userInfoStr) {
-        try {
-          latestUserInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
-        } catch (e) {}
-      }
+      return;
+    }
 
-      if (!latestUserInfo?.age || !latestUserInfo?.major) {
-        sessionStorage.setItem('redirectAfterProfileUpdate', '/assessment');
-        router.push('/profile');
-      } else {
-        router.push('/assessment');
+    // Fetch latest userInfo directly to avoid stale state from Next.js caching
+    const userInfoStr = getLocalStorageItem<string>(AuthActionTypes.USER_INFO);
+    let latestUserInfo = userInfo;
+    if (userInfoStr) {
+      try {
+        latestUserInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+      } catch (e) {}
+    }
+
+    // Local cache may be missing age/major (e.g. right after login), so confirm with the server
+    const userId = latestUserInfo?.id ?? latestUserInfo?.userId;
+    if ((!latestUserInfo?.age || !latestUserInfo?.major) && userId) {
+      setIsCheckingProfile(true);
+      try {
+        const res = await UserApi.getUserById(userId);
+        if (res.result) {
+          latestUserInfo = { ...latestUserInfo, age: res.result.age, major: res.result.major };
+          localStorage.setItem(AuthActionTypes.USER_INFO, JSON.stringify(latestUserInfo));
+          setUserInfo(latestUserInfo);
+        }
+      } catch (e) {
+        // Fall through to the profile page if the profile cannot be verified
+      } finally {
+        setIsCheckingProfile(false);
       }
+    }
+
+    if (!latestUserInfo?.age || !latestUserInfo?.major) {
+      sessionStorage.setItem('redirectAfterProfileUpdate', '/assessment');
+      router.push('/profile');
+    } else {
+      router.push('/assessment');
     }
   };
 
@@ -116,6 +138,7 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
         variant="contained"
         startIcon={<IconSparkles size={20} />}
         onClick={handleStartEvaluation}
+        disabled={isCheckingProfile}
         sx={{
           background: 'linear-gradient(135deg, #112c66ff 0%, #1D4ED8 100%)',
           color: '#ffffff',

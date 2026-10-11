@@ -45,6 +45,13 @@ export async function finishAssessment(
   return payload;
 }
 
+export async function timeUpAssessment(
+  assessmentId: number
+): Promise<IApiResponse<IAssessmentSummaryResponse>> {
+  const { payload } = await http.post<IApiResponse<IAssessmentSummaryResponse>>(`${BASE_URL}/${assessmentId}/time-up`, {});
+  return payload;
+}
+
 export async function chatWithAI(
   assessmentId: number,
   data: IChatRequest
@@ -58,5 +65,6 @@ export const AssessmentApi = {
   getNextQuestion,
   submitAnswer,
   finishAssessment,
+  timeUpAssessment,
   chatWithAI,
 };

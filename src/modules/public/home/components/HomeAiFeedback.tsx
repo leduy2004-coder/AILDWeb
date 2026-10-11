@@ -125,6 +125,7 @@ export const HomeAiFeedback: React.FC<HomeAiFeedbackProps> = ({
             lineHeight: 1.7,
             fontWeight: 500,
             fontSize: '14.5px',
+            whiteSpace: 'pre-line',
           }}
         >
           {feedbackText}

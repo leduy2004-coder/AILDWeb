@@ -73,18 +73,18 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
       {
         onSuccess: (res) => {
           if (res.result) {
+            // Last answer: skip the AI closing message and go straight to the result screen
+            if (res.result.isFinished) {
+              onFinish(res.result.finalScore, res.result.interviewScore);
+              return;
+            }
+
             const aiMsg: Message = {
               id: (Date.now() + 1).toString(),
               role: 'AI',
               content: res.result.reply,
             };
             setMessages(prev => [...prev, aiMsg]);
-
-            if (res.result.isFinished) {
-              setTimeout(() => {
-                onFinish(res.result?.finalScore, res.result?.interviewScore);
-              }, 3000);
-            }
           }
         },
         onError: () => {
@@ -95,6 +95,9 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
       }
     );
   };
+
+  const answeredCount = messages.filter(m => m.role === 'USER').length;
+  const isGrading = chatMutation.isPending && answeredCount >= chatMaxTurns;
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -196,8 +199,13 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
         {chatMutation.isPending && (
           <Box display="flex" justifyContent="flex-start" alignItems="flex-start" gap={1.5}>
             <Avatar src={logoTutor.src} sx={{ bgcolor: 'white', width: { xs: 32, md: 36 }, height: { xs: 32, md: 36 }, border: '1px solid #E2E8F0' }} imgProps={{ sx: { objectFit: 'cover', transform: 'scale(1.35)' } }} />
-            <Box sx={{ p: 2, borderRadius: '16px', borderTopLeftRadius: 0, backgroundColor: '#EFF6FF' }}>
+            <Box sx={{ p: 2, borderRadius: '16px', borderTopLeftRadius: 0, backgroundColor: '#EFF6FF', display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <CircularProgress size={20} />
+              {isGrading && (
+                <Typography variant="body2" color="text.secondary">
+                  {t('assessment.gradingInterview', 'Đang chấm điểm và tạo gợi ý cho bạn...')}
+                </Typography>
+              )}
             </Box>
           </Box>
         )}

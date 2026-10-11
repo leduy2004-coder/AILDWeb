@@ -134,7 +134,7 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
         </IconButton>
       </DialogTitle>
       
-      <DialogContent sx={{ p: selectedResource ? 0 : 3, backgroundColor: selectedResource ? '#000' : '#F8FAFC', display: 'flex', flexDirection: 'column' }}>
+      <DialogContent sx={{ p: selectedResource ? 0 : { xs: 1.5, sm: 2, md: 3 }, backgroundColor: selectedResource ? '#000' : '#F8FAFC', display: 'flex', flexDirection: 'column' }}>
         {selectedResource ? (
           // VIEWER MODE
           (() => {
@@ -179,16 +179,16 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
               </Typography>
             </Box>
           ) : (
-            <Grid container spacing={{ xs: 1.5, md: 3 }} sx={{ p: 1 }}>
+            <Grid container spacing={{ xs: 1.5, sm: 2, md: 2.5, lg: 3 }} sx={{ p: { xs: 0, sm: 1 } }}>
               {resources.map((item) => (
-                <Grid size={{ xs: 12, md: 4 }} key={item.id}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.id}>
                   <Card
                     elevation={0}
                     onClick={() => setSelectedResource(item)}
                     sx={{
                       position: 'relative',
                       border: '1px solid #E2E8F0',
-                      borderRadius: '16px',
+                      borderRadius: { xs: '12px', sm: '16px' },
                       height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
@@ -207,13 +207,13 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                       },
                     }}
                   >
-                    <CardContent sx={{ p: { xs: 1, sm: 2.5 }, '&:last-child': { pb: { xs: 1, sm: 2.5 } }, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                    <CardContent sx={{ p: { xs: 1.25, sm: 2, md: 2, lg: 2.5 }, '&:last-child': { pb: { xs: 1.25, sm: 2, md: 2, lg: 2.5 } }, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                       
                       {/* DESKTOP LAYOUT */}
                       <Box display={{ xs: 'none', sm: 'flex' }} flexDirection="column" height="100%" flexGrow={1}>
-                        <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-                          <Box display="flex" alignItems="center" gap={1.5}>
-                            <Box sx={{ display: 'flex', p: 0.5, borderRadius: '8px', backgroundColor: '#F1F5F9' }}>
+                        <Box display="flex" justifyContent="space-between" alignItems="center" gap={1} mb={{ sm: 1.5, md: 2 }} minWidth={0}>
+                          <Box display="flex" alignItems="center" gap={1} minWidth={0} flexShrink={1}>
+                            <Box sx={{ display: 'flex', p: 0.5, borderRadius: '8px', backgroundColor: '#F1F5F9', flexShrink: 0 }}>
                               {getResourceIcon(item.url)}
                             </Box>
                             <Tooltip title={item.domainName || item.domainCode || 'AI'}>
@@ -227,18 +227,21 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                                   fontWeight: 600,
                                   fontSize: '0.75rem',
                                   height: '24px',
-                                  maxWidth: '140px',
+                                  maxWidth: { sm: '110px', md: '125px', lg: '150px' },
+                                  minWidth: 0,
+                                  flexShrink: 1,
                                   '& .MuiChip-label': {
                                     display: 'block',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
+                                    px: 1,
                                   }
                                 }}
                               />
                             </Tooltip>
                           </Box>
-                          <Box display="flex" alignItems="center" gap={0.5}>
+                          <Box display="flex" alignItems="center" gap={0.5} flexShrink={0}>
                             <IconButton 
                               size="small" 
                               onClick={(e) => {
@@ -246,24 +249,27 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                                 setSelectedResourceForReport(item);
                               }}
                               sx={{ 
+                                p: 0.75,
                                 color: '#94A3B8',
                                 transition: 'all 0.2s',
                                 '&:hover': { color: '#EF4444' }
                               }}
                               title="Báo cáo lỗi"
                             >
-                              <IconFlag size={20} />
+                              <IconFlag size={18} />
                             </IconButton>
                             <IconButton 
                               size="small" 
                               onClick={(e) => handleToggleLike(e, item.id)}
                               sx={{ 
+                                p: 0.75,
                                 color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8',
                                 transition: 'all 0.2s',
                                 '&:hover': { color: '#EF4444', transform: 'scale(1.1)' }
                               }}
+                              title={likesInfo[item.id]?.isLiked ? "Bỏ thích" : "Yêu thích"}
                             >
-                              {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={20} /> : <IconHeart size={20} />}
+                              {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={18} /> : <IconHeart size={18} />}
                             </IconButton>
                           </Box>
                         </Box>
@@ -272,13 +278,15 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                           variant="h6"
                           fontWeight={700}
                           color="text.primary"
-                          mb={1.5}
+                          mb={{ sm: 1, md: 1.5 }}
                           sx={{
-                            fontSize: '1.1rem',
+                            fontSize: { sm: '1rem', md: '1.05rem', lg: '1.1rem' },
+                            lineHeight: 1.4,
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
+                            wordBreak: 'break-word',
                           }}
                         >
                           {item.title}
@@ -288,25 +296,35 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                           variant="body2"
                           color="text.secondary"
                           sx={{
-                            mb: 3,
-                            lineHeight: 1.6,
-                            fontSize: '0.875rem',
+                            mb: { sm: 2, md: 2.5 },
+                            lineHeight: 1.5,
+                            fontSize: { sm: '0.8rem', md: '0.875rem' },
                             flexGrow: 1,
                             display: '-webkit-box',
-                            WebkitLineClamp: 3,
+                            WebkitLineClamp: { sm: 2, md: 3 },
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
+                            wordBreak: 'break-word',
                           }}
                         >
                           {item.description}
                         </Typography>
 
-                        <Box display="flex" alignItems="center" justifyContent="space-between" mt="auto" pt={2} sx={{ borderTop: '1px solid #F1F5F9' }}>
+                        <Box 
+                          display="flex" 
+                          alignItems="center" 
+                          justifyContent="space-between" 
+                          gap={1}
+                          mt="auto" 
+                          pt={{ sm: 1.5, md: 2 }} 
+                          sx={{ borderTop: '1px solid #F1F5F9' }}
+                        >
                           <Typography
                             sx={{
                               color: '#2563EB',
                               fontWeight: 600,
-                              fontSize: '0.875rem',
+                              fontSize: { sm: '0.8rem', md: '0.875rem' },
+                              whiteSpace: 'nowrap',
                             }}
                           >
                             {t('home.recommendations.viewDocument', 'Xem tài liệu')}
@@ -316,7 +334,21 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                               label={item.targetLevelName}
                               size="small"
                               variant="outlined"
-                              sx={{ fontSize: '0.7rem', height: '22px', borderRadius: '6px', color: '#64748B', borderColor: '#CBD5E1' }}
+                              sx={{ 
+                                fontSize: '0.7rem', 
+                                height: '22px', 
+                                borderRadius: '6px', 
+                                color: '#64748B', 
+                                borderColor: '#CBD5E1',
+                                maxWidth: '120px',
+                                flexShrink: 0,
+                                '& .MuiChip-label': {
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  px: 1,
+                                }
+                              }}
                             />
                           )}
                         </Box>
@@ -328,34 +360,67 @@ export const ResourceListViewerModal = NiceModal.create(({ resources = [], initi
                           {getResourceIcon(item.url)}
                         </Box>
                         <Box flexGrow={1} minWidth={0} display="flex" flexDirection="column" gap={0.5}>
-                          <Typography variant="subtitle2" fontWeight={700} color="text.primary" sx={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.3 }}>
+                          <Typography 
+                            variant="subtitle2" 
+                            fontWeight={700} 
+                            color="text.primary" 
+                            sx={{ 
+                              display: '-webkit-box', 
+                              WebkitLineClamp: 2, 
+                              WebkitBoxOrient: 'vertical', 
+                              overflow: 'hidden', 
+                              lineHeight: 1.3,
+                              fontSize: '0.875rem',
+                            }}
+                          >
                             {item.title}
                           </Typography>
-                          <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
-                            <Chip
-                              label={item.domainName || item.domainCode || 'AI'}
-                              size="small"
-                              sx={{
-                                borderRadius: '4px', backgroundColor: '#EFF6FF', color: '#1E40AF',
-                                fontWeight: 600, fontSize: '9px', height: '18px', maxWidth: '140px',
-                                '& .MuiChip-label': { px: 1, display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
-                              }}
-                            />
+                          <Box display="flex" alignItems="center" gap={0.75} flexWrap="wrap" minWidth={0}>
+                            <Tooltip title={item.domainName || item.domainCode || 'AI'}>
+                              <Chip
+                                label={item.domainName || item.domainCode || 'AI'}
+                                size="small"
+                                sx={{
+                                  borderRadius: '4px', 
+                                  backgroundColor: '#EFF6FF', 
+                                  color: '#1E40AF',
+                                  fontWeight: 600, 
+                                  fontSize: '9px', 
+                                  height: '18px', 
+                                  maxWidth: { xs: '150px', sm: '180px' },
+                                  minWidth: 0,
+                                  flexShrink: 1,
+                                  '& .MuiChip-label': { 
+                                    px: 1, 
+                                    display: 'block', 
+                                    whiteSpace: 'nowrap', 
+                                    overflow: 'hidden', 
+                                    textOverflow: 'ellipsis' 
+                                  }
+                                }}
+                              />
+                            </Tooltip>
                             {item.targetLevelName && (
-                              <Typography variant="caption" color="text.secondary" sx={{ fontSize: '10px', whiteSpace: 'nowrap' }}>
+                              <Typography variant="caption" color="text.secondary" sx={{ fontSize: '10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
                                 • {item.targetLevelName}
                               </Typography>
                             )}
                           </Box>
                         </Box>
                         <Box display="flex" flexDirection="column" alignItems="center" gap={0.5} flexShrink={0}>
-                          <IconButton size="small" onClick={(e) => handleToggleLike(e, item.id)} sx={{ p: 0.5, color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8' }}>
+                          <IconButton 
+                            size="small" 
+                            onClick={(e) => handleToggleLike(e, item.id)} 
+                            sx={{ p: 0.5, color: likesInfo[item.id]?.isLiked ? '#EF4444' : '#94A3B8' }}
+                            title={likesInfo[item.id]?.isLiked ? "Bỏ thích" : "Yêu thích"}
+                          >
                             {likesInfo[item.id]?.isLiked ? <IconHeartFilled size={16} /> : <IconHeart size={16} />}
                           </IconButton>
                           <IconButton 
                             size="small" 
                             onClick={(e) => { e.stopPropagation(); setSelectedResourceForReport(item); }}
                             sx={{ p: 0.5, color: '#94A3B8', '&:hover': { color: '#EF4444' } }}
+                            title="Báo cáo lỗi"
                           >
                             <IconFlag size={16} />
                           </IconButton>
