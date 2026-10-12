@@ -11,6 +11,7 @@
     "datePlaceholder": "October 12, 2023",
     "startNewEvaluation": "Start new evaluation",
     "evaluatedAlert": "Assessment completed at {{date}}",
+    "finalScore": "Final Score",
     "currentProgress": "AI Competency & Skill Tree",
     "radar": {
       "title": "AI Competency Radar Chart",
@@ -34,10 +35,19 @@
         "DESIGN": "System Design"
       }
     },
+    "domain": {
+      "HCM": "Human-centred Mindset",
+      "ETHICS": "AI Ethics",
+      "TECH": "AI Techniques & Applications",
+      "DESIGN": "AI System Design"
+    },
     "level": {
       "L1": "UNDERSTAND",
       "L2": "APPLY",
-      "L3": "CREATE"
+      "L3": "CREATE",
+      "UNDERSTAND": "UNDERSTAND",
+      "APPLY": "APPLY",
+      "CREATE": "CREATE"
     },
     "skillTree": {
       "title": "AI Skill Tree (12 Nodes)",
@@ -125,7 +135,8 @@
       "required": "{{fieldName}} is required",
       "email_invalid": "{{fieldName}} is invalid"
     },
-    "upload_images": "Click or drag and drop to upload images"
+    "upload_images": "Click or drag and drop to upload images",
+    "cancel": "Cancel"
   },
   "login": {
     "title": "Login",
@@ -818,6 +829,18 @@
       "ageInvalid": "Please enter a valid age",
       "ageMin": "Age is not valid",
       "ageMax": "Age is not valid"
+    }
+  },
+  "report_resource": {
+    "title": "Report Resource",
+    "description": "You are reporting the document: ",
+    "instruction": "Please let the administrator know what issue this document has (e.g. broken link, incorrect content, etc.).",
+    "placeholder": "Enter reason for report...",
+    "submit": "Submit Report",
+    "success": "Report submitted successfully. Thank you for your feedback!",
+    "error": {
+      "empty_reason": "Please enter a reason for the report",
+      "submit_failed": "An error occurred, please try again later."
     }
   }
 }

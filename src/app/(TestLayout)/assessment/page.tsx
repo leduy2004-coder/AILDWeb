@@ -7,6 +7,7 @@ import { IconClock, IconPlayerPause } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { TestQuestionCard } from '@/modules/public/assessment/components/TestQuestionCard';
+import { getLocalizedDomain, getLocalizedLevel } from '@/modules/public/home/constant/home-resource.constant';
 import { TestChatRoom } from '@/modules/public/assessment/components/TestChatRoom';
 import { TestResultCard } from '@/modules/public/assessment/components/TestResultCard';
 import Logo from '@/app/(DashboardLayout)/layout/shared/logo/Logo';
@@ -244,8 +245,12 @@ export default function AssessmentPage() {
           <TestResultCard summaryData={summaryData} />
         ) : (
           <TestQuestionCard
-            domainName={currentQuestion.domainName || ''}
-            levelName={currentQuestion.levelName || ''}
+            domainName={getLocalizedDomain({
+              domainName: currentQuestion.domainName,
+            }, t)}
+            levelName={getLocalizedLevel({
+              targetLevelName: currentQuestion.levelName,
+            }, t)}
             content={currentQuestion.content || ''}
             type={currentQuestion.type}
             options={currentQuestion.options || []}

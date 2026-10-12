@@ -11,6 +11,7 @@
     "datePlaceholder": "Ngày 12 tháng 10, 2023",
     "startNewEvaluation": "Bắt đầu bài đánh giá mới",
     "evaluatedAlert": "Đã làm bài đánh giá vào lúc {{date}}",
+    "finalScore": "Điểm tổng kết",
     "currentProgress": "Năng lực & Cây kỹ năng AI",
     "radar": {
       "title": "Biểu đồ Năng lực AI",
@@ -34,10 +35,19 @@
         "DESIGN": "Thiết kế HT"
       }
     },
+    "domain": {
+      "HCM": "Tư duy lấy con người làm trung tâm",
+      "ETHICS": "Đạo đức AI",
+      "TECH": "Kỹ thuật và Ứng dụng AI",
+      "DESIGN": "Thiết kế Hệ thống AI"
+    },
     "level": {
       "L1": "THÔNG HIỂU",
       "L2": "VẬN DỤNG",
-      "L3": "SÁNG TẠO"
+      "L3": "SÁNG TẠO",
+      "UNDERSTAND": "THÔNG HIỂU",
+      "APPLY": "VẬN DỤNG",
+      "CREATE": "SÁNG TẠO"
     },
     "skillTree": {
       "title": "Cây Kỹ Năng AI (12 Node)",
@@ -130,7 +140,8 @@
       "required": "{{fieldName}} không được để trống",
       "email_invalid": "{{fieldName}} không hợp lệ"
     },
-    "upload_images": "Nhấn hoặc kéo thả để tải ảnh lên"
+    "upload_images": "Nhấn hoặc kéo thả để tải ảnh lên",
+    "cancel": "Hủy"
   },
   "login": {
     "title": "Đăng nhập",
@@ -829,6 +840,18 @@
       "ageInvalid": "Vui lòng nhập tuổi hợp lệ",
       "ageMin": "Tuổi không hợp lệ",
       "ageMax": "Tuổi không hợp lệ"
+    }
+  },
+  "report_resource": {
+    "title": "Báo cáo tài nguyên",
+    "description": "Bạn đang báo cáo tài liệu: ",
+    "instruction": "Vui lòng cho quản trị viên biết tài liệu này gặp vấn đề gì (ví dụ: link hỏng, nội dung sai, v.v.).",
+    "placeholder": "Nhập lý do báo cáo...",
+    "submit": "Gửi Báo Cáo",
+    "success": "Báo cáo thành công. Cảm ơn bạn đã phản hồi!",
+    "error": {
+      "empty_reason": "Vui lòng nhập lý do báo cáo",
+      "submit_failed": "Có lỗi xảy ra, vui lòng thử lại sau."
     }
   }
 }

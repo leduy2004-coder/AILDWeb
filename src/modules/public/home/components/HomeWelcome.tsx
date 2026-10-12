@@ -125,7 +125,7 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
               }}
             >
               <Typography variant="subtitle2" fontWeight={700}>
-                Điểm tổng kết:
+                {t('home.finalScore', 'Điểm tổng kết')}:
               </Typography>
               <Typography variant="subtitle1" fontWeight={800}>
                 {Math.round(finalScore * 100) / 100}/10

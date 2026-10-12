@@ -9,7 +9,6 @@ import {
   Button,
   Paper,
   Chip,
-  TextField,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { IconShieldCheck } from '@tabler/icons-react';
