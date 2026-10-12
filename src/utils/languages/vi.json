@@ -503,6 +503,10 @@
       "password": "Mật khẩu",
       "passwordPlaceholder": "Nhập mật khẩu...",
       "passwordEditNote": "* Để nguyên ******** nếu không muốn thay đổi mật khẩu.",
+      "age": "Độ tuổi",
+      "agePlaceholder": "Nhập tuổi...",
+      "major": "Ngành nghề / Lĩnh vực",
+      "majorPlaceholder": "Ví dụ: IT, Kế toán, Marketing...",
       "role": "Vai trò",
       "status": "Trạng thái tài khoản",
       "cancel": "Hủy bỏ",
@@ -516,7 +520,8 @@
         "emailInvalid": "Email không hợp lệ",
         "passwordRequired": "Mật khẩu không được để trống khi tạo mới",
         "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự",
-        "roleRequired": "Vui lòng chọn vai trò"
+        "roleRequired": "Vui lòng chọn vai trò",
+        "ageInvalid": "Tuổi phải từ 1 đến 100"
       }
     },
     "delete": {

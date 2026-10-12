@@ -63,6 +63,8 @@ export default function UserFormModal({ open, onClose, detailData, isEdit }: Pro
       password: '',
       roleCode: 'STUDENT',
       status: true,
+      age: '',
+      major: '',
     },
   });
 
@@ -75,6 +77,8 @@ export default function UserFormModal({ open, onClose, detailData, isEdit }: Pro
           password: '********',
           roleCode: getRoleCode(detailData.role),
           status: detailData.status !== false,
+          age: detailData.age != null ? String(detailData.age) : '',
+          major: detailData.major || '',
         });
       } else {
         reset({
@@ -83,12 +87,17 @@ export default function UserFormModal({ open, onClose, detailData, isEdit }: Pro
           password: '',
           roleCode: 'STUDENT',
           status: true,
+          age: '',
+          major: '',
         });
       }
     }
   }, [open, isEdit, detailData, reset]);
 
   const onSubmit = (data: UserFormValues) => {
+    const age = data.age ? Number(data.age) : undefined;
+    const major = data.major?.trim() || undefined;
+
     if (isEdit && detailData) {
       const updateData: IUserUpdateRequest = {
         id: detailData.id,
@@ -97,6 +106,8 @@ export default function UserFormModal({ open, onClose, detailData, isEdit }: Pro
         status: data.status,
         role: { code: data.roleCode },
         password: data.password && data.password !== '********' ? data.password : undefined,
+        age,
+        major,
       };
 
       updateMutation.mutate(updateData, {
@@ -113,6 +124,8 @@ export default function UserFormModal({ open, onClose, detailData, isEdit }: Pro
         password: data.password || '',
         status: data.status,
         role: { code: data.roleCode },
+        age,
+        major,
       };
 
       createMutation.mutate(createData, {
@@ -225,6 +238,48 @@ export default function UserFormModal({ open, onClose, detailData, isEdit }: Pro
                   />
                 )}
               />
+            </Box>
+
+            {/* Age & Major Fields */}
+            <Box display="flex" gap={2}>
+              <Box flex={1}>
+                <Typography variant="subtitle2" fontWeight={600} mb={1}>
+                  {t('form.age')}
+                </Typography>
+                <Controller
+                  name="age"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      type="number"
+                      inputProps={{ min: 1, max: 100 }}
+                      placeholder={t('form.agePlaceholder')}
+                      error={!!errors.age}
+                      helperText={errors.age?.message}
+                    />
+                  )}
+                />
+              </Box>
+              <Box flex={2}>
+                <Typography variant="subtitle2" fontWeight={600} mb={1}>
+                  {t('form.major')}
+                </Typography>
+                <Controller
+                  name="major"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      placeholder={t('form.majorPlaceholder')}
+                      error={!!errors.major}
+                      helperText={errors.major?.message}
+                    />
+                  )}
+                />
+              </Box>
             </Box>
 
             {/* Role Select & Status Switch */}

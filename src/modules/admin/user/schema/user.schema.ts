@@ -22,6 +22,14 @@ export const getUserSchema = (t: (key: string) => string, isEdit?: boolean) => {
           .min(6, { message: t('form.validation.passwordMin') }),
     roleCode: z.string().min(1, { message: t('form.validation.roleRequired') }),
     status: z.boolean(),
+    // Kept as string in the form; empty means "not set"
+    age: z
+      .string()
+      .optional()
+      .refine((val) => !val || (/^\d+$/.test(val) && Number(val) >= 1 && Number(val) <= 100), {
+        message: t('form.validation.ageInvalid'),
+      }),
+    major: z.string().optional(),
   });
 };
 

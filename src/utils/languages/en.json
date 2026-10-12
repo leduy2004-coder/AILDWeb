@@ -498,6 +498,10 @@
       "password": "Password",
       "passwordPlaceholder": "Enter password...",
       "passwordEditNote": "* Leave as ******** if you don't want to change password.",
+      "age": "Age",
+      "agePlaceholder": "Enter age...",
+      "major": "Major / Field",
+      "majorPlaceholder": "e.g. IT, Accounting, Marketing...",
       "role": "Role",
       "status": "Account Status",
       "cancel": "Cancel",
@@ -511,7 +515,8 @@
         "emailInvalid": "Invalid email address",
         "passwordRequired": "Password is required for new user",
         "passwordMin": "Password must be at least 6 characters",
-        "roleRequired": "Please select a role"
+        "roleRequired": "Please select a role",
+        "ageInvalid": "Age must be between 1 and 100"
       }
     },
     "delete": {
