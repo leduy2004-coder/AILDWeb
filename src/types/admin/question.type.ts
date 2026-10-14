@@ -9,9 +9,8 @@ export interface IQuestion {
   id: number;
   domainId: number;
   levelId: number;
-  type: 'MULTIPLE_CHOICE' | 'PRACTICAL';
+  type: 'MULTIPLE_CHOICE';
   content: string;
-  rubric?: string;
   status: 'DRAFT' | 'PUBLISHED' | 'REJECTED';
   options?: IQuestionOption[];
   difficultyIndex?: number;
@@ -23,7 +22,6 @@ export interface IQuestionRequest {
   levelId: number;
   type: string;
   content: string;
-  rubric?: string;
   status: string;
   options?: IQuestionOption[];
 }
@@ -40,7 +38,6 @@ export interface IQuestionFilter {
 export interface IAIGenerateQuestionRequest {
   domainId: number;
   levelId: number;
-  type: string;
   applicationArea?: string;
   notes?: string;
 }

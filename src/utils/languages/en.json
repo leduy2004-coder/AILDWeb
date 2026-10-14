@@ -316,12 +316,7 @@
       "incorrect": "Incorrect",
       "selected": "Selected by Student",
       "correctAnswer": "Correct Answer",
-      "studentAnswerText": "Student Answer:",
-      "noAnswer": "(No answer provided)",
-      "rubric": "Evaluation Rubric / Correct Answer:",
-      "aiFeedback": "AI Evaluation & Feedback",
-      "score": "Score:",
-      "noAIFeedback": "(No feedback from AI)",
+      "aiFeedback": "AI Overall Feedback",
       "tabMcq": "Multiple Choice",
       "tabChat": "AI Interview History",
       "noChatHistory": "No AI interview history."
@@ -567,8 +562,7 @@
       "difficultyNote": "* Difficulty: based on student performance evaluation"
     },
     "types": {
-      "MULTIPLE_CHOICE": "Multiple Choice",
-      "PRACTICAL": "Practical"
+      "MULTIPLE_CHOICE": "Multiple Choice"
     },
     "status": {
       "DRAFT": "Draft",
@@ -618,8 +612,6 @@
       "optionsCorrectHint": "Select the correct answer",
       "addOption": "Add Option",
       "optionPlaceholder": "Enter option text...",
-      "rubric": "Rubric",
-      "rubricPlaceholder": "Enter evaluation rubric for practical question...",
       "status": "Status",
       "cancel": "Cancel",
       "save": "Save Question",

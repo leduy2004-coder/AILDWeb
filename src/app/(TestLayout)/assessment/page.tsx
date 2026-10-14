@@ -99,7 +99,7 @@ export default function AssessmentPage() {
     }
   };
 
-  const handleNext = async (selectedOptionId: number | null, answerText?: string) => {
+  const handleNext = async (selectedOptionId: number | null) => {
     if (!assessmentId || !currentQuestion?.questionId) return;
 
     setIsSubmitting(true);

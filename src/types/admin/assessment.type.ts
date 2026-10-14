@@ -20,13 +20,9 @@ export interface IAdminAssessmentAnswerDto {
   questionId: number;
   questionContent: string;
   questionType: string;
-  rubric: string | null;
-  answerText: string | null;
   selectedOptionId: number | null;
   isCorrect: boolean;
   finalScore: number;
-  aiScore: number | null;
-  aiJustification: string | null;
   answeredAt: string;
   domainCode: string | null;
   domainName: string | null;

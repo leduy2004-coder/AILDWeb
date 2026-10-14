@@ -28,7 +28,6 @@ export interface INextQuestionResponse {
 export interface ISubmitAnswerRequest {
   questionId: number;
   selectedOptionId?: number;
-  answerText?: string;
 }
 
 export interface IDomainScoreDto {

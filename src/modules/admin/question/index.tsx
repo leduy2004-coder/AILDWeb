@@ -56,8 +56,7 @@ export default function QuestionBankPage() {
           data: {
             ...res.result,
             originalDomainId: requestData.domainId,
-            originalLevelId: requestData.levelId,
-            originalType: requestData.type
+            originalLevelId: requestData.levelId
           } 
         });
         const isDuplicate = res.result?.isDuplicate;

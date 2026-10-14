@@ -53,7 +53,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
   const [aiDialogOpen, setAiDialogOpen] = React.useState(false);
   const [confirmCloseOpen, setConfirmCloseOpen] = React.useState(false);
   const [hasUnsavedAIData, setHasUnsavedAIData] = React.useState(false);
-  const [expandModalField, setExpandModalField] = React.useState<'content' | 'rubric' | null>(null);
+  const [expandModalField, setExpandModalField] = React.useState<'content' | null>(null);
 
   const schema = getQuestionSchema(t);
 
@@ -70,7 +70,6 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
         { content: '', isCorrect: false, displayOrder: 2 },
       ],
       correctOptionIndex: 0,
-      rubric: '',
     }
   });
 
@@ -79,7 +78,6 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
     name: 'options'
   });
 
-  const watchType = watch('type');
   const watchCorrectIndex = watch('correctOptionIndex');
 
   const { data: detailData, isLoading: isLoadingDetail } = useQuestion(questionId as number);
@@ -108,7 +106,6 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
           levelId: q.levelId,
           type: q.type as 'MULTIPLE_CHOICE',
           status: q.status,
-          rubric: q.rubric || '',
           options: mappedOptions,
           correctOptionIndex: correctIdx !== null ? Number(correctIdx) : null,
           difficultyIndex: q.difficultyIndex !== null && q.difficultyIndex !== undefined ? Number(q.difficultyIndex) : undefined,
@@ -125,7 +122,6 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
             { content: '', isCorrect: false, displayOrder: 2 },
           ],
           correctOptionIndex: 0,
-          rubric: '',
           difficultyIndex: undefined,
         });
         setHasUnsavedAIData(false);
@@ -157,9 +153,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
         ...currentValues,
         domainId: aiGeneratedData.originalDomainId ?? currentValues.domainId,
         levelId: aiGeneratedData.originalLevelId ?? currentValues.levelId,
-        type: aiGeneratedData.originalType ?? currentValues.type,
         content: generatedData.content || '',
-        rubric: generatedData.rubric || '',
         options: mappedOptions,
         correctOptionIndex: correctIdx,
         status: 'DRAFT', // Always DRAFT when AI generated
@@ -173,11 +167,11 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
   const onSubmit = (data: QuestionFormValues) => {
     const payload = {
       ...data,
-      options: data.type === 'MULTIPLE_CHOICE' ? data.options?.map((opt, idx) => ({
+      options: data.options?.map((opt, idx) => ({
         ...opt,
         isCorrect: idx === data.correctOptionIndex,
         displayOrder: idx + 1,
-      })) : []
+      }))
     };
 
     if (isEdit) {
@@ -205,7 +199,6 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
       onAIGenerate({
         domainId: currentValues.domainId,
         levelId: currentValues.levelId,
-        type: currentValues.type,
         applicationArea: appArea,
         notes: notes
       });
@@ -412,57 +405,53 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                 />
               </Box>
 
-              {/* Options for MULTIPLE_CHOICE */}
-              {watchType === 'MULTIPLE_CHOICE' && (
-                <Box>
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                    <Typography variant="subtitle2" fontWeight={600}>{t('form.optionsTitle')}</Typography>
-                    <Typography variant="caption" color="textSecondary">{t('form.optionsCorrectHint')}</Typography>
-                  </Box>
-                  <Stack spacing={2}>
-                    {fields.map((item, index) => (
-                      <Box key={item.id} display="flex" alignItems="center" gap={1}>
-                        <Radio
-                          checked={watchCorrectIndex === index}
-                          onChange={() => setValue('correctOptionIndex', index, { shouldValidate: true })}
-                        />
-                        <Controller
-                          name={`options.${index}.content`}
-                          control={control}
-                          render={({ field, fieldState: { error } }) => (
-                            <TextField
-                              {...field}
-                              fullWidth
-                              multiline
-                              size="small"
-                              placeholder={t('form.optionPlaceholder')}
-                              error={!!error}
-                              helperText={error?.message}
-                            />
-                          )}
-                        />
-                        <IconButton color="error" onClick={() => remove(index)} disabled={fields.length <= 2}>
-                          <Icon icon="solar:trash-bin-trash-bold" />
-                        </IconButton>
-                      </Box>
-                    ))}
-                    {errors.options?.root?.message && <FormHelperText error>{errors.options.root.message}</FormHelperText>}
-                    {/* Fallback in case RHF puts it directly on options */}
-                    {errors.options?.message && <FormHelperText error>{errors.options.message}</FormHelperText>}
-                    {errors.correctOptionIndex && <FormHelperText error>{errors.correctOptionIndex.message}</FormHelperText>}
-                    
-                    <Button
-                      startIcon={<Icon icon="solar:add-circle-linear" />}
-                      onClick={() => append({ content: '', isCorrect: false, displayOrder: fields.length + 1 })}
-                      sx={{ alignSelf: 'flex-start' }}
-                    >
-                      {t('form.addOption')}
-                    </Button>
-                  </Stack>
+              {/* Options */}
+              <Box>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                  <Typography variant="subtitle2" fontWeight={600}>{t('form.optionsTitle')}</Typography>
+                  <Typography variant="caption" color="textSecondary">{t('form.optionsCorrectHint')}</Typography>
                 </Box>
-              )}
-
-
+                <Stack spacing={2}>
+                  {fields.map((item, index) => (
+                    <Box key={item.id} display="flex" alignItems="center" gap={1}>
+                      <Radio
+                        checked={watchCorrectIndex === index}
+                        onChange={() => setValue('correctOptionIndex', index, { shouldValidate: true })}
+                      />
+                      <Controller
+                        name={`options.${index}.content`}
+                        control={control}
+                        render={({ field, fieldState: { error } }) => (
+                          <TextField
+                            {...field}
+                            fullWidth
+                            multiline
+                            size="small"
+                            placeholder={t('form.optionPlaceholder')}
+                            error={!!error}
+                            helperText={error?.message}
+                          />
+                        )}
+                      />
+                      <IconButton color="error" onClick={() => remove(index)} disabled={fields.length <= 2}>
+                        <Icon icon="solar:trash-bin-trash-bold" />
+                      </IconButton>
+                    </Box>
+                  ))}
+                  {errors.options?.root?.message && <FormHelperText error>{errors.options.root.message}</FormHelperText>}
+                  {/* Fallback in case RHF puts it directly on options */}
+                  {errors.options?.message && <FormHelperText error>{errors.options.message}</FormHelperText>}
+                  {errors.correctOptionIndex && <FormHelperText error>{errors.correctOptionIndex.message}</FormHelperText>}
+                  
+                  <Button
+                    startIcon={<Icon icon="solar:add-circle-linear" />}
+                    onClick={() => append({ content: '', isCorrect: false, displayOrder: fields.length + 1 })}
+                    sx={{ alignSelf: 'flex-start' }}
+                  >
+                    {t('form.addOption')}
+                  </Button>
+                </Stack>
+              </Box>
 
               {/* Status */}
               <Box>
@@ -517,8 +506,8 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
         <ExpandFieldModal
           open={Boolean(expandModalField)}
           onClose={() => setExpandModalField(null)}
-          title={expandModalField === 'content' ? t('form.content') : t('form.rubric')}
-          placeholder={expandModalField === 'content' ? t('form.contentPlaceholder') : t('form.rubricPlaceholder')}
+          title={t('form.content')}
+          placeholder={t('form.contentPlaceholder')}
           name={expandModalField}
           control={control}
         />

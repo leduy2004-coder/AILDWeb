@@ -321,12 +321,7 @@
       "incorrect": "Sai",
       "selected": "Sinh viên chọn",
       "correctAnswer": "Đáp án đúng",
-      "studentAnswerText": "Câu trả lời của sinh viên:",
-      "noAnswer": "(Không có câu trả lời)",
-      "rubric": "Tiêu chí chấm / Đáp án đúng:",
-      "aiFeedback": "AI Chấm điểm & Nhận xét",
-      "score": "Điểm:",
-      "noAIFeedback": "(Không có nhận xét từ AI)",
+      "aiFeedback": "Nhận xét chung của AI",
       "tabMcq": "Chi tiết Trắc nghiệm",
       "tabChat": "Lịch sử Phỏng vấn AI",
       "noChatHistory": "Không có lịch sử phỏng vấn AI."
@@ -578,8 +573,7 @@
       "difficultyNote": "* Độ khó: dựa vào đánh giá bài làm sinh viên"
     },
     "types": {
-      "MULTIPLE_CHOICE": "Trắc nghiệm",
-      "PRACTICAL": "Thực hành"
+      "MULTIPLE_CHOICE": "Trắc nghiệm"
     },
     "status": {
       "DRAFT": "Nháp",
@@ -629,8 +623,6 @@
       "optionsCorrectHint": "Chọn câu trả lời đúng",
       "addOption": "Thêm tùy chọn",
       "optionPlaceholder": "Nhập văn bản tùy chọn...",
-      "rubric": "Tiêu chí đánh giá (Rubric)",
-      "rubricPlaceholder": "Nhập rubric đánh giá cho loại câu hỏi thực hành...",
       "status": "Trạng thái",
       "cancel": "Hủy bỏ",
       "save": "Lưu câu hỏi",

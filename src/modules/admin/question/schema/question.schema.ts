@@ -6,7 +6,6 @@ export const getQuestionSchema = (t: (key: string, options?: any) => string) => 
     domainId: z.number({ message: t('form.validation.domainRequired') }),
     levelId: z.number({ message: t('form.validation.levelRequired') }),
     type: z.enum(['MULTIPLE_CHOICE']),
-    rubric: z.string().optional(),
     status: z.string(),
     options: z.array(
       z.object({
@@ -30,19 +29,17 @@ export const getQuestionSchema = (t: (key: string, options?: any) => string) => 
       if (data.difficultyIndex === null || data.difficultyIndex === undefined) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.difficultyRequired'), path: ['difficultyIndex'] });
       }
-      if (data.type === 'MULTIPLE_CHOICE') {
-        if (!data.options || data.options.length < 2) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.optionsRequired'), path: ['options'] });
-        } else {
-          data.options.forEach((opt, idx) => {
-            if (!opt.content || opt.content.trim() === '') {
-              ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.contentRequired'), path: ['options', idx, 'content'] });
-            }
-          });
-        }
-        if (data.correctOptionIndex === null || data.correctOptionIndex === undefined) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.oneCorrectRequired'), path: ['correctOptionIndex'] });
-        }
+      if (!data.options || data.options.length < 2) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.optionsRequired'), path: ['options'] });
+      } else {
+        data.options.forEach((opt, idx) => {
+          if (!opt.content || opt.content.trim() === '') {
+            ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.contentRequired'), path: ['options', idx, 'content'] });
+          }
+        });
+      }
+      if (data.correctOptionIndex === null || data.correctOptionIndex === undefined) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: t('form.validation.oneCorrectRequired'), path: ['correctOptionIndex'] });
       }
     }
   });
