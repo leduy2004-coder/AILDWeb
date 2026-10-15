@@ -184,7 +184,7 @@ Các nhóm bảng chính (đã cập nhật thêm 3 nhóm bảng cho tính năng
 - **Mới:** `skill_nodes` — trạng thái monotonic (Locked/Unlocked/Completed) + `recent_accuracy` cho từng node của từng sinh viên
 - **Mới:** `node_attempts` — log từng lần thử 1 node, phục vụ Adaptive Testing Engine tính điểm và cập nhật `recent_accuracy`
 - **Mới:** `certificates` — mã xác thực (hash), ngày cấp, node/domain liên quan
-- **Mới:** `question_generation_attempts` — log từng lần AI thử sinh câu hỏi (domain, level, similarity_score, kết quả ACCEPTED/REJECTED_DUPLICATE/FAILED_MAX_RETRY), phục vụ audit và số liệu minh chứng hiệu quả chống trùng lặp trong báo cáo
+- **Mới:** `question_generation_attempts` — log từng lần AI thử sinh câu hỏi (domain, level, similarity_score, kết quả ACCEPTED/REJECTED_DUPLICATE/INVALID_OUTPUT/FAILED_MAX_RETRY; mỗi lượt sinh kết thúc bằng đúng 1 dòng ACCEPTED hoặc FAILED_MAX_RETRY), phục vụ audit và số liệu minh chứng hiệu quả chống trùng lặp trong báo cáo
 
 ## 13. Giới hạn đã biết
 

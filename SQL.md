@@ -262,7 +262,7 @@ CREATE TABLE question_generation_attempts (
     application_field VARCHAR(50),                 -- lĩnh vực áp dụng dùng cho lần thử này
     similarity_score NUMERIC(4,3),
     result          VARCHAR(20) NOT NULL
-                    CHECK (result IN ('ACCEPTED', 'REJECTED_DUPLICATE', 'FAILED_MAX_RETRY')),
+                    CHECK (result IN ('ACCEPTED', 'REJECTED_DUPLICATE', 'INVALID_OUTPUT', 'FAILED_MAX_RETRY')),
     resulting_question_id BIGINT REFERENCES questions(id), -- null nếu không ACCEPTED
     created_at      TIMESTAMP NOT NULL DEFAULT now()
 );
