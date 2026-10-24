@@ -1,20 +1,19 @@
-version: '3.8'
 services:
   aild-web:
-
     container_name: aild-web
     ports:
-      - "3000:3000"
+      # Localhost only: Docker bypasses UFW, so public traffic goes through Nginx
+      - "127.0.0.1:3000:3000"
     env_file:
       - .env.production
-    # Build image with variables from .env (Local or VPS)
+    # NEXT_PUBLIC_* are baked in at build time. Compose reads them from `.env` (not .env.production),
+    # so create .env from .env.example before `docker compose up --build`.
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_ENDPOINT: ${NEXT_PUBLIC_API_ENDPOINT:-http://localhost:8080}
-        NEXT_PUBLIC_GOOGLE_LOGIN_URL: ${NEXT_PUBLIC_GOOGLE_LOGIN_URL:-http://localhost:8080/api/v1/auth/oauth2/authorization/google}
+        NEXT_PUBLIC_API_ENDPOINT: ${NEXT_PUBLIC_API_ENDPOINT:?set NEXT_PUBLIC_API_ENDPOINT in .env}
+        NEXT_PUBLIC_GOOGLE_LOGIN_URL: ${NEXT_PUBLIC_GOOGLE_LOGIN_URL:?set NEXT_PUBLIC_GOOGLE_LOGIN_URL in .env}
     environment:
       - NODE_ENV=production
-      # - NEXT_PUBLIC_URL=https://productic.com
-      # - NEXT_PUBLIC_GOOGLE_LOGIN_URL=http://localhost:8080/api/v1/auth/oauth2/authorization/google
+    restart: unless-stopped
