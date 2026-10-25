@@ -108,6 +108,7 @@ const request = async <Response>(
     : `${baseUrl}/${url}`;
 
   const res = await fetch(fullUrl, {
+    credentials: "include",
     ...options,
     headers: {
       ...baseHeaders,
@@ -137,18 +138,23 @@ const request = async <Response>(
         }
       );
     } else if (res.status === AUTHENTICATION_ERROR_STATUS) {
-      if (isClient()) {
+      const isAuthEndpoint =
+        url.includes('/login') || url.includes('/refresh') || url.includes('/register');
+
+      if (isClient() && !isAuthEndpoint) {
         const originalRequest = async () => {
           const newToken = localStorage.getItem(AuthActionTypes.ACCESS_TOKEN);
+          const requestHeaders: Record<string, string> = {
+            ...baseHeaders,
+            ...(options?.headers as Record<string, string>),
+          };
           if (newToken) {
-            baseHeaders.Authorization = `Bearer ${newToken}`;
+            requestHeaders.Authorization = `Bearer ${newToken}`;
           }
           const retryRes = await fetch(fullUrl, {
+            credentials: "include",
             ...options,
-            headers: {
-              ...baseHeaders,
-              ...options?.headers,
-            },
+            headers: requestHeaders,
             body,
             method,
           });
@@ -177,10 +183,12 @@ const request = async <Response>(
             );
 
             const refreshData = await refreshRes.json();
+            const newAccessToken =
+              refreshData.result?.access_token || refreshData.result?.accessToken;
 
-            if (refreshRes.ok && refreshData.result?.accessToken) {
-              localStorage.setItem(AuthActionTypes.ACCESS_TOKEN, refreshData.result.accessToken);
-              processQueue(null, refreshData.result.accessToken);
+            if (refreshRes.ok && newAccessToken) {
+              localStorage.setItem(AuthActionTypes.ACCESS_TOKEN, newAccessToken);
+              processQueue(null, newAccessToken);
               return (await originalRequest()) as typeof data;
             } else {
               throw new Error("Refresh failed");
