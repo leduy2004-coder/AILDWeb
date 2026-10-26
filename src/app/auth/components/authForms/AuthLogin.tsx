@@ -8,10 +8,11 @@ import { useFormLogin } from '../../schemas/login.schema';
 import AuthSocialButtons from './AuthSocialButtons';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { ISigningBody } from '@/types/shared';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, IconButton, InputAdornment, Divider } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { isAdminPortal } from '@/modules/shared/utils/portal.util';
 
 interface AuthLoginProps extends loginType {
   onSubmit?: SubmitHandler<ISigningBody>;
@@ -21,6 +22,12 @@ const AuthLogin = ({ title, subtitle, subtext, onSubmit }: AuthLoginProps) => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const { control, handleSubmit } = useFormLogin();
+  // Known only in the browser; null until then so the student-only links never flash on the admin portal
+  const [adminPortal, setAdminPortal] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setAdminPortal(isAdminPortal());
+  }, []);
   const handleFormSubmit: SubmitHandler<ISigningBody> = async (data) => {
     if (onSubmit) await onSubmit(data);
   };
@@ -155,43 +162,45 @@ const AuthLogin = ({ title, subtitle, subtext, onSubmit }: AuthLoginProps) => {
         </Stack>
       </form>
 
-      {/* Divider */}
-      <Box my={3}>
-        <Divider>
-          <Typography
-            component="span"
-            color="textSecondary"
-            variant="body2"
-            fontWeight="400"
-          >
-            {t('login.or')}
-          </Typography>
-        </Divider>
-      </Box>
+      {/* Google login and sign-up are for students only */}
+      {adminPortal === false && (
+        <>
+          {/* Divider */}
+          <Box my={3}>
+            <Divider>
+              <Typography
+                component="span"
+                color="textSecondary"
+                variant="body2"
+                fontWeight="400"
+              >
+                {t('login.or')}
+              </Typography>
+            </Divider>
+          </Box>
 
-      {/* Social Buttons */}
-      <AuthSocialButtons title={t('login.orSignUpWith')} />
+          {/* Social Buttons */}
+          <AuthSocialButtons title={t('login.orSignUpWith')} />
 
-      {/* Sign Up Link */}
-      <Box sx={{ mt: 3, textAlign: 'center' }}>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {t('login.dontHaveAccount')}{' '}
-          <Typography
-            component={Link}
-            href="/auth/register"
-            fontWeight="600"
-            sx={{
-              textDecoration: 'none',
-              color: 'primary.main',
-            }}
-          >
-            {t('login.signupButton')}
-          </Typography>
-        </Typography>
-      </Box>
+          {/* Sign Up Link */}
+          <Box sx={{ mt: 3, textAlign: 'center' }}>
+            <Typography color="textSecondary" variant="body2">
+              {t('login.dontHaveAccount')}{' '}
+              <Typography
+                component={Link}
+                href="/auth/register"
+                fontWeight="600"
+                sx={{
+                  textDecoration: 'none',
+                  color: 'primary.main',
+                }}
+              >
+                {t('login.signupButton')}
+              </Typography>
+            </Typography>
+          </Box>
+        </>
+      )}
 
       {subtitle}
     </Box>

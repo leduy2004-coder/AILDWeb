@@ -72,7 +72,6 @@
       },
       "cumulativeNote": "* Lưu ý: Cây kỹ năng thể hiện sự tiến bộ tích lũy qua nhiều bài đánh giá, giúp theo dõi sự phát triển toàn diện của bạn."
     },
-
     "recommendations": {
       "title": "Đề xuất cho bạn",
       "viewAll": "Xem tất cả",
@@ -192,7 +191,12 @@
       "title": "Đăng nhập thất bại",
       "message": "Tên đăng nhập hoặc mật khẩu không chính xác."
     },
-    "processingGoogle": "Đang xử lý đăng nhập Google..."
+    "processingGoogle": "Đang xử lý đăng nhập Google...",
+    "wrongPortal": {
+      "title": "Sai trang đăng nhập",
+      "adminOnly": "Trang này chỉ dành cho tài khoản quản trị.",
+      "useAdminPortal": "Tài khoản quản trị vui lòng đăng nhập tại trang quản trị."
+    }
   },
   "register": {
     "step1": {
