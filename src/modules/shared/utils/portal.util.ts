@@ -12,14 +12,8 @@ export const isAdminPortal = (): boolean => {
   return window.location.hostname === new URL(ADMIN_URL!).hostname;
 };
 
-/**
- * i18n key of the error to show when a user with this role must not log in on the current portal,
- * or null when the login is allowed.
- */
-export const getPortalRoleError = (role?: string): string | null => {
-  if (!isPortalSplit()) return null;
-  if (isAdminPortal()) {
-    return role === ROLE_CODE.ADMIN ? null : 'login.wrongPortal.adminOnly';
-  }
-  return role === ROLE_CODE.ADMIN ? 'login.wrongPortal.useAdminPortal' : null;
+/** Admins may log in only on the admin portal, other roles only on the student portal. */
+export const isRoleAllowedOnPortal = (role?: string): boolean => {
+  if (!isPortalSplit()) return true;
+  return isAdminPortal() === (role === ROLE_CODE.ADMIN);
 };

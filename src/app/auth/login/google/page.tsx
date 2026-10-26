@@ -6,7 +6,7 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { loginGoogle } from '@/apis/auth';
 import { setLocalStorageItems } from '@/modules/shared/utils';
-import { getPortalRoleError } from '@/modules/shared/utils/portal.util';
+import { isRoleAllowedOnPortal } from '@/modules/shared/utils/portal.util';
 import { PATH_NAME } from '@/modules/shared/constants';
 import { AuthActionTypes } from '@/types/shared/auth.type';
 import { showErrorToast } from '@/modules/shared/components/toasts/ToastHelper';
@@ -36,12 +36,9 @@ export default function GoogleCallbackPage() {
         const user = response.result.user;
         const userRole = typeof user?.role === 'string' ? user.role : (user?.role as any)?.code;
 
-        // Google login is for students; admins must use the admin portal
-        const portalError = getPortalRoleError(userRole);
-        if (portalError) {
-          showErrorToast(t('login.wrongPortal.title'), t(portalError));
-          router.push('/auth/login');
-          return;
+        // Google login is for students only: reject other roles with the generic login error
+        if (!isRoleAllowedOnPortal(userRole)) {
+          throw new Error('Role not allowed on this portal');
         }
 
         const redirectPath = PATH_NAME.STUDENT;
