@@ -191,12 +191,7 @@
       "title": "Đăng nhập thất bại",
       "message": "Tên đăng nhập hoặc mật khẩu không chính xác."
     },
-    "processingGoogle": "Đang xử lý đăng nhập Google...",
-    "wrongPortal": {
-      "title": "Sai trang đăng nhập",
-      "adminOnly": "Trang này chỉ dành cho tài khoản quản trị.",
-      "useAdminPortal": "Tài khoản quản trị vui lòng đăng nhập tại trang quản trị."
-    }
+    "processingGoogle": "Đang xử lý đăng nhập Google..."
   },
   "register": {
     "step1": {
