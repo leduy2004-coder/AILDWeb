@@ -4,6 +4,7 @@ import { checkUserTypeByUsername, login } from '@/apis/auth';
 import { AuthActionTypes, ISigningBody, LoginBodyType } from '@/types/shared/auth.type';
 import { PATH_NAME, USER_TYPE, RoleType } from '@/modules/shared/constants';
 import { setLocalStorageItems } from '@/modules/shared/utils';
+import { getPortalRoleError } from '@/modules/shared/utils/portal.util';
 import { AxiosError } from 'axios';
 import { t } from 'i18next';
 import { showErrorToast } from '../../components/toasts/ToastHelper';
@@ -16,6 +17,13 @@ export const signingSlice = createAsyncThunk(
       if (typeof window !== 'undefined') {
         const user = response.result.user;
         const userRole = typeof user?.role === 'string' ? user.role : (user?.role as any)?.code;
+
+        // Admins log in only on the admin portal, other roles only on the student portal
+        const portalError = getPortalRoleError(userRole);
+        if (portalError) {
+          showErrorToast(t('login.wrongPortal.title'), t(portalError));
+          return rejectWithValue(portalError);
+        }
 
         let redirectPath = PATH_NAME.HOME;
         if (userRole === RoleType.ADMIN) {

@@ -187,7 +187,12 @@
       "title": "Login failed",
       "message": "The username or password is incorrect."
     },
-    "processingGoogle": "Processing Google login..."
+    "processingGoogle": "Processing Google login...",
+    "wrongPortal": {
+      "title": "Wrong login page",
+      "adminOnly": "This page is for administrator accounts only.",
+      "useAdminPortal": "Administrator accounts must sign in on the admin portal."
+    }
   },
   "register": {
     "step1": {
