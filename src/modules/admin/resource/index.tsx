@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { IconPlus } from '@tabler/icons-react';
