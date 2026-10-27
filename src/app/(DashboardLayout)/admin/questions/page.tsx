@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import QuestionBankPage from '@/modules/admin/question';
 
-export const metadata = {
-  title: 'Ngân hàng câu hỏi | AILD',
-  description: 'Quản lý ngân hàng câu hỏi của hệ thống AILD',
-};
-
 export default function Page() {
-  return <QuestionBankPage />;
+  return (
+    <>
+      <PageMeta titleKey="admin_question.pageTitle" descriptionKey="admin_question.pageDescription" />
+      <QuestionBankPage />
+    </>
+  );
 }

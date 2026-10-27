@@ -76,7 +76,6 @@ export default function RootLayout({
         <MainWrapper sx={{ padding: customizer.isHorizontal ? 0 : '20px' }}>
           <LoadingIndicator />
 
-          <title>{t('title')}</title>
           {/* ------------------------------------------- */}
           {/* Main Wrapper */}
           {/* ------------------------------------------- */}

@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import ResourceModule from '@/modules/admin/resource';
 
-export const metadata = {
-  title: 'Quản lý tài nguyên | AILD',
-  description: 'Quản lý tài liệu và tài nguyên học tập trong hệ thống AILD',
-};
-
 export default function ResourcesPage() {
-  return <ResourceModule />;
+  return (
+    <>
+      <PageMeta titleKey="admin_resource.pageTitle" descriptionKey="admin_resource.pageDescription" />
+      <ResourceModule />
+    </>
+  );
 }

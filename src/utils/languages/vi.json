@@ -3,6 +3,8 @@
     "back_to_top": "Lên đầu trang"
   },
   "home": {
+    "pageTitle": "Trang chủ | AILD",
+    "pageDescription": "Tổng quan học tập và tiến trình của sinh viên trên hệ thống AILD",
     "welcome": "Chào mừng trở lại",
     "lastEvaluation": "Đánh giá lần cuối",
     "noEvaluationYet": "Chưa có bài đánh giá nào",
@@ -143,6 +145,8 @@
     "cancel": "Hủy"
   },
   "login": {
+    "pageTitle": "Đăng nhập | AILD",
+    "pageDescription": "Đăng nhập vào hệ thống AILD",
     "title": "Đăng nhập",
     "username": {
       "title": "Tên đăng nhập",
@@ -194,6 +198,8 @@
     "processingGoogle": "Đang xử lý đăng nhập Google..."
   },
   "register": {
+    "pageTitle": "Đăng ký | AILD",
+    "pageDescription": "Tạo tài khoản mới trên hệ thống AILD",
     "step1": {
       "fullName": "Họ và tên",
       "fullNamePlaceholder": "Nhập họ và tên",
@@ -666,6 +672,8 @@
     }
   },
   "assessment": {
+    "pageTitle": "Kiểm tra đánh giá | AILD",
+    "pageDescription": "Thực hiện bài kiểm tra đánh giá năng lực trên hệ thống AILD",
     "startError": "Không thể bắt đầu bài thi. Vui lòng thử lại sau.",
     "loadQuestionError": "Lỗi khi tải câu hỏi.",
     "submitAnswerError": "Lỗi khi lưu đáp án.",
@@ -701,6 +709,8 @@
     "finalScoreTitle": "ĐIỂM TỔNG KẾT"
   },
   "admin_configs": {
+    "pageTitle": "Cấu hình hệ thống | AILD",
+    "pageDescription": "Quản lý cấu hình và thông số hệ thống AILD",
     "title": "Quản lý Cấu hình",
     "subtitle": "Quản lý Lĩnh vực và Cấp độ của hệ thống",
     "tabs": {
@@ -748,6 +758,8 @@
     }
   },
   "admin_settings": {
+    "pageTitle": "Cài đặt hệ thống | AILD",
+    "pageDescription": "Quản lý cài đặt hệ thống AILD",
     "title": "Cài đặt Hệ thống",
     "subtitle": "Quản lý các cấu hình cốt lõi của hệ thống, bao gồm đánh giá AI và trọng số điểm.",
     "save": "Lưu cài đặt",
@@ -819,6 +831,8 @@
     }
   },
   "profile": {
+    "pageTitle": "Hồ sơ cá nhân | AILD",
+    "pageDescription": "Quản lý thông tin hồ sơ cá nhân",
     "title": "Hồ sơ cá nhân",
     "subtitle": "Vui lòng cập nhật thông tin cá nhân để hệ thống có thể tùy chỉnh bài đánh giá phù hợp với bạn.",
     "save": "Lưu thông tin",

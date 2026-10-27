@@ -1,17 +1,22 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import { SubmissionDetailWrapper } from '@/modules/admin/submissions/detail/SubmissionDetailWrapper';
 
-export const metadata = {
-  title: 'Chi tiết bài nộp | AILD',
-  description: 'Xem chi tiết kết quả bài kiểm tra của học viên',
-};
-
-export default function SubmissionDetailPage({
+export default async function SubmissionDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const id = Number(params.id);
+  const { id: rawId } = await params;
+  const id = Number(rawId);
   if (!id) return null;
-  return <SubmissionDetailWrapper id={id} />;
+  return (
+    <>
+      <PageMeta
+        titleKey="admin_submission.pageDetailTitle"
+        descriptionKey="admin_submission.pageDetailDescription"
+      />
+      <SubmissionDetailWrapper id={id} />
+    </>
+  );
 }

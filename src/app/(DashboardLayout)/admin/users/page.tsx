@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import UserModule from '@/modules/admin/user';
 
-export const metadata = {
-  title: 'Quản lý người dùng | AILD',
-  description: 'Quản lý danh sách người dùng trong hệ thống AILD',
-};
-
 export default function UsersPage() {
-  return <UserModule />;
+  return (
+    <>
+      <PageMeta titleKey="admin_user.pageTitle" descriptionKey="admin_user.pageDescription" />
+      <UserModule />
+    </>
+  );
 }

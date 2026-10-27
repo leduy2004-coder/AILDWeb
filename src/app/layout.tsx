@@ -22,7 +22,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google" content="notranslate" />
-        <title>{'TutorHub_LD'}</title>
       </head>
       <FontWrapper>
         <Providers>

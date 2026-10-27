@@ -3,6 +3,8 @@
     "back_to_top": "Back to top"
   },
   "home": {
+    "pageTitle": "Home | AILD",
+    "pageDescription": "Learning overview and student progress on the AILD system",
     "welcome": "Welcome back",
     "lastEvaluation": "Last evaluation",
     "noEvaluationYet": "No assessment yet",
@@ -143,6 +145,8 @@
     "cancel": "Cancel"
   },
   "login": {
+    "pageTitle": "Login | AILD",
+    "pageDescription": "Sign in to the AILD system",
     "title": "Login",
     "username": {
       "title": "Username",
@@ -194,6 +198,8 @@
     "processingGoogle": "Processing Google login..."
   },
   "register": {
+    "pageTitle": "Register | AILD",
+    "pageDescription": "Create a new account on the AILD system",
     "step1": {
       "fullName": "Full name",
       "fullNamePlaceholder": "Enter full name",
@@ -666,6 +672,8 @@
     }
   },
   "assessment": {
+    "pageTitle": "Assessment | AILD",
+    "pageDescription": "Take the competency assessment test on the AILD system",
     "startError": "Cannot start assessment. Please try again later.",
     "loadQuestionError": "Error loading question.",
     "submitAnswerError": "Error saving answer.",
@@ -701,6 +709,8 @@
     "finalScoreTitle": "FINAL SCORE"
   },
   "admin_configs": {
+    "pageTitle": "System Configuration | AILD",
+    "pageDescription": "Manage AILD system configuration and parameters",
     "title": "Configuration Management",
     "subtitle": "Manage system Domains and Levels",
     "tabs": {
@@ -748,6 +758,8 @@
     }
   },
   "admin_settings": {
+    "pageTitle": "System Settings | AILD",
+    "pageDescription": "Manage AILD system settings",
     "title": "System Settings",
     "subtitle": "Manage core system configurations, including AI assessment and scoring weights.",
     "save": "Save Settings",
@@ -819,6 +831,8 @@
     }
   },
   "profile": {
+    "pageTitle": "Profile | AILD",
+    "pageDescription": "Manage your personal profile information",
     "title": "Personal Profile",
     "subtitle": "Please update your personal information so the system can customize the assessment to suit you.",
     "save": "Save Information",
