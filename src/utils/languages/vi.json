@@ -267,6 +267,10 @@
     "settings": "Cài đặt hệ thống"
   },
   "admin_submission": {
+    "pageTitle": "Quản lý bài nộp | AILD",
+    "pageDescription": "Xem và quản lý các bài nộp của học viên trong hệ thống AILD",
+    "pageDetailTitle": "Chi tiết bài nộp | AILD",
+    "pageDetailDescription": "Xem chi tiết kết quả bài kiểm tra của học viên",
     "title": "Danh sách Bài làm",
     "subtitle": "Quản lý toàn bộ bài làm của sinh viên",
     "filter": {
@@ -327,6 +331,8 @@
     }
   },
   "admin_overview": {
+    "pageTitle": "Bảng điều khiển quản trị | AILD",
+    "pageDescription": "Tổng quan hệ thống dành cho quản trị viên",
     "title": "Tổng quan",
     "errorFetchData": "Lỗi khi tải dữ liệu tổng quan.",
     "noData": "Không có dữ liệu",
@@ -388,6 +394,8 @@
     }
   },
   "admin_resource": {
+    "pageTitle": "Quản lý tài nguyên | AILD",
+    "pageDescription": "Quản lý tài liệu và tài nguyên học tập trong hệ thống AILD",
     "title": "Tài nguyên học tập",
     "subtitle": "Quản lý và giám tuyển tài liệu giáo dục.",
     "search": "Tìm kiếm tài nguyên...",
@@ -470,6 +478,8 @@
     }
   },
   "admin_user": {
+    "pageTitle": "Quản lý người dùng | AILD",
+    "pageDescription": "Quản lý danh sách người dùng trong hệ thống AILD",
     "title": "Quản lý người dùng",
     "subtitle": "Quản lý danh sách, vai trò và trạng thái tài khoản người dùng.",
     "search": "Tìm kiếm theo tên hoặc email...",
@@ -541,6 +551,8 @@
     }
   },
   "admin_question": {
+    "pageTitle": "Ngân hàng câu hỏi | AILD",
+    "pageDescription": "Quản lý ngân hàng câu hỏi dùng cho cả bài Test và thực hành",
     "title": "Ngân hàng câu hỏi",
     "description": "Quản lý ngân hàng câu hỏi dùng cho cả bài Test và thực hành.",
     "newQuestion": "Tạo câu hỏi",
