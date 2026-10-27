@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import ProfileModule from '@/modules/public/profile';
 
-export const metadata = {
-  title: 'Hồ sơ cá nhân | AILD',
-  description: 'Quản lý thông tin hồ sơ cá nhân',
-};
-
 export default function ProfilePage() {
-  return <ProfileModule />;
+  return (
+    <>
+      <PageMeta titleKey="profile.pageTitle" descriptionKey="profile.pageDescription" />
+      <ProfileModule />
+    </>
+  );
 }

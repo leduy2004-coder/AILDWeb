@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import AdminConfigPage from '@/modules/admin/config';
 
-export const metadata = {
-  title: 'Cấu hình hệ thống | AILD',
-  description: 'Quản lý cấu hình và thông số hệ thống AILD',
-};
-
 export default function Page() {
-  return <AdminConfigPage />;
+  return (
+    <>
+      <PageMeta titleKey="admin_configs.pageTitle" descriptionKey="admin_configs.pageDescription" />
+      <AdminConfigPage />
+    </>
+  );
 }

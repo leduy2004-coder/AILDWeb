@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Grid, Typography, Avatar, useMediaQuery, Theme } from '@mui/material';
 
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import AuthLogin from '../components/authForms/AuthLogin';
 import { signingSlice } from '@/modules/shared/store/auth';
 import { Loading } from '@/modules/shared/components';
@@ -46,6 +47,7 @@ export default function Login() {
 
   return (
     <PageContainer title={t('login.title')} description={t('login.title')}>
+      <PageMeta titleKey="login.pageTitle" descriptionKey="login.pageDescription" />
       <Box
         sx={{
           flexGrow: 1,

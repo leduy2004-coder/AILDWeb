@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslation } from 'react-i18next';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 
 import AuthRegister from '../components/authForms/AuthRegister';
 import { useSelector } from '@/store/hooks';
@@ -21,6 +22,7 @@ export default function Register() {
 
   return (
     <PageContainer title={t('login.createAccountTitle')} description={t('login.createAccountTitle')}>
+      <PageMeta titleKey="register.pageTitle" descriptionKey="register.pageDescription" />
       <Box
         sx={{
           flexGrow: 1,

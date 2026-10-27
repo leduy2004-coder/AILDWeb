@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageMeta } from '@/modules/shared/components/container/PageMeta';
 import SubmissionsModule from '@/modules/admin/submissions';
 
-export const metadata = {
-  title: 'Quản lý bài nộp | AILD',
-  description: 'Xem và quản lý các bài nộp của học viên trong hệ thống AILD',
-};
-
 export default function SubmissionsPage() {
-  return <SubmissionsModule />;
+  return (
+    <>
+      <PageMeta titleKey="admin_submission.pageTitle" descriptionKey="admin_submission.pageDescription" />
+      <SubmissionsModule />
+    </>
+  );
 }
