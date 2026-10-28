@@ -50,7 +50,8 @@ jobs:
           command_timeout: 30m
           script: |
             set -e
-            cd /opt/aild/aild-web
+            # Parent folder of both repos on the VPS: repo variable APP_DIR (default /opt/aild)
+            cd ${{ vars.APP_DIR || '/opt/aild' }}/aild-web
             # Deploy exactly what is on origin/production (untracked .env files are kept)
             git fetch origin production
             git checkout -B production origin/production
