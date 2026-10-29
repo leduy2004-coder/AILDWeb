@@ -47,8 +47,8 @@ export default function AppContainer({ children }: { children: ReactNode }) {
         if (!event.newValue) {
           // Token removed -> Logout
           window.location.replace('/auth/login');
-        } else if (!event.oldValue && event.newValue) {
-          // Token added -> Login
+        } else if (event.oldValue !== event.newValue) {
+          // Token added or replaced by another account's login -> reload as the new user
           window.location.replace('/');
         }
       }

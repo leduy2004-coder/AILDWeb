@@ -289,7 +289,8 @@
       "IN_PROGRESS": "Đang làm",
       "SUBMITTED": "Đã nộp",
       "REVIEWED": "Đã chấm điểm",
-      "COMPLETED": "Hoàn thành"
+      "COMPLETED": "Hoàn thành",
+      "INTERVIEWING": "Đang phỏng vấn"
     },
     "action": {
       "deleteSelected": "Xóa",

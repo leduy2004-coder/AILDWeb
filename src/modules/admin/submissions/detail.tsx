@@ -81,7 +81,7 @@ export default function SubmissionDetailModule({ id }: SubmissionDetailModulePro
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="body2" color="text.secondary">{t('detail.status', 'Trạng thái')}</Typography>
-            <Typography variant="body1" fontWeight={500}>{info.status}</Typography>
+            <Typography variant="body1" fontWeight={500}>{t(`status.${info.status}`, info.status)}</Typography>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="body2" color="text.secondary">{t('detail.finalScore', 'Điểm tổng kết')}</Typography>
