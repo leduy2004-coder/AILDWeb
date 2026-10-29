@@ -27,7 +27,10 @@ const getResourceIcon = (url?: string) => {
   }
 };
 
-export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recommendedResources = [] }) => {
+// Stable default: a new [] on every render would retrigger the effect below and loop forever (guest /home)
+const NO_RESOURCES: IStudentRecommendedResource[] = [];
+
+export const HomeRecommendations: React.FC<HomeRecommendationsProps> = ({ recommendedResources = NO_RESOURCES }) => {
   const { t } = useTranslation();
   const [likesInfo, setLikesInfo] = React.useState<Record<number, { count: number; isLiked: boolean }>>({});
   const [selectedResourceForReport, setSelectedResourceForReport] = React.useState<IStudentRecommendedResource | null>(null);
