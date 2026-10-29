@@ -7,6 +7,8 @@ export interface IAdminAssessmentListDto {
   submittedAt: string | null;
   status: string;
   finalScore: number | null;
+  violationCount: number;
+  maxViolations: number;
 }
 
 export interface IQuestionOptionDto {

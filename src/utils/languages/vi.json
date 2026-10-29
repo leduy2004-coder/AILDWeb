@@ -306,7 +306,8 @@
       "startedAt": "Bắt đầu lúc",
       "status": "Trạng thái",
       "actions": "Thao tác",
-      "noData": "Không có dữ liệu"
+      "noData": "Không có dữ liệu",
+      "violations": "Vi phạm"
     },
     "delete": {
       "success": "Đã xóa bài làm thành công.",
@@ -336,7 +337,10 @@
       "aiFeedback": "Nhận xét chung của AI",
       "tabMcq": "Chi tiết Trắc nghiệm",
       "tabChat": "Lịch sử Phỏng vấn AI",
-      "noChatHistory": "Không có lịch sử phỏng vấn AI."
+      "noChatHistory": "Không có lịch sử phỏng vấn AI.",
+      "violations": "Số lần vi phạm",
+      "forceSubmitted": "bị buộc nộp bài",
+      "violationsHint": "Chuyển tab, rời cửa sổ, thoát toàn màn hình, tải lại hoặc đóng trang"
     }
   },
   "admin_overview": {
@@ -709,7 +713,35 @@
     "chatFinishSuccess": "Tuyệt vời, bạn đã hoàn thành phần phỏng vấn!",
     "mcqScoreTitle": "TRẮC NGHIỆM",
     "interviewScoreTitle": "PHỎNG VẤN",
-    "finalScoreTitle": "ĐIỂM TỔNG KẾT"
+    "finalScoreTitle": "ĐIỂM TỔNG KẾT",
+    "antiCheat": {
+      "fullscreenTitle": "Bài thi yêu cầu chế độ toàn màn hình",
+      "fullscreenDesc": "Trong lúc làm bài, việc chuyển tab, chuyển cửa sổ, thoát toàn màn hình, tải lại hoặc đóng trang sẽ bị ghi nhận là vi phạm. Thời gian vẫn tiếp tục chạy khi bạn rời trang. Vi phạm {{max}} lần, bài thi sẽ tự động được nộp.",
+      "enterFullscreen": "Vào chế độ toàn màn hình",
+      "warningTitle": "Cảnh báo vi phạm",
+      "warningDesc": "Hệ thống phát hiện bạn đã rời khỏi màn hình làm bài ({{count}}/{{max}}). Nếu đạt {{max}} lần, bài thi sẽ tự động được nộp.",
+      "understood": "Tôi đã hiểu",
+      "forceSubmitted": "Bạn đã rời khỏi bài thi quá nhiều lần. Bài thi đã được tự động nộp."
+    },
+    "mcqSubmitSuccess": "Nộp bài trắc nghiệm thành công! Tiếp theo là phần phỏng vấn với AI.",
+    "rules": {
+      "title": "Quy định làm bài",
+      "subtitle": "Bài đánh giá gồm phần trắc nghiệm, sau đó là phần phỏng vấn với AI.",
+      "questions": "{{count}} câu trắc nghiệm",
+      "interview": "{{count}} câu phỏng vấn với AI",
+      "duration": "{{minutes}} phút cho cả bài",
+      "violationTitle": "Các hành vi bị tính là vi phạm",
+      "violationTab": "Chuyển sang tab hoặc cửa sổ khác (Ctrl+Tab, Alt+Tab)",
+      "violationBlur": "Click ra ngoài trình duyệt hoặc sang màn hình khác",
+      "violationReload": "Tải lại hoặc đóng trang (thời gian vẫn tiếp tục chạy)",
+      "violationFullscreen": "Thoát chế độ toàn màn hình (Esc, F11)",
+      "violationLimit": "Vi phạm {{max}} lần, bài thi sẽ tự động được nộp.",
+      "blocked": "Trong lúc làm bài không thể sao chép, dán hoặc nhấn chuột phải.",
+      "resumeWarning": "Bạn đang có bài làm dở. Thời gian vẫn đang chạy và lần quay lại này được tính 1 vi phạm.",
+      "back": "Quay lại",
+      "start": "Tôi đã hiểu, bắt đầu làm bài",
+      "continue": "Tiếp tục làm bài"
+    }
   },
   "admin_configs": {
     "pageTitle": "Cấu hình hệ thống | AILD",
@@ -799,6 +831,10 @@
       "duration_minutes": {
         "label": "Thời gian làm bài (Phút)",
         "description": "Thời gian tối đa để hoàn thành phần thi trắc nghiệm."
+      },
+      "require_fullscreen": {
+        "label": "Bắt buộc chế độ toàn màn hình",
+        "description": "Thí sinh phải vào toàn màn hình mới thấy đề; thoát toàn màn hình bị tính là vi phạm. Không áp dụng trên iPhone (Safari không hỗ trợ)."
       }
     },
     "validation": {

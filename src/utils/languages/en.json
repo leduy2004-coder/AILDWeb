@@ -306,7 +306,8 @@
       "startedAt": "Started At",
       "status": "Status",
       "actions": "Actions",
-      "noData": "No data available"
+      "noData": "No data available",
+      "violations": "Violations"
     },
     "delete": {
       "success": "Submissions deleted successfully.",
@@ -336,7 +337,10 @@
       "aiFeedback": "AI Overall Feedback",
       "tabMcq": "Multiple Choice",
       "tabChat": "AI Interview History",
-      "noChatHistory": "No AI interview history."
+      "noChatHistory": "No AI interview history.",
+      "violations": "Violations",
+      "forceSubmitted": "force-submitted",
+      "violationsHint": "Tab switch, leaving the window, exiting fullscreen, reloading or closing the page"
     }
   },
   "admin_overview": {
@@ -709,7 +713,35 @@
     "chatFinishSuccess": "Great job, you have completed the interview!",
     "mcqScoreTitle": "MULTIPLE CHOICE",
     "interviewScoreTitle": "INTERVIEW",
-    "finalScoreTitle": "FINAL SCORE"
+    "finalScoreTitle": "FINAL SCORE",
+    "antiCheat": {
+      "fullscreenTitle": "This test requires fullscreen mode",
+      "fullscreenDesc": "While taking the test, switching tabs, switching windows, leaving fullscreen, reloading or closing the page is recorded as a violation. The timer keeps running while you are away. After {{max}} violations, your test will be submitted automatically.",
+      "enterFullscreen": "Enter fullscreen",
+      "warningTitle": "Violation warning",
+      "warningDesc": "You left the test screen ({{count}}/{{max}}). After {{max}} violations, your test will be submitted automatically.",
+      "understood": "I understand",
+      "forceSubmitted": "You left the test too many times. Your test has been submitted automatically."
+    },
+    "mcqSubmitSuccess": "Multiple-choice part submitted! Next up: the interview with AI.",
+    "rules": {
+      "title": "Test rules",
+      "subtitle": "The assessment has a multiple-choice part followed by an interview with AI.",
+      "questions": "{{count}} multiple-choice questions",
+      "interview": "{{count}} AI interview questions",
+      "duration": "{{minutes}} minutes for the whole test",
+      "violationTitle": "The following count as violations",
+      "violationTab": "Switching to another tab or window (Ctrl+Tab, Alt+Tab)",
+      "violationBlur": "Clicking outside the browser or onto another screen",
+      "violationReload": "Reloading or closing the page (the timer keeps running)",
+      "violationFullscreen": "Leaving fullscreen mode (Esc, F11)",
+      "violationLimit": "After {{max}} violations, your test will be submitted automatically.",
+      "blocked": "Copy, paste and right-click are disabled during the test.",
+      "resumeWarning": "You have an unfinished test. The timer is still running and coming back counts as 1 violation.",
+      "back": "Back",
+      "start": "I understand, start the test",
+      "continue": "Continue the test"
+    }
   },
   "admin_configs": {
     "pageTitle": "System Configuration | AILD",
@@ -799,6 +831,10 @@
       "duration_minutes": {
         "label": "Duration (Minutes)",
         "description": "Maximum time allowed to complete the multiple-choice test."
+      },
+      "require_fullscreen": {
+        "label": "Require fullscreen mode",
+        "description": "Candidates must enter fullscreen to see the test; leaving fullscreen counts as a violation. Not applied on iPhone (Safari does not support it)."
       }
     },
     "validation": {

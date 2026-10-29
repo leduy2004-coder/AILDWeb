@@ -2,12 +2,15 @@ import http from '@/lib/http';
 import { IApiResponse } from '@/types/shared';
 import { API_PREFIX } from '@/apis/constants/api.constant';
 import {
+  IAssessmentConfigResponse,
   IAssessmentStartResponse,
   INextQuestionResponse,
   ISubmitAnswerRequest,
   IAssessmentSummaryResponse,
   IChatRequest,
   IChatResponse,
+  IViolationResponse,
+  IChatMessageDto,
 } from '@/types/student/assessment.type';
 
 export * from '@/types/student/assessment.type';
@@ -19,6 +22,11 @@ export const ASSESSMENT_QUERY_KEYS = {
 };
 
 const BASE_URL = `${API_PREFIX.AILD}/student/assessment`;
+
+export async function getAssessmentConfig(): Promise<IApiResponse<IAssessmentConfigResponse>> {
+  const { payload } = await http.get<IApiResponse<IAssessmentConfigResponse>>(`${BASE_URL}/config`);
+  return payload;
+}
 
 export async function startAssessment(): Promise<IApiResponse<IAssessmentStartResponse>> {
   const { payload } = await http.post<IApiResponse<IAssessmentStartResponse>>(`${BASE_URL}/start`, {});
@@ -60,11 +68,24 @@ export async function chatWithAI(
   return payload;
 }
 
+export async function reportViolation(assessmentId: number): Promise<IApiResponse<IViolationResponse>> {
+  const { payload } = await http.post<IApiResponse<IViolationResponse>>(`${BASE_URL}/${assessmentId}/violation`, {});
+  return payload;
+}
+
+export async function getChatHistory(assessmentId: number): Promise<IApiResponse<IChatMessageDto[]>> {
+  const { payload } = await http.get<IApiResponse<IChatMessageDto[]>>(`${BASE_URL}/${assessmentId}/chat-history`);
+  return payload;
+}
+
 export const AssessmentApi = {
+  getAssessmentConfig,
   startAssessment,
   getNextQuestion,
   submitAnswer,
   finishAssessment,
   timeUpAssessment,
   chatWithAI,
+  reportViolation,
+  getChatHistory,
 };
