@@ -90,7 +90,7 @@ export const TestQuestionCard: React.FC<TestQuestionCardProps> = ({
         />
       </Box>
 
-      <Typography variant="h5" fontWeight={700} color="text.primary" mb={{ xs: 3, md: 4 }} sx={{ lineHeight: 1.5, fontSize: { xs: '1.1rem', md: '1.5rem' } }}>
+      <Typography variant="h5" fontWeight={700} color="text.primary" mb={{ xs: 3, md: 4 }} sx={{ lineHeight: 1.5, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
         {content}
       </Typography>
 
