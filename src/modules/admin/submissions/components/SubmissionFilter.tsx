@@ -57,6 +57,9 @@ export default function SubmissionFilter({
           >
             <MenuItem value=""><em>{t('filter.all', 'Tất cả')}</em></MenuItem>
             <MenuItem value="IN_PROGRESS">{t('status.IN_PROGRESS', 'Đang làm')}</MenuItem>
+            <MenuItem value="INTERVIEWING">{t('status.INTERVIEWING', 'Đang phỏng vấn')}</MenuItem>
+            <MenuItem value="SUBMITTED">{t('status.SUBMITTED', 'Đã nộp')}</MenuItem>
+            <MenuItem value="REVIEWED">{t('status.REVIEWED', 'Đã chấm điểm')}</MenuItem>
             <MenuItem value="COMPLETED">{t('status.COMPLETED', 'Hoàn thành')}</MenuItem>
           </Select>
         </FormControl>

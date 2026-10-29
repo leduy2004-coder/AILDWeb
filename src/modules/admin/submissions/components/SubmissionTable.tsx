@@ -50,6 +50,8 @@ export default function SubmissionTable({
     switch (status) {
       case 'IN_PROGRESS':
         return 'warning';
+      case 'INTERVIEWING':
+        return 'info';
       case 'SUBMITTED':
         return 'info';
       case 'REVIEWED':
