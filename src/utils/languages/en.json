@@ -1,4 +1,4 @@
-{
+﻿{
   "button": {
     "back_to_top": "Back to top"
   },
@@ -11,7 +11,9 @@
     "notAssessed": "NOT ASSESSED",
     "noEvaluationDesc": "You haven't taken any assessment yet. Start a new evaluation to measure your AI competency!",
     "datePlaceholder": "October 12, 2023",
+    "startEvaluation": "Start evaluation",
     "startNewEvaluation": "Start new evaluation",
+    "errorLoadDashboard": "Unable to load student dashboard data. Please check your connection or log in again.",
     "evaluatedAlert": "Assessment completed at {{date}}",
     "finalScore": "Final Score",
     "currentProgress": "AI Competency & Skill Tree",
