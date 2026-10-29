@@ -29,10 +29,10 @@ export const PublicHeader: React.FC = () => {
     <Box sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper', py: { xs: 1, md: 2 } }}>
       <Container maxWidth="lg" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Logo */}
-        <Logo margin="0" />
+        <Logo margin="0" href="/home" />
 
         {/* Links & Actions */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1.5, md: 3 } }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 3 } }}>
           <Language />
 
           {isLoggedIn ? (
