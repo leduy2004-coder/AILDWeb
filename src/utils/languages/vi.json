@@ -1,4 +1,4 @@
-{
+﻿{
   "button": {
     "back_to_top": "Lên đầu trang"
   },
@@ -11,7 +11,9 @@
     "notAssessed": "CHƯA ĐÁNH GIÁ",
     "noEvaluationDesc": "Bạn chưa thực hiện bài đánh giá nào. Hãy bắt đầu bài đánh giá mới để đo lường năng lực AI của bạn!",
     "datePlaceholder": "Ngày 12 tháng 10, 2023",
+    "startEvaluation": "Bắt đầu đánh giá",
     "startNewEvaluation": "Bắt đầu bài đánh giá mới",
+    "errorLoadDashboard": "Không thể tải dữ liệu bảng điều khiển sinh viên. Vui lòng kiểm tra lại kết nối hoặc đăng nhập lại.",
     "evaluatedAlert": "Đã làm bài đánh giá vào lúc {{date}}",
     "finalScore": "Điểm tổng kết",
     "currentProgress": "Năng lực & Cây kỹ năng AI",

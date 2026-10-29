@@ -88,10 +88,13 @@ const Language = () => {
           gap: 1.5,
           alignItems: 'center',
           justifyContent: 'center',
+          minWidth: { xs: 0, sm: 64 },
+          px: { xs: 0.5, sm: 1 },
         }}
         onClick={handleClick}
       >
-        <Typography variant="subtitle2" color="textPrimary" sx={{ fontWeight: 500 }}>
+        {/* Name hidden on phones so the header fits; the letter avatar still opens the menu */}
+        <Typography variant="subtitle2" color="textPrimary" sx={{ fontWeight: 500, display: { xs: 'none', sm: 'block' } }}>
           {currentLang.flagname}
         </Typography>
         <Avatar

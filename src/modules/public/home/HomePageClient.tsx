@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 import { Box, Container, CircularProgress, Alert } from '@mui/material';
 import { HomeWelcome } from './components/HomeWelcome';
@@ -11,6 +12,7 @@ import HomeCertificate from './components/HomeCertificate';
 import { useGetStudentDashboard } from '@/apis/student/hook';
 
 export default function HomePageClient() {
+  const { t } = useTranslation();
   const { data, isLoading, isError } = useGetStudentDashboard();
 
   const dashboardData = data?.result;
@@ -26,7 +28,10 @@ export default function HomePageClient() {
           ) : isError ? (
             <Box mb={4}>
               <Alert severity="error">
-                Không thể tải dữ liệu bảng điều khiển sinh viên. Vui lòng kiểm tra lại kết nối hoặc đăng nhập lại.
+                {t(
+                  'home.errorLoadDashboard',
+                  'Không thể tải dữ liệu bảng điều khiển sinh viên. Vui lòng kiểm tra lại kết nối hoặc đăng nhập lại.'
+                )}
               </Alert>
               <HomeWelcome lastEvaluationDate={null} isEvaluated={false} />
               <HomeProgress domainProgresses={[]} isEvaluated={false} />

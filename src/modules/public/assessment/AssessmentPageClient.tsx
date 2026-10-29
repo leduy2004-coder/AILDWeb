@@ -199,7 +199,7 @@ export default function AssessmentPageClient() {
         }}
       >
         <Box flex={1} display="flex" alignItems="center" justifyContent="flex-start">
-          <Logo margin="0" />
+          <Logo margin="0" href="/home" />
         </Box>
 
         <Box flex={2} display="flex" flexDirection="column" alignItems="center" maxWidth="400px" mx={2}>
