@@ -1,5 +1,6 @@
 import { PublicHeader } from './layout/header/PublicHeader';
 import { PublicFooter } from './layout/footer/PublicFooter';
+import { ScrollTop } from '@/app/(DashboardLayout)/layout/shared/Scrolltotop/ScrollToTop';
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,6 +8,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <PublicHeader />
       <main style={{ flexGrow: 1 }}>{children}</main>
       <PublicFooter />
+      <ScrollTop />
     </div>
   );
 }

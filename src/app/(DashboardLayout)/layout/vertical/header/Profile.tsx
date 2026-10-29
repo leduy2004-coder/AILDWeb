@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { ActionButton } from '@/modules/shared/styled';
 import { getLocalStorageItem } from '@/modules/shared/utils';
 import { logout } from '@/apis/auth/auth.api';
@@ -27,6 +28,7 @@ const Profile = () => {
   const { showLoading, hideLoading } = useLoadingIndicator();
   const [anchorEl2, setAnchorEl2] = useState(null);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const handleClick2 = (event: AnyType) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -60,17 +62,18 @@ const Profile = () => {
     try {
       disableUnsavedWarning();
       await logout();
-
-      // Clear session variables
-      localStorage.removeItem(AuthActionTypes.ACCESS_TOKEN);
-      localStorage.removeItem(AuthActionTypes.REFRESH_TOKEN);
-
-      // Redirect to login page
-      router.push('/auth/login');
     } catch (error) {
       console.error("Logout failed", error);
     } finally {
+      // Clear the session even if the logout call failed, otherwise the user stays half logged in
+      localStorage.removeItem(AuthActionTypes.ACCESS_TOKEN);
+      localStorage.removeItem(AuthActionTypes.REFRESH_TOKEN);
+      localStorage.removeItem(AuthActionTypes.USER_INFO);
+      // Drop the previous user's cached data (dashboard...) so it is not shown or refetched after logout
+      queryClient.clear();
+
       hideLoading();
+      router.push('/auth/login');
     }
   };
 

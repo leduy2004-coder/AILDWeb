@@ -18,9 +18,9 @@ export const PublicHeader: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    // Token only: a leftover USER_INFO from an older logout must not show the profile menu
     const token = getLocalStorageItem<string>(AuthActionTypes.ACCESS_TOKEN);
-    const userInfoStr = getLocalStorageItem<string>(AuthActionTypes.USER_INFO);
-    if (token || userInfoStr) {
+    if (token) {
       setIsLoggedIn(true);
     }
   }, []);
