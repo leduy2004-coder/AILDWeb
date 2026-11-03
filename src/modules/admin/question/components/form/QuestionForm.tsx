@@ -33,6 +33,8 @@ import { getQuestionSchema, QuestionFormValues } from '../../schema/question.sch
 import AIGenerateDialog from '../modal/AIGenerateDialog';
 import ConfirmCloseDialog from '../modal/ConfirmCloseDialog';
 import ExpandFieldModal from '../modal/ExpandFieldModal';
+import SourcePassagesPanel from '../ai/SourcePassagesPanel';
+import { ISourcePassage } from '@/types/admin/source-document.type';
 
 interface Props {
   open: boolean;
@@ -54,6 +56,8 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
   const [confirmCloseOpen, setConfirmCloseOpen] = React.useState(false);
   const [hasUnsavedAIData, setHasUnsavedAIData] = React.useState(false);
   const [expandModalField, setExpandModalField] = React.useState<'content' | null>(null);
+  // Passages the AI draft cites; kept outside the form values and sent back as sourceChunkIds on save
+  const [sourcePassages, setSourcePassages] = React.useState<ISourcePassage[]>([]);
 
   const schema = getQuestionSchema(t);
 
@@ -110,6 +114,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
           correctOptionIndex: correctIdx !== null ? Number(correctIdx) : null,
           difficultyIndex: q.difficultyIndex !== null && q.difficultyIndex !== undefined ? Number(q.difficultyIndex) : undefined,
         });
+        setSourcePassages(q.sourceChunks || []);
       } else if (!isEdit) {
         reset({
           content: '',
@@ -125,6 +130,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
           difficultyIndex: undefined,
         });
         setHasUnsavedAIData(false);
+        setSourcePassages([]);
       }
     }
   }, [open, isEdit, detailData, reset]);
@@ -158,7 +164,8 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
         correctOptionIndex: correctIdx,
         status: 'DRAFT', // Always DRAFT when AI generated
       });
-      
+      setSourcePassages(aiGeneratedData.sourceChunks || []);
+
       setHasUnsavedAIData(true);
       if (onClearAIData) onClearAIData();
     }
@@ -171,7 +178,8 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
         ...opt,
         isCorrect: idx === data.correctOptionIndex,
         displayOrder: idx + 1,
-      }))
+      })),
+      sourceChunkIds: sourcePassages.map((p) => p.chunkId),
     };
 
     if (isEdit) {
@@ -351,6 +359,7 @@ export default function QuestionFormModal({ open, onClose, questionId, onAIGener
                 />
               </Box>
 
+              <SourcePassagesPanel passages={sourcePassages} />
 
               {/* Type */}
               <Box display="flex" alignItems="center" gap={2}>

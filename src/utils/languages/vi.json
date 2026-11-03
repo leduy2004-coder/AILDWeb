@@ -271,6 +271,7 @@
     "submission": "Danh sách bài làm",
     "question": "Danh sách câu hỏi",
     "resource": "Quản lý tài nguyên",
+    "sourceDocument": "Tài liệu nguồn",
     "configs": "Cấu hình",
     "settings": "Cài đặt hệ thống"
   },
@@ -490,6 +491,140 @@
       "deleteError": "Có lỗi xảy ra khi xóa báo cáo"
     }
   },
+  "admin_source_document": {
+    "pageTitle": "Tài liệu nguồn | AILD",
+    "pageDescription": "Quản lý tài liệu khung năng lực dùng làm căn cứ cho AI soạn câu hỏi",
+    "pageDetailTitle": "Chi tiết tài liệu nguồn | AILD",
+    "pageDetailDescription": "Xem và điều chỉnh các đoạn của tài liệu nguồn",
+    "title": "Tài liệu nguồn",
+    "subtitle": "Tài liệu khung (UNESCO AI CFS, QĐ 3439...) được cắt đoạn và tự gán miền năng lực để AI soạn câu hỏi có trích dẫn",
+    "uploadButton": "Tải lên tài liệu",
+    "coverage": {
+      "title": "Độ phủ tài liệu theo 4 miền năng lực",
+      "subtitle": "Số đoạn đang dùng được của từng miền. Miền dưới {{threshold}} đoạn nên bổ sung tài liệu. Mức Understand/Apply/Create do prompt điều khiển nên không cần gán cho từng đoạn.",
+      "passages": "{{count}} đoạn"
+    },
+    "filter": {
+      "searchPlaceholder": "Tìm theo tên tài liệu hoặc nguồn...",
+      "allStatuses": "Tất cả trạng thái",
+      "allDomains": "Tất cả miền",
+      "lowConfidence": "Chỉ độ tin cậy thấp",
+      "clear": "Xóa lọc"
+    },
+    "status": {
+      "PENDING": "Chờ xử lý",
+      "PROCESSING": "Đang xử lý",
+      "READY": "Sẵn sàng",
+      "FAILED": "Lỗi"
+    },
+    "chunkStatus": {
+      "ACTIVE": "Đang dùng",
+      "UNLABELED": "Chưa gán miền",
+      "IGNORED": "Bỏ qua"
+    },
+    "labelSource": {
+      "AUTO": "Tự động",
+      "MANUAL": "Admin gán"
+    },
+    "ignoreReason": {
+      "TOO_SHORT": "Quá ngắn",
+      "TABLE_OF_CONTENTS": "Mục lục",
+      "REFERENCES": "Tài liệu tham khảo",
+      "MANUAL": "Admin bỏ qua"
+    },
+    "table": {
+      "title": "Tài liệu",
+      "status": "Trạng thái",
+      "pages": "Số trang",
+      "chunks": "Đoạn",
+      "createdDate": "Ngày tải lên",
+      "action": "Thao tác",
+      "empty": "Chưa có tài liệu nào",
+      "activeCount": "{{count}} đang dùng",
+      "unlabeledCount": "{{count}} chưa gán",
+      "ignoredCount": "{{count}} bỏ qua",
+      "actionView": "Xem các đoạn",
+      "actionReprocess": "Xử lý lại",
+      "actionDelete": "Xóa"
+    },
+    "chunkTable": {
+      "page": "Trang",
+      "content": "Nội dung",
+      "label": "Miền năng lực",
+      "confidence": "Độ tin cậy",
+      "status": "Trạng thái",
+      "empty": "Không có đoạn nào",
+      "noLabel": "Chưa gán miền"
+    },
+    "upload": {
+      "title": "Tải lên tài liệu nguồn",
+      "file": "File PDF",
+      "filePlaceholder": "Bấm để chọn file PDF (tối đa {{size}} MB)",
+      "fileNote": "PDF phải có lớp chữ (không phải bản scan ảnh). Hệ thống sẽ tự cắt đoạn và gán miền năng lực.",
+      "docTitle": "Tên tài liệu",
+      "docTitlePlaceholder": "Để trống sẽ dùng tên file",
+      "sourceName": "Nguồn",
+      "sourceNamePlaceholder": "VD: UNESCO, Bộ GD-ĐT",
+      "publishedYear": "Năm",
+      "cancel": "Hủy",
+      "submit": "Tải lên",
+      "success": "Đã tải lên, hệ thống đang xử lý tài liệu",
+      "error": "Tải lên thất bại",
+      "duplicate": "Tài liệu này đã được tải lên trước đó (cùng nội dung file). Xóa tài liệu cũ nếu muốn tải lại.",
+      "validation": {
+        "fileRequired": "Vui lòng chọn file PDF",
+        "pdfOnly": "Chỉ chấp nhận file PDF",
+        "fileTooLarge": "File vượt quá {{size}} MB",
+        "titleMax": "Tên tài liệu tối đa 200 ký tự",
+        "sourceNameMax": "Nguồn tối đa 200 ký tự",
+        "yearInvalid": "Năm không hợp lệ"
+      }
+    },
+    "reprocess": {
+      "success": "Đang xử lý lại tài liệu",
+      "error": "Không thể xử lý lại tài liệu"
+    },
+    "delete": {
+      "title": "Xóa tài liệu nguồn",
+      "content": "Tài liệu và toàn bộ các đoạn của nó sẽ không còn được dùng để soạn câu hỏi. Câu hỏi đã soạn vẫn giữ nguyên.",
+      "cancel": "Hủy",
+      "confirm": "Xóa",
+      "success": "Đã xóa tài liệu",
+      "error": "Xóa tài liệu thất bại"
+    },
+    "detail": {
+      "back": "Quay lại danh sách",
+      "notFound": "Không tìm thấy tài liệu",
+      "pages": "{{count}} trang",
+      "processing": "Tài liệu đang được xử lý, danh sách đoạn sẽ tự cập nhật.",
+      "failed": "Xử lý thất bại: {{message}}. Bấm \"Xử lý lại\" ở danh sách tài liệu để thử lại.",
+      "hint": "Các đoạn đã được tự gán miền năng lực và dùng được ngay. Chỉ cần sửa khi thấy gán sai: lọc \"Chỉ độ tin cậy thấp\" để xem những đoạn đáng kiểm tra."
+    },
+    "bulk": {
+      "label": "Gán miền cho {{count}} đoạn",
+      "ignore": "Bỏ qua",
+      "restore": "Khôi phục",
+      "ignoreSuccess": "Đã bỏ qua {{count}} đoạn",
+      "restoreSuccess": "Đã khôi phục {{count}} đoạn",
+      "error": "Cập nhật thất bại"
+    },
+    "label": {
+      "title": "Gán miền năng lực cho {{count}} đoạn",
+      "note": "Nhãn do Admin gán sẽ được giữ nguyên khi hệ thống xử lý lại tài liệu.",
+      "domain": "Miền năng lực",
+      "cancel": "Hủy",
+      "submit": "Gán miền",
+      "success": "Đã gán miền cho {{count}} đoạn",
+      "error": "Gán miền thất bại"
+    },
+    "preview": {
+      "title": "Đoạn #{{index}} — trang {{pages}}",
+      "words": "{{count}} từ",
+      "label": "Miền đang dùng",
+      "suggestion": "Hệ thống đề xuất",
+      "close": "Đóng"
+    }
+  },
   "admin_user": {
     "pageTitle": "Quản lý người dùng | AILD",
     "pageDescription": "Quản lý danh sách người dùng trong hệ thống AILD",
@@ -676,6 +811,12 @@
       "content": "Bạn có chắc chắn muốn xóa câu hỏi này không? Hành động này không thể hoàn tác.",
       "success": "Xóa câu hỏi thành công",
       "error": "Có lỗi xảy ra khi xóa"
+    },
+    "sources": {
+      "title": "Đoạn tài liệu nguồn",
+      "hint": "Câu hỏi do AI soạn dựa trên các đoạn dưới đây. Hãy đối chiếu trước khi xuất bản.",
+      "page": "trang {{pages}}",
+      "unknownDocument": "Tài liệu đã bị xóa"
     }
   },
   "assessment": {

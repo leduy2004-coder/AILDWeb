@@ -271,6 +271,7 @@
     "submission": "Submissions",
     "question": "Question Bank",
     "resource": "Resources",
+    "sourceDocument": "Source documents",
     "configs": "Configurations",
     "settings": "System Settings"
   },
@@ -490,6 +491,140 @@
       "deleteError": "Error deleting report"
     }
   },
+  "admin_source_document": {
+    "pageTitle": "Source documents | AILD",
+    "pageDescription": "Manage the framework documents that ground AI question drafting",
+    "pageDetailTitle": "Source document detail | AILD",
+    "pageDetailDescription": "Review and adjust the passages of a source document",
+    "title": "Source documents",
+    "subtitle": "Framework documents (UNESCO AI CFS, QĐ 3439...) are split into passages and auto-labelled with a competency domain so the AI drafts questions with citations",
+    "uploadButton": "Upload document",
+    "coverage": {
+      "title": "Source coverage of the 4 competency domains",
+      "subtitle": "Usable passages per domain. Domains with fewer than {{threshold}} passages need more material. The Understand/Apply/Create level is set by the prompt, so passages are not labelled with a level.",
+      "passages": "{{count}} passages"
+    },
+    "filter": {
+      "searchPlaceholder": "Search by document title or source...",
+      "allStatuses": "All statuses",
+      "allDomains": "All domains",
+      "lowConfidence": "Low confidence only",
+      "clear": "Clear filters"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "PROCESSING": "Processing",
+      "READY": "Ready",
+      "FAILED": "Failed"
+    },
+    "chunkStatus": {
+      "ACTIVE": "Active",
+      "UNLABELED": "No domain",
+      "IGNORED": "Ignored"
+    },
+    "labelSource": {
+      "AUTO": "Auto",
+      "MANUAL": "By admin"
+    },
+    "ignoreReason": {
+      "TOO_SHORT": "Too short",
+      "TABLE_OF_CONTENTS": "Table of contents",
+      "REFERENCES": "References",
+      "MANUAL": "Ignored by admin"
+    },
+    "table": {
+      "title": "Document",
+      "status": "Status",
+      "pages": "Pages",
+      "chunks": "Passages",
+      "createdDate": "Uploaded",
+      "action": "Actions",
+      "empty": "No documents yet",
+      "activeCount": "{{count}} active",
+      "unlabeledCount": "{{count}} unlabeled",
+      "ignoredCount": "{{count}} ignored",
+      "actionView": "View passages",
+      "actionReprocess": "Reprocess",
+      "actionDelete": "Delete"
+    },
+    "chunkTable": {
+      "page": "Page",
+      "content": "Content",
+      "label": "Domain",
+      "confidence": "Confidence",
+      "status": "Status",
+      "empty": "No passages",
+      "noLabel": "No domain"
+    },
+    "upload": {
+      "title": "Upload source document",
+      "file": "PDF file",
+      "filePlaceholder": "Click to choose a PDF file (max {{size}} MB)",
+      "fileNote": "The PDF must contain text (not a scanned image). The system splits it into passages and labels their domain automatically.",
+      "docTitle": "Document title",
+      "docTitlePlaceholder": "Leave empty to use the file name",
+      "sourceName": "Source",
+      "sourceNamePlaceholder": "e.g. UNESCO, Ministry of Education",
+      "publishedYear": "Year",
+      "cancel": "Cancel",
+      "submit": "Upload",
+      "success": "Uploaded, the document is being processed",
+      "error": "Upload failed",
+      "duplicate": "This document has already been uploaded (same file content). Delete the old one to upload it again.",
+      "validation": {
+        "fileRequired": "Please choose a PDF file",
+        "pdfOnly": "Only PDF files are allowed",
+        "fileTooLarge": "The file exceeds {{size}} MB",
+        "titleMax": "Title is limited to 200 characters",
+        "sourceNameMax": "Source is limited to 200 characters",
+        "yearInvalid": "Invalid year"
+      }
+    },
+    "reprocess": {
+      "success": "Reprocessing the document",
+      "error": "Could not reprocess the document"
+    },
+    "delete": {
+      "title": "Delete source document",
+      "content": "The document and all its passages will no longer be used for question drafting. Existing questions are kept.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "success": "Document deleted",
+      "error": "Could not delete the document"
+    },
+    "detail": {
+      "back": "Back to list",
+      "notFound": "Document not found",
+      "pages": "{{count}} pages",
+      "processing": "The document is being processed; the passage list refreshes automatically.",
+      "failed": "Processing failed: {{message}}. Use \"Reprocess\" in the document list to retry.",
+      "hint": "Passages are labelled with a domain automatically and usable right away. Only fix wrong labels: filter \"Low confidence only\" to see the passages worth a check."
+    },
+    "bulk": {
+      "label": "Set domain for {{count}} passages",
+      "ignore": "Ignore",
+      "restore": "Restore",
+      "ignoreSuccess": "Ignored {{count}} passages",
+      "restoreSuccess": "Restored {{count}} passages",
+      "error": "Update failed"
+    },
+    "label": {
+      "title": "Set the domain of {{count}} passages",
+      "note": "Labels set by the admin are kept when the document is reprocessed.",
+      "domain": "Domain",
+      "cancel": "Cancel",
+      "submit": "Apply",
+      "success": "Updated the domain of {{count}} passages",
+      "error": "Could not update the domain"
+    },
+    "preview": {
+      "title": "Passage #{{index}} — page {{pages}}",
+      "words": "{{count}} words",
+      "label": "Current domain",
+      "suggestion": "System suggestion",
+      "close": "Close"
+    }
+  },
   "admin_user": {
     "pageTitle": "User Management | AILD",
     "pageDescription": "Manage the list of users in the AILD system",
@@ -676,6 +811,12 @@
       "content": "Are you sure you want to delete this question? This action cannot be undone.",
       "success": "Question deleted successfully",
       "error": "An error occurred while deleting"
+    },
+    "sources": {
+      "title": "Source passages",
+      "hint": "The AI drafted this question from the passages below. Check it against them before publishing.",
+      "page": "page {{pages}}",
+      "unknownDocument": "Deleted document"
     }
   },
   "assessment": {
