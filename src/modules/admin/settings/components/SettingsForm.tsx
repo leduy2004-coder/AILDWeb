@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Grid, TextField, Typography, Paper, Divider } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography, Paper, Divider, FormControlLabel, Switch } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm, Controller } from 'react-hook-form';
@@ -92,6 +92,27 @@ export default function SettingsForm({ initialValues, isSaving, onSave }: Settin
                     helperText={errors[SETTING_KEYS.ASSESSMENT_DURATION_MINUTES]?.message}
                     type="number" InputLabelProps={{ sx: { fontSize: '1.05rem', fontWeight: 600, '& .MuiFormLabel-asterisk': { color: 'error.main' } } }}
                   />
+                )}
+              />
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <Controller
+                name={SETTING_KEYS.ASSESSMENT_REQUIRE_FULLSCREEN}
+                control={control}
+                render={({ field }) => (
+                  <Box>
+                    <FormControlLabel
+                      control={<Switch checked={!!field.value} onChange={(e) => field.onChange(e.target.checked)} />}
+                      label={
+                        <Typography fontWeight={600}>
+                          {t('admin_settings.fields.require_fullscreen.label', 'Bắt buộc chế độ toàn màn hình')}
+                        </Typography>
+                      }
+                    />
+                    <Typography variant="body2" color="text.secondary" ml={6}>
+                      {t('admin_settings.fields.require_fullscreen.description', 'Thí sinh phải vào toàn màn hình mới thấy đề; thoát toàn màn hình bị tính là vi phạm. Không áp dụng trên iPhone (Safari không hỗ trợ).')}
+                    </Typography>
+                  </Box>
                 )}
               />
             </Grid>

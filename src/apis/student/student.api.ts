@@ -19,6 +19,14 @@ export async function getStudentCertificateBlob(): Promise<Blob> {
   return response.payload ? (response.payload as Blob) : (response as any as Blob);
 }
 
+// PNG render of the certificate for the on-screen preview (scales to fit, unlike the browser PDF viewer)
+export async function getStudentCertificatePreviewBlob(): Promise<Blob> {
+  const response = await http.get(`${API_PREFIX.AILD}/student/dashboard/certificate/preview`, {
+    responseType: 'blob',
+  });
+  return response.payload ? (response.payload as Blob) : (response as any as Blob);
+}
+
 export async function toggleResourceLike(resourceId: number): Promise<IApiResponse<boolean>> {
   const { payload } = await http.post<IApiResponse<boolean>>(
     `${API_PREFIX.AILD}/student/dashboard/resources/${resourceId}/like`
@@ -37,6 +45,7 @@ export async function reportResource(resourceId: number, reason: string): Promis
 export const StudentApi = {
   getStudentDashboard,
   getStudentCertificateBlob,
+  getStudentCertificatePreviewBlob,
   toggleResourceLike,
   reportResource,
 };

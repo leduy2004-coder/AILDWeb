@@ -3,6 +3,7 @@ import { Box, Typography, TextField, IconButton, Paper, CircularProgress, Avatar
 import { IconSend, IconRobot, IconUser } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useChatWithAI } from '@/apis/assessment/hook';
+import { getChatHistory } from '@/apis/assessment/assessment.api';
 import { toast } from 'react-toastify';
 import logoTutor from '@/assests/images/logo.png';
 
@@ -29,8 +30,10 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
   const initTriggered = useRef(false);
 
   useEffect(() => {
-    if (!initTriggered.current) {
-      initTriggered.current = true;
+    if (initTriggered.current) return;
+    initTriggered.current = true;
+
+    const startInterview = () => {
       chatMutation.mutate(
         { message: `Bắt đầu phỏng vấn. Hãy chào tôi, phổ biến ngắn gọn luật phỏng vấn (tối đa ${chatMaxTurns} lượt hỏi đáp) và đặt ngay câu hỏi đầu tiên.` },
         {
@@ -42,8 +45,20 @@ export const TestChatRoom: React.FC<TestChatRoomProps> = ({ assessmentId, chatMa
           }
         }
       );
-    }
-  }, [assessmentId]);
+    };
+
+    // Resume after a reload: show the saved conversation instead of greeting again
+    getChatHistory(assessmentId)
+      .then((res) => {
+        const history = res.result || [];
+        if (history.length > 0) {
+          setMessages(history.map((m) => ({ id: m.id.toString(), role: m.role, content: m.content })));
+        } else {
+          startInterview();
+        }
+      })
+      .catch(startInterview);
+  }, [assessmentId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

@@ -89,6 +89,20 @@ export default function SubmissionDetailModule({ id }: SubmissionDetailModulePro
               {info.finalScore !== null && info.finalScore !== undefined ? `${Math.round(info.finalScore * 100) / 100}/10` : '-'}
             </Typography>
           </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Typography variant="body2" color="text.secondary">{t('detail.violations', 'Số lần vi phạm')}</Typography>
+            <Typography
+              variant="body1"
+              fontWeight={600}
+              color={info.violationCount >= info.maxViolations ? 'error.main' : info.violationCount > 0 ? 'warning.main' : 'text.primary'}
+            >
+              {info.violationCount}/{info.maxViolations}
+              {info.violationCount >= info.maxViolations && ` (${t('detail.forceSubmitted', 'bị buộc nộp bài')})`}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {t('detail.violationsHint', 'Chuyển tab, rời cửa sổ, thoát toàn màn hình, tải lại hoặc đóng trang')}
+            </Typography>
+          </Grid>
         </Grid>
       </Paper>
 

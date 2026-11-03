@@ -80,6 +80,7 @@ export default function SubmissionTable({
               <TableCell sx={{ fontWeight: 600 }}>{t('table.student', 'Sinh viên')}</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>{t('table.startedAt', 'Bắt đầu lúc')}</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>{t('table.finalScore', 'Điểm')}</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>{t('table.violations', 'Vi phạm')}</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>{t('table.status', 'Trạng thái')}</TableCell>
               <TableCell align="center" sx={{ fontWeight: 600 }}>
                 {t('table.actions', 'Thao tác')}
@@ -89,7 +90,7 @@ export default function SubmissionTable({
           <TableBody>
             {data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} align="center" sx={{ py: 3 }}>
+                <TableCell colSpan={8} align="center" sx={{ py: 3 }}>
                   <Typography color="text.secondary">
                     {t('table.noData', 'Không có dữ liệu')}
                   </Typography>
@@ -127,6 +128,17 @@ export default function SubmissionTable({
                       </Typography>
                     ) : (
                       <Typography variant="body2" color="text.secondary">-</Typography>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {row.violationCount > 0 ? (
+                      <Chip
+                        label={`${row.violationCount}/${row.maxViolations}`}
+                        color={row.violationCount >= row.maxViolations ? 'error' : 'warning'}
+                        size="small"
+                      />
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">0</Typography>
                     )}
                   </TableCell>
                   <TableCell>

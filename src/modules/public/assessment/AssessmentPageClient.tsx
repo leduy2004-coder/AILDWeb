@@ -2,23 +2,28 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Box, Typography, CircularProgress, LinearProgress, Button } from '@mui/material';
-import { IconClock, IconPlayerPause } from '@tabler/icons-react';
+import { Box, Typography, CircularProgress, LinearProgress, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { IconClock, IconPlayerPause, IconAlertTriangle, IconMaximize } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { TestQuestionCard } from '@/modules/public/assessment/components/TestQuestionCard';
 import { getLocalizedDomain, getLocalizedLevel } from '@/modules/public/home/constant/home-resource.constant';
 import { TestChatRoom } from '@/modules/public/assessment/components/TestChatRoom';
 import { TestResultCard } from '@/modules/public/assessment/components/TestResultCard';
+import { AssessmentRulesCard } from '@/modules/public/assessment/components/AssessmentRulesCard';
+import { useAntiCheat } from '@/modules/public/assessment/hooks/useAntiCheat';
 import Logo from '@/app/(DashboardLayout)/layout/shared/logo/Logo';
 import {
+  getAssessmentConfig,
   startAssessment,
   getNextQuestion,
   submitAnswer,
   finishAssessment,
   timeUpAssessment,
+  reportViolation,
   INextQuestionResponse,
   IAssessmentSummaryResponse,
+  IAssessmentConfigResponse,
 } from '@/apis/assessment/assessment.api';
 
 export default function AssessmentPageClient() {
@@ -38,6 +43,14 @@ export default function AssessmentPageClient() {
   const timeUpHandledRef = React.useRef(false);
   const finishingRef = React.useRef(false);
 
+  const [totalQuestions, setTotalQuestions] = useState<number>(0);
+  const [violationCount, setViolationCount] = useState(0);
+  const [maxViolations, setMaxViolations] = useState(3);
+  const [requireFullscreen, setRequireFullscreen] = useState(false);
+  const [violationWarning, setViolationWarning] = useState<number | null>(null);
+  const [config, setConfig] = useState<IAssessmentConfigResponse | null>(null);
+  const [isStarting, setIsStarting] = useState(false);
+
   const isCompleted = summaryData?.status === 'COMPLETED';
 
   useEffect(() => {
@@ -45,23 +58,13 @@ export default function AssessmentPageClient() {
     if (initRef.current) return;
     initRef.current = true;
 
-    // Start assessment on mount
-    const initAssessment = async () => {
-      try {
-        const startRes = await startAssessment();
-        if (startRes.result) {
-          setAssessmentId(startRes.result.assessmentId);
-          setChatMaxTurns(startRes.result.chatMaxTurns || 4);
-          setTimeLeft(startRes.result.durationMinutes * 60);
-          setIsStarted(true);
-          fetchNextQuestion(startRes.result.assessmentId);
-        }
-      } catch (error) {
+    // Show the rules first; the clock only starts when the student clicks start
+    getAssessmentConfig()
+      .then((res) => setConfig(res.result))
+      .catch(() => {
         toast.error(t('assessment.startError', 'Không thể bắt đầu bài thi. Vui lòng thử lại sau.'));
         router.push('/home');
-      }
-    };
-    initAssessment();
+      });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Timer logic
@@ -125,7 +128,11 @@ export default function AssessmentPageClient() {
       if (res.result) {
         setSummaryData(res.result);
       }
-      toast.success(t('assessment.submitSuccess', 'Nộp bài thành công!'));
+      if (res.result?.status === 'INTERVIEWING') {
+        toast.success(t('assessment.mcqSubmitSuccess', 'Nộp bài trắc nghiệm thành công! Tiếp theo là phần phỏng vấn với AI.'));
+      } else {
+        toast.success(t('assessment.submitSuccess', 'Nộp bài thành công!'));
+      }
     } catch (error) {
       toast.error(t('assessment.submitError', 'Lỗi khi nộp bài.'));
     } finally {
@@ -147,13 +154,22 @@ export default function AssessmentPageClient() {
     toast.success(t('assessment.chatFinishSuccess', 'Tuyệt vời, bạn đã hoàn thành phần phỏng vấn!'));
   };
 
-  const handleTimeUp = async () => {
-    if (!assessmentId) return;
-    toast.warning(t('assessment.timeUp', 'Hết thời gian làm bài!'));
+  const handleForceSubmit = (id: number | null = assessmentId) => {
+    // A normal submit is already running, let it finish
+    if (finishingRef.current || timeUpHandledRef.current) return;
+    timeUpHandledRef.current = true;
+    setViolationWarning(null);
+    toast.error(t('assessment.antiCheat.forceSubmitted', 'Bạn đã rời khỏi bài thi quá nhiều lần. Bài thi đã được tự động nộp.'));
+    handleTimeUp(false, id);
+  };
+
+  const handleTimeUp = async (showTimeUpToast = true, id: number | null = assessmentId) => {
+    if (!id) return;
+    if (showTimeUpToast) toast.warning(t('assessment.timeUp', 'Hết thời gian làm bài!'));
     setTimeUpError(false);
     setIsFinishing(true);
     try {
-      const res = await timeUpAssessment(assessmentId);
+      const res = await timeUpAssessment(id);
       if (res.result) {
         setSummaryData(res.result);
       }
@@ -164,13 +180,116 @@ export default function AssessmentPageClient() {
     }
   };
 
+  const handleViolation = async () => {
+    if (!assessmentId || timeUpHandledRef.current) return;
+    try {
+      const res = await reportViolation(assessmentId);
+      const result = res.result;
+      if (!result) return;
+      setViolationCount(result.violationCount);
+      setMaxViolations(result.maxViolations);
+
+      if (result.status === 'COMPLETED' && result.summary) {
+        timeUpHandledRef.current = true;
+        setViolationWarning(null);
+        setSummaryData(result.summary);
+        if (result.violationCount >= result.maxViolations) {
+          toast.error(t('assessment.antiCheat.forceSubmitted', 'Bạn đã rời khỏi bài thi quá nhiều lần. Bài thi đã được tự động nộp.'));
+        }
+      } else if (result.violationCount >= result.maxViolations) {
+        // Server could not grade (AI unavailable): fall back to time-up, which has a retry screen
+        handleForceSubmit();
+      } else {
+        setViolationWarning(result.violationCount);
+      }
+    } catch (error) {
+      // Network error: the violation is lost, the test goes on
+    }
+  };
+
+  const { needsFullscreen, enterFullscreen } = useAntiCheat({
+    enabled: isStarted && !isCompleted && !timeUpError,
+    requireFullscreen,
+    onViolation: handleViolation,
+  });
+
+  const handleStartAssessment = async () => {
+    if (isStarting) return;
+    // Must run inside the click handler: browsers only allow fullscreen on a user gesture
+    if (config?.requireFullscreen) enterFullscreen();
+    setIsStarting(true);
+    try {
+      const startRes = await startAssessment();
+      const result = startRes.result;
+      if (result) {
+        setAssessmentId(result.assessmentId);
+        setChatMaxTurns(result.chatMaxTurns || 4);
+        setTotalQuestions(result.totalQuestions);
+        // Remaining time comes from the server so reloading does not reset the clock
+        setTimeLeft(result.remainingSeconds);
+        setViolationCount(result.violationCount);
+        setMaxViolations(result.maxViolations);
+        setRequireFullscreen(result.requireFullscreen);
+        setIsStarted(true);
+
+        const reachedLimit = result.violationCount >= result.maxViolations;
+        if (result.status === 'COMPLETED') {
+          // Resumed after the deadline or with the last violation: show the result directly
+          timeUpHandledRef.current = true;
+          if (result.summary) setSummaryData(result.summary);
+          if (reachedLimit) {
+            toast.error(t('assessment.antiCheat.forceSubmitted', 'Bạn đã rời khỏi bài thi quá nhiều lần. Bài thi đã được tự động nộp.'));
+          }
+          return;
+        }
+
+        if (reachedLimit) {
+          handleForceSubmit(result.assessmentId);
+        } else if (result.violationCount > 0) {
+          // Reloading/closing the page was counted as a violation
+          setViolationWarning(result.violationCount);
+        }
+
+        if (result.status === 'INTERVIEWING' && result.summary) {
+          setSummaryData(result.summary);
+        } else {
+          fetchNextQuestion(result.assessmentId);
+        }
+      }
+    } catch (error) {
+      toast.error(t('assessment.startError', 'Không thể bắt đầu bài thi. Vui lòng thử lại sau.'));
+      router.push('/home');
+    }
+  };
+
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  if (!isStarted || !currentQuestion) {
+  if (!isStarted) {
+    if (!config) {
+      return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+          <CircularProgress />
+        </Box>
+      );
+    }
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#F8FAFC" px={2} py={4}>
+        <AssessmentRulesCard
+          config={config}
+          isStarting={isStarting}
+          onStart={handleStartAssessment}
+          onBack={() => router.push('/home')}
+        />
+      </Box>
+    );
+  }
+
+  // A resumed interview has no current question, only the summary
+  if (!isStarted || (!currentQuestion && !summaryData)) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <CircularProgress />
@@ -178,9 +297,9 @@ export default function AssessmentPageClient() {
     );
   }
 
-  const progressPercent = currentQuestion.currentIndex && currentQuestion.totalQuestions
-    ? (currentQuestion.currentIndex / currentQuestion.totalQuestions) * 100
-    : 0;
+  const progressCurrent = currentQuestion?.currentIndex ?? totalQuestions;
+  const progressTotal = currentQuestion?.totalQuestions ?? totalQuestions;
+  const progressPercent = progressCurrent && progressTotal ? (progressCurrent / progressTotal) * 100 : 0;
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh" bgcolor="#F8FAFC">
@@ -205,9 +324,9 @@ export default function AssessmentPageClient() {
         <Box flex={2} display="flex" flexDirection="column" alignItems="center" maxWidth="400px" mx={2}>
           <Typography variant="caption" fontWeight={600} color="text.secondary" mb={0.5}>
             {t('assessment.progress', {
-              current: currentQuestion.currentIndex,
-              total: currentQuestion.totalQuestions,
-              defaultValue: `Câu hỏi ${currentQuestion.currentIndex} trên ${currentQuestion.totalQuestions}`
+              current: progressCurrent,
+              total: progressTotal,
+              defaultValue: `Câu hỏi ${progressCurrent} trên ${progressTotal}`
             })}
           </Typography>
           <LinearProgress
@@ -218,6 +337,14 @@ export default function AssessmentPageClient() {
         </Box>
 
         <Box flex={1} display="flex" alignItems="center" justifyContent="flex-end" gap={3}>
+          {violationCount > 0 && !isCompleted && (
+            <Box display="flex" alignItems="center" gap={0.5}>
+              <IconAlertTriangle size={18} color="#F59E0B" />
+              <Typography variant="body2" fontWeight={600} color="#B45309">
+                {violationCount}/{maxViolations}
+              </Typography>
+            </Box>
+          )}
           <Box display="flex" alignItems="center" gap={1}>
             <IconClock size={20} color={timeLeft < 60 ? '#EF4444' : '#64748B'} />
             <Typography variant="body1" fontWeight={700} color={timeLeft < 60 ? '#EF4444' : 'text.primary'}>
@@ -232,7 +359,7 @@ export default function AssessmentPageClient() {
         {timeUpError ? (
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%" gap={2}>
             <Typography variant="h6">{t('assessment.timeUpError', 'Không thể nộp bài khi hết giờ. Vui lòng thử lại.')}</Typography>
-            <Button variant="contained" onClick={handleTimeUp}>{t('assessment.retry', 'Thử lại')}</Button>
+            <Button variant="contained" onClick={() => handleTimeUp()}>{t('assessment.retry', 'Thử lại')}</Button>
           </Box>
         ) : isFinishing ? (
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
@@ -243,7 +370,7 @@ export default function AssessmentPageClient() {
           <TestChatRoom assessmentId={assessmentId!} chatMaxTurns={chatMaxTurns} onFinish={handleChatFinish} />
         ) : summaryData ? (
           <TestResultCard summaryData={summaryData} />
-        ) : (
+        ) : currentQuestion && (
           <TestQuestionCard
             domainName={getLocalizedDomain({
               domainName: currentQuestion.domainName,
@@ -260,6 +387,60 @@ export default function AssessmentPageClient() {
           />
         )}
       </Box>
+
+      {/* Fullscreen gate: content stays hidden until the candidate goes back to fullscreen */}
+      {needsFullscreen && (
+        <Box
+          sx={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: (theme) => theme.zIndex.modal + 1,
+            bgcolor: 'rgba(15, 23, 42, 0.92)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 2,
+            px: 3,
+            textAlign: 'center',
+          }}
+        >
+          <IconMaximize size={48} color="#FFFFFF" />
+          <Typography variant="h5" fontWeight={700} color="#FFFFFF">
+            {t('assessment.antiCheat.fullscreenTitle', 'Bài thi yêu cầu chế độ toàn màn hình')}
+          </Typography>
+          <Typography variant="body1" color="#CBD5E1" maxWidth={520}>
+            {t('assessment.antiCheat.fullscreenDesc', {
+              max: maxViolations,
+              defaultValue: `Trong lúc làm bài, việc chuyển tab, chuyển cửa sổ, thoát toàn màn hình, tải lại hoặc đóng trang sẽ bị ghi nhận là vi phạm. Thời gian vẫn tiếp tục chạy khi bạn rời trang. Vi phạm ${maxViolations} lần, bài thi sẽ tự động được nộp.`,
+            })}
+          </Typography>
+          <Button variant="contained" size="large" onClick={enterFullscreen} startIcon={<IconMaximize size={20} />}>
+            {t('assessment.antiCheat.enterFullscreen', 'Vào chế độ toàn màn hình')}
+          </Button>
+        </Box>
+      )}
+
+      <Dialog open={violationWarning !== null && !needsFullscreen} onClose={() => setViolationWarning(null)} maxWidth="xs" fullWidth>
+        <DialogTitle display="flex" alignItems="center" gap={1}>
+          <IconAlertTriangle size={24} color="#F59E0B" />
+          {t('assessment.antiCheat.warningTitle', 'Cảnh báo vi phạm')}
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+            {t('assessment.antiCheat.warningDesc', {
+              count: violationWarning ?? 0,
+              max: maxViolations,
+              defaultValue: `Hệ thống phát hiện bạn đã rời khỏi màn hình làm bài (${violationWarning ?? 0}/${maxViolations}). Nếu đạt ${maxViolations} lần, bài thi sẽ tự động được nộp.`,
+            })}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={() => setViolationWarning(null)}>
+            {t('assessment.antiCheat.understood', 'Tôi đã hiểu')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

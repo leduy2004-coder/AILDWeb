@@ -1,3 +1,5 @@
+import { ISourcePassage } from './source-document.type';
+
 export interface IQuestionOption {
   id?: number;
   content: string;
@@ -15,6 +17,7 @@ export interface IQuestion {
   options?: IQuestionOption[];
   difficultyIndex?: number;
   updatedAt?: string;
+  sourceChunks?: ISourcePassage[];
 }
 
 export interface IQuestionRequest {
@@ -24,6 +27,7 @@ export interface IQuestionRequest {
   content: string;
   status: string;
   options?: IQuestionOption[];
+  sourceChunkIds?: number[];
 }
 
 export interface IQuestionFilter {

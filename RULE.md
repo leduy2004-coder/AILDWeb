@@ -37,7 +37,7 @@ Chỉ 2 vai trò: **Sinh viên** (người được đánh giá) và **Admin** (
 
 - **Frontend**: Next.js
 - **Backend**: Spring Boot
-- **Database**: PostgreSQL (xem `aild_database_schema.sql`)
+- **Database**: MySQL 8.0 (schema sinh từ JPA entity, xem `aild_database_schema.sql`)
 - **AI**: gọi API model có sẵn (không train/fine-tune riêng), kết hợp prompt engineering + rule-based logic
 
 ### Nguyên tắc kiến trúc: Hybrid — Rule-based Control Layer + LLM Reasoning Layer
@@ -49,6 +49,7 @@ Mọi lời gọi AI đều được bọc bởi lớp thuật toán kiểm soá
 | AI-Grading Service | Chấm điểm dựa trên rubric + câu trả lời | Self-consistency check, ngưỡng confidence, quyết định lưu điểm hay đẩy review |
 | AI-Interviewer (giai đoạn 3, tùy chọn) | Sinh câu follow-up | Đếm số lượt follow-up (hard limit), timeout, state machine chuyển câu neo |
 | Recommendation Engine | (nếu dùng) diễn đạt lại gợi ý | Toàn bộ việc chọn tài nguyên là SQL query có điều kiện, AI không tham gia chọn |
+| AI soạn câu hỏi (RAG) | Soạn câu hỏi dựa trên đoạn tài liệu nguồn được truy xuất, bắt buộc trích dẫn | Lọc đoạn theo đúng miền (SQL), xếp hạng bằng cosine theo ô, kiểm tra trích dẫn bằng code, dedup + retry tối đa 3 lần (mục 9) |
 
 ### Module lõi backend
 
@@ -57,7 +58,8 @@ Mọi lời gọi AI đều được bọc bởi lớp thuật toán kiểm soá
 | Assessment Engine | Chấm rule-based cho trắc nghiệm, tổng hợp điểm |
 | AI-Grading Service | Chấm phần thực hành/tự luận có kiểm soát |
 | Adaptive Testing Engine | Chọn câu tiếp theo dựa trên performance, không dùng AI (mục 6) |
-| Recommendation Engine | Ghép nối điểm yếu với tài nguyên trong kho (RAG-based, truy vấn DB) |
+| Recommendation Engine | Ghép nối điểm yếu với tài nguyên trong kho (truy vấn SQL có điều kiện) |
+| Knowledge Retriever (RAG) | Cắt tài liệu nguồn thành đoạn, embedding, tự gán miền năng lực, truy xuất đoạn cho AI soạn câu hỏi (mục 9) |
 | Certificate Service | Sinh chứng chỉ số + mã xác thực (mục 5) |
 
 ## 5. Tính năng đặc biệt #1 — Chứng chỉ năng lực có thể xác thực
@@ -110,6 +112,7 @@ Vấn đề đã xử lý: nếu sinh viên làm tốt lần đầu rồi làm d
 2. **Bài làm sinh viên (Submissions)** — danh sách bài làm → click xem chi tiết từng câu, điểm AI chấm + bằng chứng + confidence, có thể override điểm, đánh dấu "Reviewed"
 3. **Quản lý câu hỏi (Question Bank)** — CRUD câu hỏi, gắn nhãn domain × level, tạo bộ đề theo tỷ lệ phủ ma trận 4×3, gắn `difficulty_index` phục vụ Adaptive Testing
 4. **Quản lý tài nguyên (Resources)** — CRUD tài nguyên gợi ý; có chỉ báo coverage 4×3 để tránh thiếu tài nguyên ở ô nào đó
+5. **Tài liệu nguồn (Source documents)** — upload PDF khung năng lực (UNESCO AI CFS, QĐ 3439...); độ phủ theo 4 miền (số đoạn); xem danh sách đoạn, sửa miền bị gán sai, bỏ qua/khôi phục đoạn (không bắt buộc duyệt từng đoạn)
 
 ## 9. Nguyên tắc kiểm soát AI (chống "bịa")
 
@@ -131,8 +134,36 @@ Vấn đề đã xử lý: nếu sinh viên làm tốt lần đầu rồi làm d
 ### AI hỗ trợ soạn câu hỏi (tùy chọn, không bắt buộc có)
 
 1. Luôn ở trạng thái `DRAFT`, không bao giờ tự `PUBLISHED`
-2. Grounding bằng đoạn tài liệu gốc (QĐ 3439/UNESCO), tránh tự trích sự kiện/số liệu không kiểm chứng được
-3. Admin bắt buộc đọc/sửa/xác nhận thủ công mới cho publish
+2. Grounding bằng đoạn tài liệu gốc (QĐ 3439/UNESCO) qua RAG, tránh tự trích sự kiện/số liệu không kiểm chứng được
+3. Admin bắt buộc đọc/sửa/xác nhận thủ công mới cho publish — đoạn nguồn được hiển thị ngay cạnh câu Draft để đối chiếu
+
+#### Grounding bằng RAG (Retrieval-Augmented Generation)
+
+**Nạp tài liệu (một lần, chạy nền):**
+1. Admin upload PDF → hệ thống trích text (PDFBox), bỏ header/footer lặp lại
+2. Cắt thành đoạn ~400 từ theo ranh giới đoạn văn, overlap ~50 từ, giữ số trang
+3. Tự loại đoạn rác (`IGNORED`): mục lục, tài liệu tham khảo, đoạn < 50 từ
+4. Tính embedding từng đoạn
+5. **Tự gán miền**: so cosine giữa embedding đoạn với embedding mô tả 4 miền năng lực → miền giống nhất, độ tin cậy = cosine. Đạt ngưỡng → `ACTIVE` (dùng ngay); dưới ngưỡng → `UNLABELED` (không dùng tới khi Admin gán tay)
+   - **Chỉ gán miền, không gán mức Bloom**: embedding đo chủ đề/từ vựng nên phân biệt được miền (đạo đức, kỹ thuật, thiết kế, con người), nhưng không phân biệt được mức tư duy. Cùng một đoạn về thiên kiến có thể ra câu Understand ("thiên kiến là gì"), Apply ("gặp output thiên kiến thì làm gì") hay Create ("thiết kế quy trình kiểm tra thiên kiến"). Đoạn tài liệu cung cấp **kiến thức**; mức Understand/Apply/Create là **cách đặt câu hỏi**, do prompt điều khiển (`levelGuide`)
+6. Admin chỉ sửa ngoại lệ (lọc "độ tin cậy thấp"); nhãn Admin gán (`MANUAL`) luôn thắng nhãn máy và được giữ khi xử lý lại
+
+**Khi soạn câu hỏi:**
+```
+1. RULE  : lấy các đoạn ACTIVE đúng miền Admin chọn — SQL, không AI
+2. VECTOR: xếp hạng theo cosine với (lĩnh vực + ghi chú của Admin + mô tả ô domain × level)
+           → đoạn hợp với mức được yêu cầu tự nổi lên đầu, không cần gán mức cho đoạn
+3. Lần thử i lấy cửa sổ hạng [3(i-1)+1 .. 3i] → retry khi trùng có chất liệu mới
+4. Đưa 3 đoạn vào prompt; AI bắt buộc trả "sourceChunkIds"
+5. CODE  : sourceChunkIds phải khác rỗng và nằm trong tập vừa đưa vào,
+           sai → INVALID_OUTPUT, dùng chung vòng retry tối đa 3 lần
+6. Lưu Draft kèm source_chunk_ids; log đoạn đã dùng vào question_generation_attempts
+```
+- Miền chưa có đoạn nguồn → prompt chạy như trước (không RAG), hệ thống vẫn hoạt động
+- Lưu trữ vector: MySQL không có kiểu vector nên embedding lưu dạng JSON, cosine tính trong Java (brute-force sau khi đã lọc theo miền, khoảng vài chục đến vài trăm vector/lần)
+- Chỉ so sánh vector cùng embedding model; đổi model → "Xử lý lại" tài liệu
+- Chống trùng: (1) upload — so SHA-256 nội dung file với các tài liệu chưa xóa, trùng thì từ chối (đổi tên file vẫn bị phát hiện); (2) truy xuất — đoạn có nội dung giống hệt nhau (cùng tài liệu ở 2 file PDF khác nhau) chỉ giữ đoạn xếp hạng cao nhất
+- Xóa tài liệu là xóa mềm (tài liệu + đoạn); đoạn đã xóa không còn được truy xuất, câu hỏi đã soạn giữ nguyên
 
 #### Input bắt buộc từ Admin trước khi gọi AI (không để AI tự chọn)
 
@@ -184,11 +215,19 @@ Các nhóm bảng chính (đã cập nhật thêm 3 nhóm bảng cho tính năng
 - **Mới:** `skill_nodes` — trạng thái monotonic (Locked/Unlocked/Completed) + `recent_accuracy` cho từng node của từng sinh viên
 - **Mới:** `node_attempts` — log từng lần thử 1 node, phục vụ Adaptive Testing Engine tính điểm và cập nhật `recent_accuracy`
 - **Mới:** `certificates` — mã xác thực (hash), ngày cấp, node/domain liên quan
-- **Mới:** `question_generation_attempts` — log từng lần AI thử sinh câu hỏi (domain, level, similarity_score, kết quả ACCEPTED/REJECTED_DUPLICATE/INVALID_OUTPUT/FAILED_MAX_RETRY; mỗi lượt sinh kết thúc bằng đúng 1 dòng ACCEPTED hoặc FAILED_MAX_RETRY), phục vụ audit và số liệu minh chứng hiệu quả chống trùng lặp trong báo cáo
+- **Mới:** `question_generation_attempts` — log từng lần AI thử sinh câu hỏi (domain, level, similarity_score, kết quả ACCEPTED/REJECTED_DUPLICATE/INVALID_OUTPUT/FAILED_MAX_RETRY; mỗi lượt sinh kết thúc bằng đúng 1 dòng ACCEPTED hoặc FAILED_MAX_RETRY; `source_chunk_ids` = các đoạn nguồn đưa vào prompt ở lần thử đó), phục vụ audit và số liệu minh chứng hiệu quả chống trùng lặp trong báo cáo
+- **Mới (RAG):** `source_documents` — tài liệu nguồn Admin upload (tên, nguồn, năm, số trang, trạng thái PENDING/PROCESSING/READY/FAILED)
+- **Mới (RAG):** `source_chunks` — đoạn tài liệu: nội dung, trang, embedding (JSON) + embedding_model, miền đề xuất + độ tin cậy, miền đang dùng + label_source (AUTO/MANUAL), trạng thái ACTIVE/UNLABELED/IGNORED
+- `questions.source_chunk_ids` — các đoạn nguồn câu hỏi do AI soạn đã trích dẫn
 
 ## 13. Giới hạn đã biết
 
 - Chất lượng gợi ý phụ thuộc hoàn toàn vào việc Admin nhập đủ tài nguyên cho từng ô trong ma trận 4×3
+- Chất lượng câu hỏi do AI soạn phụ thuộc độ phủ tài liệu nguồn từng miền (theo dõi ở tab Tài liệu nguồn)
+- Truy xuất vector dùng cosine brute-force trong Java, phù hợp quy mô vài trăm đến vài nghìn đoạn; quy mô lớn hơn cần vector DB (pgvector...)
+- Tự gán miền bằng so sánh embedding có thể sai với đoạn nói về nhiều miền cùng lúc; ngưỡng tin cậy cần hiệu chỉnh sau khi nạp tài liệu thật
+- Đoạn nguồn không được gán mức Bloom; việc câu hỏi đúng mức Understand/Apply/Create phụ thuộc prompt và bước Admin duyệt
+- PDF dạng ảnh scan không trích được chữ (không có OCR)
 - Không có văn bản pháp lý chính thức riêng cho sinh viên đại học tại Việt Nam ở thời điểm thực hiện đồ án; khung áp dụng là suy rộng có căn cứ từ QĐ 3439 + UNESCO AI CFS 2024
 - Không có bảng xếp hạng liên sinh viên (chủ đích, vì Adaptive Testing khiến việc so sánh điểm thô không công bằng)
 

@@ -32,6 +32,8 @@ export const getSettingsSchema = (t: (key: string) => string) => {
       .number({ message: t('admin_settings.validation.duration_minutes.invalid') })
       .min(5, { message: t('admin_settings.validation.duration_minutes.min') })
       .max(180, { message: t('admin_settings.validation.duration_minutes.max') }),
+
+    [SETTING_KEYS.ASSESSMENT_REQUIRE_FULLSCREEN]: z.boolean(),
   }).refine(
     (data) => {
       const sum = data[SETTING_KEYS.MCQ_WEIGHT] + data[SETTING_KEYS.INTERVIEW_WEIGHT];

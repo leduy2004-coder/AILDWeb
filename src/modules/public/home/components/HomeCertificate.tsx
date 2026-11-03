@@ -28,41 +28,62 @@ const HomeCertificate = ({ isEvaluated }: HomeCertificateProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
   if (!isEvaluated) {
     return null;
   }
 
-  const handleOpen = async () => {
-    if (!fullScreen) {
-      setOpen(true);
-    }
+  const triggerDownload = (url: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'AILD_Certificate.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-    let currentUrl = pdfUrl;
-    if (!currentUrl) {
-      setLoading(true);
-      try {
-        const blob = await StudentApi.getStudentCertificateBlob();
-        if (blob instanceof Blob) {
-            currentUrl = URL.createObjectURL(blob);
-            setPdfUrl(currentUrl);
-        } else {
-            console.error("Not a blob", blob);
-        }
-      } catch (error) {
-        console.error('Failed to load certificate:', error);
-      } finally {
-        setLoading(false);
+  const loadPdfUrl = async () => {
+    if (pdfUrl) return pdfUrl;
+    try {
+      const blob = await StudentApi.getStudentCertificateBlob();
+      if (blob instanceof Blob) {
+        const url = URL.createObjectURL(blob);
+        setPdfUrl(url);
+        return url;
       }
+      console.error("Not a blob", blob);
+    } catch (error) {
+      console.error('Failed to load certificate:', error);
+    }
+    return null;
+  };
+
+  const handleOpen = async () => {
+    // Mobile: download the PDF directly
+    if (fullScreen) {
+      setLoading(true);
+      const url = await loadPdfUrl();
+      setLoading(false);
+      if (url) triggerDownload(url);
+      return;
     }
 
-    if (fullScreen && currentUrl) {
-      const link = document.createElement('a');
-      link.href = currentUrl;
-      link.download = 'AILD_Certificate.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    setOpen(true);
+    if (previewUrl) return;
+    setLoading(true);
+    try {
+      const blob = await StudentApi.getStudentCertificatePreviewBlob();
+      if (blob instanceof Blob) {
+        setPreviewUrl(URL.createObjectURL(blob));
+      } else {
+        console.error("Not a blob", blob);
+      }
+    } catch (error) {
+      console.error('Failed to load certificate preview:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,15 +91,11 @@ const HomeCertificate = ({ isEvaluated }: HomeCertificateProps) => {
     setOpen(false);
   };
 
-  const handleDownload = () => {
-    if (pdfUrl) {
-      const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.download = 'AILD_Certificate.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+  const handleDownload = async () => {
+    setDownloading(true);
+    const url = await loadPdfUrl();
+    setDownloading(false);
+    if (url) triggerDownload(url);
   };
 
   return (
@@ -129,11 +146,11 @@ const HomeCertificate = ({ isEvaluated }: HomeCertificateProps) => {
           </Typography>
           <Box display="flex" gap={1} width={{ xs: '100%', sm: 'auto' }} justifyContent="space-between">
             <Button 
-                startIcon={<IconDownload size={18} />}
+                startIcon={downloading ? <CircularProgress size={18} color="inherit" /> : <IconDownload size={18} />}
                 variant="outlined"
                 color="primary"
                 onClick={handleDownload}
-                disabled={!pdfUrl}
+                disabled={!previewUrl || downloading}
                 sx={{ textTransform: 'none', borderRadius: '8px', flexGrow: { xs: 1, sm: 0 } }}
             >
                 {t('home.certificate.downloadBtn')}
@@ -143,19 +160,28 @@ const HomeCertificate = ({ isEvaluated }: HomeCertificateProps) => {
             </IconButton>
           </Box>
         </DialogTitle>
-        <DialogContent sx={{ p: 0, height: '75vh', position: 'relative' }}>
+        <DialogContent sx={{ p: { xs: 1, sm: 3 }, height: '75vh', overflow: 'hidden', bgcolor: '#F1F5F9' }}>
           {loading ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">
               <CircularProgress />
             </Box>
-          ) : pdfUrl ? (
-            <iframe 
-              src={pdfUrl} 
-              width="100%" 
-              height="100%" 
-              style={{ border: 'none' }}
-              title="Certificate PDF"
-            />
+          ) : previewUrl ? (
+            // The image scales down to fit the dialog, so the whole certificate is visible without scrolling
+            <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+              <Box
+                component="img"
+                src={previewUrl}
+                alt={t('home.certificate.title')}
+                sx={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain',
+                  borderRadius: '4px',
+                  boxShadow: '0 8px 30px rgba(15, 23, 42, 0.15)',
+                  backgroundColor: '#FFFFFF',
+                }}
+              />
+            </Box>
           ) : (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">
               <Typography color="error">{t('home.certificate.error')}</Typography>
