@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -13,8 +14,11 @@ import ConfirmBulkDeleteModal from './modal/ConfirmBulkDeleteModal';
 export default function SubmissionsModule() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_submission' });
 
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusQuery, setStatusQuery] = useState('');
+  // ?status=COMPLETED&sort=score_desc preselect the filters (links from the overview cards)
+  const [statusQuery, setStatusQuery] = useState(searchParams.get('status') ?? '');
+  const [sortQuery, setSortQuery] = useState(searchParams.get('sort') ?? '');
   const [page, setPage] = useState(1);
   const size = 20;
 
@@ -22,7 +26,8 @@ export default function SubmissionsModule() {
     page,
     size,
     searchQuery || undefined,
-    statusQuery || undefined
+    statusQuery || undefined,
+    sortQuery || undefined
   );
   const deleteMutation = useDeleteAssessments();
 
@@ -94,6 +99,11 @@ export default function SubmissionsModule() {
         statusQuery={statusQuery}
         onStatusChange={(status) => {
           setStatusQuery(status);
+          setPage(1);
+        }}
+        sortQuery={sortQuery}
+        onSortChange={(sort) => {
+          setSortQuery(sort);
           setPage(1);
         }}
         selectedCount={selectedIds.length}

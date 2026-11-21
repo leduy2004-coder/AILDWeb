@@ -286,7 +286,11 @@
       "search": "Tìm kiếm theo tên hoặc email...",
       "selected": "Đã chọn {{count}}",
       "status": "Trạng thái",
-      "all": "Tất cả"
+      "all": "Tất cả",
+      "sort": "Sắp xếp",
+      "sortNewest": "Mới nhất",
+      "sortScoreDesc": "Điểm cao → thấp",
+      "sortScoreAsc": "Điểm thấp → cao"
     },
     "status": {
       "IN_PROGRESS": "Đang làm",
@@ -355,9 +359,106 @@
     "avgScore": "Điểm năng lực trung bình",
     "totalQuestionsKey": "Tổng số câu hỏi",
     "scoreByDomain": "Điểm trung bình theo lĩnh vực",
-    "proficiencyDistribution": "Phân bố mức độ thành thạo",
-    "recentActivity": "Top 5 bài làm điểm cao nhất",
-    "viewAll": "Xem tất cả",
+    "scoreByDomainHint": "Theo bài làm gần nhất của mỗi học viên. Bấm vào một cột để xem học viên và câu hỏi của lĩnh vực đó.",
+    "domainDetail": {
+      "tabStudents": "Học viên ({{count}})",
+      "tabQuestions": "Câu hỏi ({{count}})",
+      "average": "Điểm TB: {{value}}%",
+      "belowPass": "Dưới 50%: {{count}}/{{total}} học viên",
+      "studentsHint": "Điểm = % câu đúng của lĩnh vực trong bài làm gần nhất, thấp nhất lên đầu. Bài kiểm tra thích ứng (sai thì câu dễ hơn, đúng 2 câu liền thì lên mức), nên cùng một điểm có thể đến từ toàn câu Thông hiểu hoặc từ câu mức cao hơn: xem cột Câu đã làm theo mức.",
+      "domainScore": "Điểm lĩnh vực",
+      "byLevel": "Câu đã làm theo mức",
+      "answeredByLevel": "Câu đã làm: TH {{understand}} · VD {{apply}} · ST {{create}}",
+      "openSubmission": "Xem bài làm",
+      "noStudents": "Chưa có học viên nào hoàn thành bài làm.",
+      "questionsHint": "Tỉ lệ trả lời đúng trên mọi lượt làm, câu khó nhất lên đầu. Tỉ lệ đúng thấp bất thường có thể do câu hỏi chưa rõ hoặc đáp án gây nhầm.",
+      "question": "Câu hỏi",
+      "level": "Mức",
+      "attempts": "Lượt làm",
+      "correctRate": "Tỉ lệ đúng",
+      "noQuestions": "Chưa có câu hỏi nào của lĩnh vực này được làm."
+    },
+    "proficiencyDistribution": "Phân bố học viên theo mức đạt được",
+    "proficiencyDistributionHint": "Theo bài làm gần nhất của {{count}} học viên. Một mức được tính là đạt khi đúng từ 50% câu của mức đó trở lên và đã đạt các mức thấp hơn. Bấm vào một mức để xem danh sách học viên.",
+    "activity": {
+      "title": "Hoạt động làm bài",
+      "hint": "Số bài làm hoàn thành (cột) và điểm trung bình của các bài đó (đường, thang 10). Cả năm: theo tháng; chọn một tháng: theo ngày. Bấm vào một cột để xem các bài làm.",
+      "submissionsOfMonth": "Bài làm hoàn thành tháng {{month}}/{{year}} ({{count}})",
+      "submissionsOfDay": "Bài làm hoàn thành ngày {{day}}/{{month}}/{{year}} ({{count}})",
+      "noSubmissions": "Không có bài làm nào hoàn thành trong thời gian này.",
+      "completed": "Bài hoàn thành",
+      "completedTooltip": "{{count}} bài",
+      "averageScore": "Điểm TB",
+      "wholeYear": "Cả năm",
+      "monthLong": "Tháng {{month}}",
+      "axisMonth": "Tháng",
+      "axisDay": "Ngày trong tháng {{month}}/{{year}}",
+      "monthShort": {
+        "1": "T1", "2": "T2", "3": "T3", "4": "T4", "5": "T5", "6": "T6",
+        "7": "T7", "8": "T8", "9": "T9", "10": "T10", "11": "T11", "12": "T12"
+      }
+    },
+    "improvement": {
+      "title": "Tiến bộ khi làm lại",
+      "hint": "Học viên đã hoàn thành bài làm từ 2 lần trở lên: điểm lần đầu so với lần gần nhất.",
+      "empty": "Chưa có học viên nào làm lại bài.",
+      "firstToLatest": "Điểm TB lần đầu → lần gần nhất",
+      "retakeStudents": "học viên đã làm lại",
+      "improvedStudents": "tăng điểm ({{count}} học viên)",
+      "viewList": "Xem danh sách",
+      "listTitle": "Học viên đã làm lại ({{count}})",
+      "listHint": "Giảm điểm nhiều nhất lên đầu để dễ thấy người cần hỗ trợ. Điểm thang 10.",
+      "attempts": "Số lần làm",
+      "firstScore": "Lần đầu",
+      "latestScore": "Gần nhất",
+      "change": "Thay đổi",
+      "openLatest": "Xem bài làm gần nhất"
+    },
+    "scoreParts": {
+      "title": "Trắc nghiệm và phỏng vấn",
+      "hint": "Điểm trung bình (thang 10) theo bài làm gần nhất của {{count}} học viên.",
+      "mcq": "Trắc nghiệm",
+      "interview": "Phỏng vấn AI"
+    },
+    "assessmentStatus": {
+      "studentsCompleted": "Đã làm xong ít nhất 1 bài",
+      "active": "Đang làm",
+      "timedOut": "Hết giờ, tự nộp",
+      "withViolations": "Có vi phạm",
+      "forcedByViolations": "Nộp do đủ 3 vi phạm"
+    },
+    "levelDetail": {
+      "title": "Học viên ở mức {{level}} ({{count}})",
+      "hint": "Kết quả từng mức trong bài làm gần nhất. Người gần lên mức tiếp theo nhất (tỉ lệ đúng ở mức kế cao nhất) đứng đầu.",
+      "hintTop": "Kết quả từng mức trong bài làm gần nhất, tỉ lệ đúng ở mức Sáng tạo cao nhất đứng đầu.",
+      "notAsked": "Bài làm không có câu nào ở mức này (bài kiểm tra thích ứng chưa đưa lên mức này)",
+      "empty": "Không có học viên nào ở mức này."
+    },
+    "studentCount": "{{count}} học viên",
+    "attention": {
+      "title": "Cần chú ý",
+      "allTimeStats": "Toàn bộ {{count}} bài hoàn thành:",
+      "tabSubmissions": "Bài làm cần xem lại ({{count}})",
+      "tabQuestions": "Câu hỏi bất thường ({{count}})",
+      "submissionsHint": "Bài hoàn thành trong {{days}} ngày gần nhất có vi phạm chống gian lận, hết giờ bị nộp tự động, hoặc điểm trắc nghiệm và phỏng vấn lệch nhau từ 4 điểm trở lên (có thể do tra cứu khi làm trắc nghiệm, hoặc AI chấm phỏng vấn chưa đúng). Lý do nặng nhất lên đầu.",
+      "questionsHint": "Câu hỏi có từ {{min}} lượt làm trở lên với tỉ lệ đúng ≤ 20% (đề khó hiểu hoặc đáp án gây nhầm, sai) hoặc ≥ 95% (quá dễ, không phân loại được học viên).",
+      "reason": "Lý do",
+      "submittedAt": "Nộp lúc",
+      "domain": "Lĩnh vực",
+      "editQuestion": "Sửa câu hỏi",
+      "noSubmissions": "Không có bài làm nào cần xem lại.",
+      "noQuestions": "Không có câu hỏi bất thường.",
+      "reasons": {
+        "FORCED_BY_VIOLATIONS": "Nộp do đủ {{count}} vi phạm",
+        "VIOLATIONS": "{{count}} vi phạm",
+        "SCORE_GAP": "Lệch trắc nghiệm / phỏng vấn",
+        "TIMED_OUT": "Hết giờ, tự nộp"
+      },
+      "kinds": {
+        "TOO_HARD": "Quá khó · {{rate}}%",
+        "TOO_EASY": "Quá dễ · {{rate}}%"
+      }
+    },
     "table": {
       "student": "Học viên",
       "questionSet": "Bộ đề",
@@ -385,6 +486,12 @@
         "1": "Thông hiểu",
         "2": "Vận dụng",
         "3": "Sáng tạo"
+      },
+      "notReached": "Chưa đạt Thông hiểu",
+      "short": {
+        "1": "TH",
+        "2": "VD",
+        "3": "ST"
       }
     },
     "recent": {
@@ -416,7 +523,16 @@
     "newResource": "Tài nguyên mới",
     "filter": {
       "allDomains": "Tất cả lĩnh vực",
-      "searchPlaceholder": "Tìm kiếm theo tiêu đề..."
+      "searchPlaceholder": "Tìm kiếm theo tiêu đề...",
+      "allTypes": "Tất cả loại",
+      "type": {
+        "youtube": "Video YouTube",
+        "article": "Trang web / bài viết",
+        "pdf": "Tài liệu PDF",
+        "google_doc": "Google Docs",
+        "google_slide": "Google Slides"
+      },
+      "clear": "Xóa lọc"
     },
     "table": {
       "title": "Tiêu đề",

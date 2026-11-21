@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -15,11 +16,14 @@ import ConfirmBulkDeleteUserModal from './components/modal/ConfirmBulkDeleteUser
 export default function UserModule() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_user' });
 
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
+  // ?role=STUDENT preselects the filter (link from the overview "total students" card)
+  const [roleQuery, setRoleQuery] = useState(searchParams.get('role') ?? '');
   const [page, setPage] = useState(1);
   const size = 10;
 
-  const { data: userData } = useSearchUsers(page, size, searchQuery || undefined, undefined);
+  const { data: userData } = useSearchUsers(page, size, searchQuery || undefined, undefined, roleQuery || undefined);
   const deleteMutation = useDeleteUsers();
 
   const [openForm, setOpenForm] = useState(false);
@@ -126,6 +130,11 @@ export default function UserModule() {
         searchQuery={searchQuery}
         onSearchChange={(query) => {
           setSearchQuery(query);
+          setPage(1);
+        }}
+        roleQuery={roleQuery}
+        onRoleChange={(role) => {
+          setRoleQuery(role);
           setPage(1);
         }}
         onAddClick={() => handleOpenForm()}

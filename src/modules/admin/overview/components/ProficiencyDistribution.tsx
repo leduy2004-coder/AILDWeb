@@ -4,19 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { IProficiencyDistribution } from '@/types/admin/overview.type';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme, color }) => {
-  const isPrimary = color === 'primary';
-  const isSuccess = color === 'success';
-  const isInfo = color === 'info';
-  
   let mainColor = theme.palette.primary.main;
   let bgColor = theme.palette.primary.light;
-  
-  if (isSuccess) {
+
+  if (color === 'success') {
     mainColor = theme.palette.success.main;
     bgColor = theme.palette.success.light;
-  } else if (isInfo) {
+  } else if (color === 'info') {
     mainColor = theme.palette.info.main;
     bgColor = theme.palette.info.light;
+  } else if (color === 'inherit') {
+    mainColor = theme.palette.grey[500];
+    bgColor = theme.palette.grey[200];
   }
 
   return {
@@ -39,32 +38,59 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme, color }) => {
   };
 });
 
+// Color by level, not by row position: 0 = not reached, then Understand / Apply / Create
+const LEVEL_COLOR: Record<number, 'inherit' | 'info' | 'primary' | 'success'> = {
+  0: 'inherit',
+  1: 'info',
+  2: 'primary',
+  3: 'success',
+};
+
 interface Props {
   data?: IProficiencyDistribution[];
+  onLevelClick?: (levelId: number) => void;
 }
 
-export const ProficiencyDistribution = ({ data = [] }: Props) => {
+export const ProficiencyDistribution = ({ data = [], onLevelClick }: Props) => {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_overview' });
   const theme = useTheme();
+  const totalStudents = data.reduce((sum, item) => sum + item.count, 0);
 
   return (
     <Card elevation={0} sx={{ borderRadius: 1, border: `1px solid ${theme.palette.divider}`, height: '100%' }}>
       <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
-        <Typography variant="h6" fontWeight={600} mb={4}>
+        <Typography variant="h6" fontWeight={600} mb={0.5}>
           {t('proficiencyDistribution')}
         </Typography>
+        <Typography variant="caption" color="textSecondary" component="p" mb={2}>
+          {t('proficiencyDistributionHint', { count: totalStudents })}
+        </Typography>
 
-        <Box display="flex" flexDirection="column" gap={3}>
-          {data.map((item, index) => {
-            const color = index === 0 ? 'info' : index === 1 ? 'primary' : 'success';
+        <Box display="flex" flexDirection="column" gap={1}>
+          {data.map((item) => {
+            const color = LEVEL_COLOR[item.levelId] ?? 'primary';
+            // An empty bucket has nobody to list
+            const clickable = !!onLevelClick && item.count > 0;
             return (
-              <Box key={index}>
+              <Box
+                key={item.levelId}
+                role={clickable ? 'button' : undefined}
+                tabIndex={clickable ? 0 : undefined}
+                onClick={clickable ? () => onLevelClick(item.levelId) : undefined}
+                onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') onLevelClick(item.levelId); } : undefined}
+                sx={{
+                  p: 1,
+                  borderRadius: 1,
+                  cursor: clickable ? 'pointer' : 'default',
+                  '&:hover': clickable ? { bgcolor: theme.palette.action.hover } : undefined,
+                }}
+              >
                 <Box display="flex" justifyContent="space-between" mb={1}>
                   <Typography variant="body2" color="textSecondary">
                     {t(item.levelName)}
                   </Typography>
                   <Typography variant="body2" fontWeight={600}>
-                    {Math.round(item.percentage)}%
+                    {t('studentCount', { count: item.count })} · {Math.round(item.percentage)}%
                   </Typography>
                 </Box>
                 <BorderLinearProgress 

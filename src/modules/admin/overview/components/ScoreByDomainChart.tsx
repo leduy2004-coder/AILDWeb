@@ -8,14 +8,19 @@ const Chart = dynamic(() => import('react-apexcharts').then((mod) => mod.default
 
 interface Props {
   data?: IDomainScore[];
+  onDomainClick?: (domainId: number) => void;
 }
 
-export const ScoreByDomainChart = ({ data = [] }: Props) => {
+export const ScoreByDomainChart = ({ data = [], onDomainClick }: Props) => {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_overview' });
   const theme = useTheme();
 
   const categories = data.map((d) => t(d.domainName));
   const seriesData = data.map((d) => d.averageScore);
+  const openDomain = (index: number) => {
+    const domain = data[index];
+    if (domain && onDomainClick) onDomainClick(domain.domainId);
+  };
 
   const options: any = {
     chart: {
@@ -26,8 +31,15 @@ export const ScoreByDomainChart = ({ data = [] }: Props) => {
         enabled: true,
         easing: 'easeinout',
         speed: 800,
-      }
+      },
+      // A bar or its legend entry opens the domain drill-down
+      events: {
+        dataPointSelection: (_e: unknown, _ctx: unknown, config: { dataPointIndex: number }) => openDomain(config.dataPointIndex),
+        legendClick: (_ctx: unknown, seriesIndex: number) => openDomain(seriesIndex),
+      },
     },
+    // No lasting "selected" darkening after a click: the click only opens the modal
+    states: { active: { filter: { type: 'none' } } },
     colors: [
       theme.palette.primary.main, 
       theme.palette.success.main, 
@@ -104,12 +116,14 @@ export const ScoreByDomainChart = ({ data = [] }: Props) => {
         formatter: (val: number) => `${val}%`,
       },
     },
-    legend: { 
-      show: true, 
+    legend: {
+      show: true,
       position: 'bottom',
       labels: {
         colors: theme.palette.text.secondary
-      }
+      },
+      // Clicking a legend entry opens the domain instead of hiding its bar
+      onItemClick: { toggleDataSeries: false },
     },
   };
 
@@ -123,10 +137,16 @@ export const ScoreByDomainChart = ({ data = [] }: Props) => {
   return (
     <Card elevation={0} sx={{ borderRadius: 1, border: `1px solid ${theme.palette.divider}`, height: '100%' }}>
       <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
-        <Typography variant="h6" fontWeight={600} mb={3}>
+        <Typography variant="h6" fontWeight={600} mb={0.5}>
           {t('scoreByDomain')}
         </Typography>
-        <Box height={320}>
+        <Typography variant="caption" color="textSecondary" component="p" mb={2}>
+          {t('scoreByDomainHint')}
+        </Typography>
+        <Box
+          height={320}
+          sx={{ '& .apexcharts-bar-area, & .apexcharts-legend-series': { cursor: 'pointer' } }}
+        >
           <Chart options={options} series={series} type="bar" height="100%" />
         </Box>
       </CardContent>

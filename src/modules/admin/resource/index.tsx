@@ -12,7 +12,7 @@ import { useBulkDeleteResource } from '@/apis/resource/hook/useBulkDeleteResourc
 import { IResource } from '@/types/admin/resource.type';
 import { IconTrash } from '@tabler/icons-react';
 
-import ResourceFilter from './components/ResourceFilter';
+import ResourceFilter, { ResourceFilterValue } from './components/ResourceFilter';
 import ResourceTable from './components/table/ResourceTable';
 import ResourceForm from './components/form/ResourceForm';
 import ConfirmDeleteResourceModal from './components/modal/ConfirmDeleteResourceModal';
@@ -25,9 +25,10 @@ export default function ResourceModule() {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_resource' });
   const queryClient = useQueryClient();
 
-  const [filter, setFilter] = useState<{ keyword: string; domainId: number | null }>({
+  const [filter, setFilter] = useState<ResourceFilterValue>({
     keyword: '',
     domainId: null,
+    type: null,
   });
   const [page, setPage] = useState(1);
   const size = 10;
@@ -35,6 +36,7 @@ export default function ResourceModule() {
   const { data: resourceData, isLoading } = useGetResources({
     domainId: filter.domainId,
     keyword: filter.keyword,
+    type: filter.type,
     page,
     size,
   });

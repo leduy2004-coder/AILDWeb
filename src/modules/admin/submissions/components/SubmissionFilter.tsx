@@ -9,6 +9,8 @@ interface SubmissionFilterProps {
   onSearchChange: (query: string) => void;
   statusQuery: string;
   onStatusChange: (status: string) => void;
+  sortQuery: string;
+  onSortChange: (sort: string) => void;
   selectedCount: number;
   onBulkDeleteClick: () => void;
 }
@@ -18,6 +20,8 @@ export default function SubmissionFilter({
   onSearchChange,
   statusQuery,
   onStatusChange,
+  sortQuery,
+  onSortChange,
   selectedCount,
   onBulkDeleteClick,
 }: SubmissionFilterProps) {
@@ -61,6 +65,18 @@ export default function SubmissionFilter({
             <MenuItem value="SUBMITTED">{t('status.SUBMITTED', 'Đã nộp')}</MenuItem>
             <MenuItem value="REVIEWED">{t('status.REVIEWED', 'Đã chấm điểm')}</MenuItem>
             <MenuItem value="COMPLETED">{t('status.COMPLETED', 'Hoàn thành')}</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl size="small" sx={{ minWidth: 200 }}>
+          <InputLabel>{t('filter.sort', 'Sắp xếp')}</InputLabel>
+          <Select
+            value={sortQuery}
+            label={t('filter.sort', 'Sắp xếp')}
+            onChange={(e) => onSortChange(e.target.value)}
+          >
+            <MenuItem value="">{t('filter.sortNewest', 'Mới nhất')}</MenuItem>
+            <MenuItem value="score_desc">{t('filter.sortScoreDesc', 'Điểm cao → thấp')}</MenuItem>
+            <MenuItem value="score_asc">{t('filter.sortScoreAsc', 'Điểm thấp → cao')}</MenuItem>
           </Select>
         </FormControl>
       </Box>
