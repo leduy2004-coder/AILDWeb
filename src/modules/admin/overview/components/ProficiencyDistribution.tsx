@@ -48,9 +48,10 @@ const LEVEL_COLOR: Record<number, 'inherit' | 'info' | 'primary' | 'success'> = 
 
 interface Props {
   data?: IProficiencyDistribution[];
+  onLevelClick?: (levelId: number) => void;
 }
 
-export const ProficiencyDistribution = ({ data = [] }: Props) => {
+export const ProficiencyDistribution = ({ data = [], onLevelClick }: Props) => {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_overview' });
   const theme = useTheme();
   const totalStudents = data.reduce((sum, item) => sum + item.count, 0);
@@ -61,15 +62,29 @@ export const ProficiencyDistribution = ({ data = [] }: Props) => {
         <Typography variant="h6" fontWeight={600} mb={0.5}>
           {t('proficiencyDistribution')}
         </Typography>
-        <Typography variant="caption" color="textSecondary" component="p" mb={3}>
+        <Typography variant="caption" color="textSecondary" component="p" mb={2}>
           {t('proficiencyDistributionHint', { count: totalStudents })}
         </Typography>
 
-        <Box display="flex" flexDirection="column" gap={3}>
+        <Box display="flex" flexDirection="column" gap={1}>
           {data.map((item) => {
             const color = LEVEL_COLOR[item.levelId] ?? 'primary';
+            // An empty bucket has nobody to list
+            const clickable = !!onLevelClick && item.count > 0;
             return (
-              <Box key={item.levelId}>
+              <Box
+                key={item.levelId}
+                role={clickable ? 'button' : undefined}
+                tabIndex={clickable ? 0 : undefined}
+                onClick={clickable ? () => onLevelClick(item.levelId) : undefined}
+                onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') onLevelClick(item.levelId); } : undefined}
+                sx={{
+                  p: 1,
+                  borderRadius: 1,
+                  cursor: clickable ? 'pointer' : 'default',
+                  '&:hover': clickable ? { bgcolor: theme.palette.action.hover } : undefined,
+                }}
+              >
                 <Box display="flex" justifyContent="space-between" mb={1}>
                   <Typography variant="body2" color="textSecondary">
                     {t(item.levelName)}
