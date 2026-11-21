@@ -382,7 +382,10 @@
     "proficiencyDistributionHint": "Based on the latest assessment of {{count}} students. A level counts as reached with at least 50% of its questions correct and every lower level reached. Click a level to see its students.",
     "activity": {
       "title": "Assessment Activity",
-      "hint": "Completed assessments (bars) and their average score (line, out of 10). Whole year: by month; a chosen month: by day.",
+      "hint": "Completed assessments (bars) and their average score (line, out of 10). Whole year: by month; a chosen month: by day. Click a bar to see its submissions.",
+      "submissionsOfMonth": "Completed in {{month}}/{{year}} ({{count}})",
+      "submissionsOfDay": "Completed on {{day}}/{{month}}/{{year}} ({{count}})",
+      "noSubmissions": "No assessment completed in this period.",
       "completed": "Completed",
       "completedTooltip": "{{count}} assessments",
       "averageScore": "Avg score",

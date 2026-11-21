@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Box, Card, CardContent, CircularProgress, FormControl, MenuItem, Select, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
-import { useGetActivity } from '@/apis/overview/hook';
+import { IActivityPeriod, useGetActivity } from '@/apis/overview/hook';
+import ActivitySubmissionsModal from '../modal/ActivitySubmissionsModal';
 
 const Chart = dynamic(() => import('react-apexcharts').then((mod) => mod.default), { ssr: false });
 
@@ -19,9 +20,19 @@ export const ActivityChart = () => {
   // null = the whole year
   const [month, setMonth] = useState<number | null>(null);
   const { data, isLoading } = useGetActivity(year, month);
+  // The clicked bar, whose submissions open in a modal
+  const [selectedPeriod, setSelectedPeriod] = useState<IActivityPeriod | null>(null);
 
   const activity = data?.result;
   const buckets = activity?.buckets ?? [];
+
+  const openBar = (index: number) => {
+    const bucket = buckets[index];
+    if (!bucket || bucket.completedCount === 0) return;
+    const [yyyy, mm, dd] = bucket.periodStart.split('-').map(Number);
+    // Year view: a bar is a month; month view: a bar is a day
+    setSelectedPeriod({ year: yyyy, month: mm, day: month === null ? null : dd });
+  };
   const years = activity?.years?.length ? activity.years : [year];
 
   // Labels parsed from "yyyy-MM-dd" by parts so they do not shift with the browser time zone
@@ -36,7 +47,16 @@ export const ActivityChart = () => {
   ];
 
   const options: any = {
-    chart: { toolbar: { show: false }, fontFamily: theme.typography.fontFamily },
+    chart: {
+      toolbar: { show: false },
+      fontFamily: theme.typography.fontFamily,
+      // A bar (or the score point above it) opens the submissions of that month / day
+      events: {
+        dataPointSelection: (_e: unknown, _ctx: unknown, config: { dataPointIndex: number }) => openBar(config.dataPointIndex),
+      },
+    },
+    // No lasting "selected" darkening after a click: the click only opens the modal
+    states: { active: { filter: { type: 'none' } } },
     colors: [theme.palette.primary.main, theme.palette.warning.main],
     stroke: { width: [0, 3], curve: 'smooth' },
     markers: { size: [0, 4] },
@@ -120,12 +140,13 @@ export const ActivityChart = () => {
           {isLoading ? (
             <CircularProgress />
           ) : (
-            <Box width="100%" height="100%">
+            <Box width="100%" height="100%" sx={{ '& .apexcharts-bar-area, & .apexcharts-marker': { cursor: 'pointer' } }}>
               <Chart options={options} series={series} type="line" height="100%" />
             </Box>
           )}
         </Box>
       </CardContent>
+      <ActivitySubmissionsModal period={selectedPeriod} onClose={() => setSelectedPeriod(null)} />
     </Card>
   );
 };

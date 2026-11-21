@@ -7,20 +7,14 @@ import {
 import { IconEdit, IconExternalLink } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useGetAttention } from '@/apis/overview/hook';
-import { IAssessmentStatus, ReviewReason } from '@/types/admin/overview.type';
+import { IAssessmentStatus } from '@/types/admin/overview.type';
+import ReviewReasonChips from './ReviewReasonChips';
 
 interface Props {
   /** How all completed assessments ended, shown above the review list */
   status?: IAssessmentStatus;
   completedAssessments?: number;
 }
-
-const REASON_COLOR: Record<ReviewReason, 'error' | 'warning' | 'info' | 'default'> = {
-  FORCED_BY_VIOLATIONS: 'error',
-  VIOLATIONS: 'warning',
-  SCORE_GAP: 'info',
-  TIMED_OUT: 'default',
-};
 
 const formatScore = (value?: number | null) => (value === null || value === undefined ? '-' : Number(value).toFixed(1));
 
@@ -103,17 +97,7 @@ export const AttentionTabs = ({ status, completedAssessments = 0 }: Props) => {
                           {s.studentEmail && <Typography variant="caption" color="text.secondary">{s.studentEmail}</Typography>}
                         </TableCell>
                         <TableCell>
-                          <Box display="flex" gap={0.5} flexWrap="wrap">
-                            {s.reasons.map((reason) => (
-                              <Chip
-                                key={reason}
-                                size="small"
-                                color={REASON_COLOR[reason]}
-                                variant={reason === 'TIMED_OUT' ? 'outlined' : 'filled'}
-                                label={t(`attention.reasons.${reason}`, { count: s.violationCount })}
-                              />
-                            ))}
-                          </Box>
+                          <ReviewReasonChips reasons={s.reasons} violationCount={s.violationCount} />
                         </TableCell>
                         <TableCell align="right">{formatScore(s.mcqScore)}</TableCell>
                         <TableCell align="right">{formatScore(s.interviewScore)}</TableCell>

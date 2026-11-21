@@ -6,6 +6,7 @@ import {
   IImprovementStudent,
   ILevelDetail,
   IOverviewResponse,
+  IReviewSubmission,
 } from '@/types/admin/overview.type';
 import { IApiResponse } from '@/types/shared';
 import { API_PREFIX } from '@/apis/constants/api.constant';
@@ -41,6 +42,21 @@ export async function getActivity(year: number, month: number | null): Promise<I
   return payload;
 }
 
+/** Assessments completed in one bar of the activity chart: a day (month + day), a month, or the whole year. */
+export async function getActivitySubmissions(
+  year: number,
+  month: number | null,
+  day: number | null
+): Promise<IApiResponse<IReviewSubmission[]>> {
+  const query = new URLSearchParams({ year: year.toString() });
+  if (month) query.append('month', month.toString());
+  if (day) query.append('day', day.toString());
+  const { payload } = await http.get<IApiResponse<IReviewSubmission[]>>(
+    `${API_PREFIX.AILD_ADMIN}/overview/activity/submissions?${query.toString()}`
+  );
+  return payload;
+}
+
 export async function getAttention(): Promise<IApiResponse<IAttentionResponse>> {
   const { payload } = await http.get<IApiResponse<IAttentionResponse>>(
     `${API_PREFIX.AILD_ADMIN}/overview/attention`
@@ -60,6 +76,7 @@ export const OverviewApi = {
   getDomainDetail,
   getLevelDetail,
   getActivity,
+  getActivitySubmissions,
   getAttention,
   getImprovementList,
 };

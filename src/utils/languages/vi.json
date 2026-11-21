@@ -382,7 +382,10 @@
     "proficiencyDistributionHint": "Theo bài làm gần nhất của {{count}} học viên. Một mức được tính là đạt khi đúng từ 50% câu của mức đó trở lên và đã đạt các mức thấp hơn. Bấm vào một mức để xem danh sách học viên.",
     "activity": {
       "title": "Hoạt động làm bài",
-      "hint": "Số bài làm hoàn thành (cột) và điểm trung bình của các bài đó (đường, thang 10). Cả năm: theo tháng; chọn một tháng: theo ngày.",
+      "hint": "Số bài làm hoàn thành (cột) và điểm trung bình của các bài đó (đường, thang 10). Cả năm: theo tháng; chọn một tháng: theo ngày. Bấm vào một cột để xem các bài làm.",
+      "submissionsOfMonth": "Bài làm hoàn thành tháng {{month}}/{{year}} ({{count}})",
+      "submissionsOfDay": "Bài làm hoàn thành ngày {{day}}/{{month}}/{{year}} ({{count}})",
+      "noSubmissions": "Không có bài làm nào hoàn thành trong thời gian này.",
       "completed": "Bài hoàn thành",
       "completedTooltip": "{{count}} bài",
       "averageScore": "Điểm TB",
