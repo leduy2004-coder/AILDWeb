@@ -23,6 +23,7 @@ async function searchUsers(
   size: number = 10,
   name?: string,
   email?: string,
+  role?: string,
 ): Promise<IApiResponse<IPageResponse<IUser>>> {
   const query = new URLSearchParams({
     page: page.toString(),
@@ -30,6 +31,7 @@ async function searchUsers(
   });
   if (name) query.append('name', name);
   if (email) query.append('email', email);
+  if (role) query.append('role', role);
 
   const { payload } = await http.get<IApiResponse<IPageResponse<IUser>>>(
     `${API_PREFIX.AUTH}/users/search?${query.toString()}`

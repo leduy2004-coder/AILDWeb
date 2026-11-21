@@ -286,7 +286,11 @@
       "search": "Tìm kiếm theo tên hoặc email...",
       "selected": "Đã chọn {{count}}",
       "status": "Trạng thái",
-      "all": "Tất cả"
+      "all": "Tất cả",
+      "sort": "Sắp xếp",
+      "sortNewest": "Mới nhất",
+      "sortScoreDesc": "Điểm cao → thấp",
+      "sortScoreAsc": "Điểm thấp → cao"
     },
     "status": {
       "IN_PROGRESS": "Đang làm",
@@ -355,7 +359,9 @@
     "avgScore": "Điểm năng lực trung bình",
     "totalQuestionsKey": "Tổng số câu hỏi",
     "scoreByDomain": "Điểm trung bình theo lĩnh vực",
-    "proficiencyDistribution": "Phân bố mức độ thành thạo",
+    "proficiencyDistribution": "Phân bố học viên theo mức đạt được",
+    "proficiencyDistributionHint": "Theo bài làm gần nhất của {{count}} học viên. Một mức được tính là đạt khi đúng từ 50% câu của mức đó trở lên và đã đạt các mức thấp hơn.",
+    "studentCount": "{{count}} học viên",
     "recentActivity": "Top 5 bài làm điểm cao nhất",
     "viewAll": "Xem tất cả",
     "table": {
@@ -385,7 +391,8 @@
         "1": "Thông hiểu",
         "2": "Vận dụng",
         "3": "Sáng tạo"
-      }
+      },
+      "notReached": "Chưa đạt Thông hiểu"
     },
     "recent": {
       "assessment": {
@@ -416,7 +423,16 @@
     "newResource": "Tài nguyên mới",
     "filter": {
       "allDomains": "Tất cả lĩnh vực",
-      "searchPlaceholder": "Tìm kiếm theo tiêu đề..."
+      "searchPlaceholder": "Tìm kiếm theo tiêu đề...",
+      "allTypes": "Tất cả loại",
+      "type": {
+        "youtube": "Video YouTube",
+        "article": "Trang web / bài viết",
+        "pdf": "Tài liệu PDF",
+        "google_doc": "Google Docs",
+        "google_slide": "Google Slides"
+      },
+      "clear": "Xóa lọc"
     },
     "table": {
       "title": "Tiêu đề",

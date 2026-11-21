@@ -286,7 +286,11 @@
       "search": "Search by name or email...",
       "selected": "Selected {{count}}",
       "status": "Status",
-      "all": "All"
+      "all": "All",
+      "sort": "Sort by",
+      "sortNewest": "Newest",
+      "sortScoreDesc": "Score high → low",
+      "sortScoreAsc": "Score low → high"
     },
     "status": {
       "IN_PROGRESS": "In Progress",
@@ -355,7 +359,9 @@
     "avgScore": "Average Competency Score",
     "totalQuestionsKey": "Total Questions",
     "scoreByDomain": "Average Score by Domain",
-    "proficiencyDistribution": "Proficiency Distribution",
+    "proficiencyDistribution": "Students by Level Reached",
+    "proficiencyDistributionHint": "Based on the latest assessment of {{count}} students. A level counts as reached with at least 50% of its questions correct and every lower level reached.",
+    "studentCount": "{{count}} students",
     "recentActivity": "Top 5 Highest Scoring Submissions",
     "viewAll": "View all",
     "table": {
@@ -385,7 +391,8 @@
         "1": "Understand",
         "2": "Apply",
         "3": "Create"
-      }
+      },
+      "notReached": "Below Understand"
     },
     "recent": {
       "assessment": {
@@ -416,7 +423,16 @@
     "newResource": "New Resource",
     "filter": {
       "allDomains": "All Domains",
-      "searchPlaceholder": "Search by title..."
+      "searchPlaceholder": "Search by title...",
+      "allTypes": "All types",
+      "type": {
+        "youtube": "YouTube video",
+        "article": "Web page / article",
+        "pdf": "PDF document",
+        "google_doc": "Google Docs",
+        "google_slide": "Google Slides"
+      },
+      "clear": "Clear filters"
     },
     "table": {
       "title": "Title",

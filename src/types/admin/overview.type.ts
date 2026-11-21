@@ -4,6 +4,8 @@ export interface IDomainScore {
 }
 
 export interface IProficiencyDistribution {
+  /** 1-3 = highest level reached, 0 = not even the first level */
+  levelId: number;
   levelName: string;
   count: number;
   percentage: number;
