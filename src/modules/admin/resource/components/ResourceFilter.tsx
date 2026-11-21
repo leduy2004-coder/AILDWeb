@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, TextField, InputAdornment, FormControl, Select, MenuItem, Button } from '@mui/material';
 import { IconSearch, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import { ResourceType } from '@/utils/resource.util';
 
+export interface ResourceFilterValue {
+  keyword: string;
+  domainId: number | null;
+  type: ResourceType | null;
+}
+
+// Same types as detectResourceType: derived from the URL, there is no type column
+const RESOURCE_TYPES: ResourceType[] = ['youtube', 'article', 'pdf', 'google_doc', 'google_slide'];
 
 interface ResourceFilterProps {
-  filter: {
-    keyword: string;
-    domainId: number | null;
-  };
-  onFilterChange: (filter: { keyword: string; domainId: number | null }) => void;
+  filter: ResourceFilterValue;
+  onFilterChange: (filter: ResourceFilterValue) => void;
 }
 
 export default function ResourceFilter({ filter, onFilterChange }: ResourceFilterProps) {
   const { t } = useTranslation('translation', { keyPrefix: 'admin_resource.filter' });
   const { t: tDomain } = useTranslation('translation', { keyPrefix: 'admin_overview.domain.name' });
 
-
-
   const handleClear = () => {
-    onFilterChange({ keyword: '', domainId: null });
+    onFilterChange({ keyword: '', domainId: null, type: null });
   };
 
   return (
@@ -38,7 +42,7 @@ export default function ResourceFilter({ filter, onFilterChange }: ResourceFilte
         }}
         sx={{ minWidth: 300, flex: 1 }}
       />
-      
+
       <FormControl size="small" sx={{ minWidth: 200 }}>
         <Select
           displayEmpty
@@ -53,9 +57,22 @@ export default function ResourceFilter({ filter, onFilterChange }: ResourceFilte
         </Select>
       </FormControl>
 
-      {(filter.keyword || filter.domainId) && (
+      <FormControl size="small" sx={{ minWidth: 200 }}>
+        <Select
+          displayEmpty
+          value={filter.type || ''}
+          onChange={(e) => onFilterChange({ ...filter, type: (e.target.value as ResourceType) || null })}
+        >
+          <MenuItem value="">{t('allTypes')}</MenuItem>
+          {RESOURCE_TYPES.map((type) => (
+            <MenuItem key={type} value={type}>{t(`type.${type}`)}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {(filter.keyword || filter.domainId || filter.type) && (
         <Button variant="text" color="error" startIcon={<IconX size={18} />} onClick={handleClear}>
-          Xóa lọc
+          {t('clear')}
         </Button>
       )}
     </Box>

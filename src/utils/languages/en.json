@@ -286,7 +286,11 @@
       "search": "Search by name or email...",
       "selected": "Selected {{count}}",
       "status": "Status",
-      "all": "All"
+      "all": "All",
+      "sort": "Sort by",
+      "sortNewest": "Newest",
+      "sortScoreDesc": "Score high → low",
+      "sortScoreAsc": "Score low → high"
     },
     "status": {
       "IN_PROGRESS": "In Progress",
@@ -355,9 +359,106 @@
     "avgScore": "Average Competency Score",
     "totalQuestionsKey": "Total Questions",
     "scoreByDomain": "Average Score by Domain",
-    "proficiencyDistribution": "Proficiency Distribution",
-    "recentActivity": "Top 5 Highest Scoring Submissions",
-    "viewAll": "View all",
+    "scoreByDomainHint": "Based on each student's latest assessment. Click a bar to see the students and questions of that domain.",
+    "domainDetail": {
+      "tabStudents": "Students ({{count}})",
+      "tabQuestions": "Questions ({{count}})",
+      "average": "Average: {{value}}%",
+      "belowPass": "Below 50%: {{count}}/{{total}} students",
+      "studentsHint": "Score = % correct in this domain on the latest assessment, lowest first. The test is adaptive (a wrong answer brings an easier question, 2 right in a row move up a level), so the same score can come from Understand questions only or from harder ones: see Answered by level.",
+      "domainScore": "Domain score",
+      "byLevel": "Answered by level",
+      "answeredByLevel": "Answered: U {{understand}} · A {{apply}} · C {{create}}",
+      "openSubmission": "Open submission",
+      "noStudents": "No student has completed an assessment yet.",
+      "questionsHint": "Correct rate over all attempts, hardest first. An unusually low rate may mean the question is unclear or an option is misleading.",
+      "question": "Question",
+      "level": "Level",
+      "attempts": "Attempts",
+      "correctRate": "Correct rate",
+      "noQuestions": "No question of this domain has been answered yet."
+    },
+    "proficiencyDistribution": "Students by Level Reached",
+    "proficiencyDistributionHint": "Based on the latest assessment of {{count}} students. A level counts as reached with at least 50% of its questions correct and every lower level reached. Click a level to see its students.",
+    "activity": {
+      "title": "Assessment Activity",
+      "hint": "Completed assessments (bars) and their average score (line, out of 10). Whole year: by month; a chosen month: by day. Click a bar to see its submissions.",
+      "submissionsOfMonth": "Completed in {{month}}/{{year}} ({{count}})",
+      "submissionsOfDay": "Completed on {{day}}/{{month}}/{{year}} ({{count}})",
+      "noSubmissions": "No assessment completed in this period.",
+      "completed": "Completed",
+      "completedTooltip": "{{count}} assessments",
+      "averageScore": "Avg score",
+      "wholeYear": "Whole year",
+      "monthLong": "Month {{month}}",
+      "axisMonth": "Month",
+      "axisDay": "Day of {{month}}/{{year}}",
+      "monthShort": {
+        "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+        "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+      }
+    },
+    "improvement": {
+      "title": "Progress on Retake",
+      "hint": "Students who completed the assessment at least twice: first score vs latest score.",
+      "empty": "No student has retaken the assessment yet.",
+      "firstToLatest": "Average first → latest score",
+      "retakeStudents": "students retook it",
+      "improvedStudents": "improved ({{count}} students)",
+      "viewList": "View list",
+      "listTitle": "Students who retook it ({{count}})",
+      "listHint": "Biggest drop first, to spot who needs support. Scores out of 10.",
+      "attempts": "Attempts",
+      "firstScore": "First",
+      "latestScore": "Latest",
+      "change": "Change",
+      "openLatest": "Open latest submission"
+    },
+    "scoreParts": {
+      "title": "Multiple Choice and Interview",
+      "hint": "Average score (out of 10) over the latest assessment of {{count}} students.",
+      "mcq": "Multiple choice",
+      "interview": "AI interview"
+    },
+    "assessmentStatus": {
+      "studentsCompleted": "Completed at least 1",
+      "active": "In progress",
+      "timedOut": "Timed out, auto-submitted",
+      "withViolations": "With violations",
+      "forcedByViolations": "Forced by 3 violations"
+    },
+    "levelDetail": {
+      "title": "Students at {{level}} ({{count}})",
+      "hint": "Results per level on the latest assessment. Closest to the next level first (highest correct rate on the level above).",
+      "hintTop": "Results per level on the latest assessment, highest correct rate on Create first.",
+      "notAsked": "No question of this level in the assessment (the adaptive test did not go up to it)",
+      "empty": "No student at this level."
+    },
+    "studentCount": "{{count}} students",
+    "attention": {
+      "title": "Needs Attention",
+      "allTimeStats": "All {{count}} completed:",
+      "tabSubmissions": "Submissions to review ({{count}})",
+      "tabQuestions": "Unusual questions ({{count}})",
+      "submissionsHint": "Assessments completed in the last {{days}} days with anti-cheat violations, auto-submitted at time-up, or a gap of 4+ points between the multiple-choice and interview score (possible lookup during the test, or a wrong interview grade). Most serious first.",
+      "questionsHint": "Questions with {{min}}+ attempts and a correct rate ≤ 20% (unclear question, misleading or wrong option) or ≥ 95% (too easy to tell students apart).",
+      "reason": "Reason",
+      "submittedAt": "Submitted",
+      "domain": "Domain",
+      "editQuestion": "Edit question",
+      "noSubmissions": "No submission to review.",
+      "noQuestions": "No unusual question.",
+      "reasons": {
+        "FORCED_BY_VIOLATIONS": "Forced by {{count}} violations",
+        "VIOLATIONS": "{{count}} violations",
+        "SCORE_GAP": "MC / interview gap",
+        "TIMED_OUT": "Timed out"
+      },
+      "kinds": {
+        "TOO_HARD": "Too hard · {{rate}}%",
+        "TOO_EASY": "Too easy · {{rate}}%"
+      }
+    },
     "table": {
       "student": "Student",
       "questionSet": "Question Set",
@@ -385,6 +486,12 @@
         "1": "Understand",
         "2": "Apply",
         "3": "Create"
+      },
+      "notReached": "Below Understand",
+      "short": {
+        "1": "U",
+        "2": "A",
+        "3": "C"
       }
     },
     "recent": {
@@ -416,7 +523,16 @@
     "newResource": "New Resource",
     "filter": {
       "allDomains": "All Domains",
-      "searchPlaceholder": "Search by title..."
+      "searchPlaceholder": "Search by title...",
+      "allTypes": "All types",
+      "type": {
+        "youtube": "YouTube video",
+        "article": "Web page / article",
+        "pdf": "PDF document",
+        "google_doc": "Google Docs",
+        "google_slide": "Google Slides"
+      },
+      "clear": "Clear filters"
     },
     "table": {
       "title": "Title",

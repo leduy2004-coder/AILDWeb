@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Box, Typography, Button, Stack, CircularProgress, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@iconify/react';
@@ -31,8 +32,12 @@ export default function QuestionBankPage() {
     size: 20,
   });
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  // ?edit=<id> opens that question's form directly (link from the overview "unusual questions" tab)
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const editParam = Number(searchParams.get('edit')) || null;
+  const [isFormOpen, setIsFormOpen] = useState(editParam !== null);
+  const [editingId, setEditingId] = useState<number | null>(editParam);
 
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -103,6 +108,8 @@ export default function QuestionBankPage() {
   const handleCloseForm = () => {
     setIsFormOpen(false);
     setEditingId(null);
+    // Drop ?edit= so a reload does not reopen the form
+    if (searchParams.get('edit')) router.replace('/admin/questions');
   };
 
   const handleOpenDelete = (id: number) => {

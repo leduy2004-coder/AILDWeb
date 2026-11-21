@@ -9,7 +9,7 @@ export const RESOURCE_QUERY_KEYS = {
   detail: (id: number) => ['resources', id] as const,
 };
 
-export async function getResources(filter: { domainId?: number | null; targetLevelId?: number | null; keyword?: string; page?: number; size?: number }): Promise<IApiResponse<IPageResponse<IResource>>> {
+export async function getResources(filter: { domainId?: number | null; targetLevelId?: number | null; keyword?: string; type?: string | null; page?: number; size?: number }): Promise<IApiResponse<IPageResponse<IResource>>> {
   const queryParams = new URLSearchParams();
   Object.entries(filter).forEach(([key, value]) => {
     if (value !== null && value !== undefined && value !== '') {

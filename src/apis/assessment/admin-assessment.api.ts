@@ -8,8 +8,8 @@ import {
 
 export const ADMIN_ASSESSMENT_QUERY_KEYS = {
   all: ['admin-assessments'] as const,
-  list: (page: number, limit: number, search?: string, status?: string) =>
-    ['admin-assessments', page, limit, search, status] as const,
+  list: (page: number, limit: number, search?: string, status?: string, sort?: string) =>
+    ['admin-assessments', page, limit, search, status, sort] as const,
   detail: (id: number) => ['admin-assessments', id] as const,
 };
 
@@ -19,7 +19,8 @@ export async function getAssessments(
   page: number = 1,
   limit: number = 10,
   search?: string,
-  status?: string
+  status?: string,
+  sort?: string
 ): Promise<IApiResponse<IPageResponse<IAdminAssessmentListDto>>> {
   const queryParams = new URLSearchParams({
     page: page.toString(),
@@ -30,6 +31,9 @@ export async function getAssessments(
   }
   if (status) {
     queryParams.append('status', status);
+  }
+  if (sort) {
+    queryParams.append('sort', sort);
   }
 
   const { payload } = await http.get<IApiResponse<IPageResponse<IAdminAssessmentListDto>>>(
