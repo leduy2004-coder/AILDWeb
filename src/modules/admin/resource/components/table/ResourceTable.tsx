@@ -1,9 +1,19 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Chip, Typography, Box, Link, Checkbox, TablePagination, Tooltip } from '@mui/material';
-import { IconEdit, IconTrash, IconEye, IconHeartFilled, IconFlag } from '@tabler/icons-react';
+import { IconEdit, IconTrash, IconEye, IconHeartFilled, IconFlag, IconBrandYoutube, IconPresentation, IconFileText, IconArticle } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { IResource } from '@/types/admin/resource.type';
 import { QUESTION_DOMAIN_COLOR } from '@/modules/admin/question/constant/question.constant';
+import { detectResourceType, ResourceType } from '@/utils/resource.util';
+
+// Same icons as the student home page
+const TYPE_ICON: Record<ResourceType, React.ReactNode> = {
+  youtube: <IconBrandYoutube size={18} color="#E53935" />,
+  google_slide: <IconPresentation size={18} color="#F59E0B" />,
+  google_doc: <IconFileText size={18} color="#2563EB" />,
+  pdf: <IconFileText size={18} color="#EF4444" />,
+  article: <IconArticle size={18} color="#10B981" />,
+};
 
 interface ResourceTableProps {
   data: IResource[];
@@ -39,6 +49,7 @@ export default function ResourceTable({
   const { t } = useTranslation('translation', { keyPrefix: 'admin_resource.table' });
   const { t: tDomain } = useTranslation('translation', { keyPrefix: 'admin_overview.domain.name' });
   const { t: tLevel } = useTranslation('translation', { keyPrefix: 'admin_overview.level.name' });
+  const { t: tType } = useTranslation('translation', { keyPrefix: 'admin_resource.filter.type' });
 
   const getDomainColor = (domainId: number) => QUESTION_DOMAIN_COLOR[domainId] || 'default';
 
@@ -67,7 +78,7 @@ export default function ResourceTable({
         <TableBody>
           {data.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={6} align="center" sx={{ py: 3 }}>
+              <TableCell colSpan={8} align="center" sx={{ py: 3 }}>
                 <Typography color="text.secondary">{t('empty')}</Typography>
               </TableCell>
             </TableRow>
@@ -75,6 +86,7 @@ export default function ResourceTable({
             data.map((row) => {
               const isSelected = selectedIds.indexOf(row.id) !== -1;
               const dateVal = row.modifiedDate || row.updatedAt;
+              const type = detectResourceType(row.url);
               return (
                 <TableRow key={row.id} hover selected={isSelected}>
                   <TableCell padding="checkbox">
@@ -86,9 +98,14 @@ export default function ResourceTable({
                   </TableCell>
                   <TableCell>
                   <Box>
-                    <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
-                      {row.title}
-                    </Typography>
+                    <Box display="flex" alignItems="center" gap={1} sx={{ mb: 0.5 }}>
+                      <Tooltip title={tType(type)}>
+                        <Box component="span" display="inline-flex" flexShrink={0}>{TYPE_ICON[type]}</Box>
+                      </Tooltip>
+                      <Typography variant="body2" fontWeight={500}>
+                        {row.title}
+                      </Typography>
+                    </Box>
                     <Link
                       href={row.url}
                       target="_blank"
