@@ -20,3 +20,11 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    # Hardening: limit the damage if the app is ever exploited again
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 200
+    cpus: "1.0"
+    mem_limit: 1g
