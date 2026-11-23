@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.github
+.claude
+.code-review-graph
+.vscode
+.env.local
+.env*.local
+*.tsbuildinfo
+old_*.tsx
