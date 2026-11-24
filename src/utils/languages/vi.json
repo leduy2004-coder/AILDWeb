@@ -6,6 +6,8 @@
     "pageTitle": "Trang chủ | AILD",
     "pageDescription": "Tổng quan học tập và tiến trình của sinh viên trên hệ thống AILD",
     "welcome": "Chào mừng trở lại",
+    "welcomeGuest": "Chào mừng đến với Hệ thống đánh giá năng lực sử dụng AI",
+    "welcomeGuestSubtitle": "Đăng nhập để bắt đầu đánh giá năng lực sử dụng AI của bạn.",
     "lastEvaluation": "Đánh giá lần cuối",
     "noEvaluationYet": "Chưa có bài đánh giá nào",
     "notAssessed": "CHƯA ĐÁNH GIÁ",
@@ -211,7 +213,8 @@
       "passwordRequired": "Vui lòng nhập mật khẩu",
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
       "emailRequired": "Vui lòng nhập email",
-      "emailInvalid": "Email không hợp lệ"
+      "emailInvalid": "Email không hợp lệ",
+      "emailNote": "Nhập đúng email để nhận mã OTP xác thực."
     },
     "step2": {
       "title": "Chọn vai trò của bạn",
