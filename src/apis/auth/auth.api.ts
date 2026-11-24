@@ -135,3 +135,19 @@ export async function resetPassword(body: IResetPasswordBody): Promise<IApiRespo
 
   return payload;
 }
+
+export interface IChangePasswordBody {
+  /** Current password */
+  password: string;
+  newPass: string;
+}
+
+/** Changes the signed-in user's password; the backend takes the user from the access token */
+export async function changePassword(body: IChangePasswordBody): Promise<IApiResponse<boolean>> {
+  const { payload } = await http.post<IApiResponse<boolean>>(
+    `${API_PREFIX.AUTH}/change-pass`,
+    body,
+  );
+
+  return payload;
+}

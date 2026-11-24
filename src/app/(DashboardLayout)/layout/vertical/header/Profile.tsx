@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { ActionButton } from '@/modules/shared/styled';
+import { ROLE_CODE } from '@/modules/shared/constants';
 import { getLocalStorageItem } from '@/modules/shared/utils';
 import { logout } from '@/apis/auth/auth.api';
 import { disableUnsavedWarning, useAppModal, useLoadingIndicator } from '@/modules/shared/hooks';
@@ -47,6 +48,10 @@ const Profile = () => {
       }
     }
   }, []);
+
+  // USER_INFO keeps role either as a code string or as a { code } object depending on the login path
+  const roleCode = typeof userInfo?.role === 'string' ? userInfo.role : userInfo?.role?.code;
+  const isAdmin = roleCode === ROLE_CODE.ADMIN;
 
   function handleLogout() {
     showConfirmModal({
@@ -220,12 +225,12 @@ const Profile = () => {
         <Box mt={{ xs: 1, sm: 2 }}>
           <Grid container spacing={{ xs: 1, sm: 2 }}>
             <Grid size={6}>
-              {/* Disabled for now: the /change-password page does not exist yet */}
+              {/* Admins cannot change their password from the web app; students use /change-password */}
               <ActionButton
                 variant="contained"
                 color="success"
                 onClick={handleChangePassword}
-                disabled
+                disabled={isAdmin}
                 fullWidth
                 sx={{ fontSize: { xs: '0.7rem', sm: '0.875rem' }, px: 1, py: { xs: 0.5, sm: 1 } }}
               >
