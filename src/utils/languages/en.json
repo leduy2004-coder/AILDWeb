@@ -1231,5 +1231,26 @@
       "resetTokenInvalid": "The password reset link is invalid or has expired.",
       "adminNotAllowed": "Admin accounts cannot reset their password by email."
     }
+  },
+  "changePassword": {
+    "pageTitle": "Change password | AILD",
+    "pageDescription": "Change your AILD account password",
+    "title": "Change password",
+    "subtitle": "Enter your current password and a new one (at least 8 characters).",
+    "currentPassword": "Current password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm new password",
+    "confirmPasswordPlaceholder": "Re-enter new password",
+    "submit": "Change password",
+    "success": "Password changed successfully!",
+    "validation": {
+      "currentRequired": "Please enter your current password",
+      "sameAsCurrent": "New password must be different from the current one"
+    },
+    "errors": {
+      "wrongCurrent": "Current password is incorrect."
+    }
   }
 }
