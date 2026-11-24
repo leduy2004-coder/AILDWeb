@@ -126,21 +126,23 @@ const AuthLogin = ({ title, subtitle, subtext, onSubmit }: AuthLoginProps) => {
             />
           </Box>
 
-          {/* Forgot Password */}
-          <Typography
-            component={Link}
-            href="/auth/forgot-password"
-            fontWeight="500"
-            sx={{
-              textDecoration: 'none',
-              color: 'primary.main',
-              fontSize: '14px',
-              textAlign: 'right',
-              display: 'block',
-            }}
-          >
-            {t('login.forgotPasswordLink')}
-          </Typography>
+          {/* Forgot Password: students only, admin accounts cannot reset by email */}
+          {adminPortal === false && (
+            <Typography
+              component={Link}
+              href="/auth/forgot-password"
+              fontWeight="500"
+              sx={{
+                textDecoration: 'none',
+                color: 'primary.main',
+                fontSize: '14px',
+                textAlign: 'right',
+                display: 'block',
+              }}
+            >
+              {t('login.forgotPasswordLink')}
+            </Typography>
+          )}
 
           {/* Submit button */}
           <Button

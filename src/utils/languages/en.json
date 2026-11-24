@@ -1166,5 +1166,70 @@
       "empty_reason": "Please enter a reason for the report",
       "submit_failed": "An error occurred, please try again later."
     }
+  },
+  "authFlow": {
+    "common": {
+      "successTitle": "Success",
+      "errorTitle": "Error",
+      "backToLogin": "Back to sign in"
+    },
+    "verifyOtp": {
+      "pageTitle": "Verify email | AILD",
+      "pageDescription": "Enter the OTP sent to your email to activate your account",
+      "title": "Verify your email",
+      "subtitle": "We sent a 6-digit code to",
+      "expiresIn": "Code expires in {{time}}",
+      "expired": "The code has expired. Please request a new one.",
+      "submit": "Verify",
+      "didNotReceive": "Didn't receive the code?",
+      "resend": "Resend code",
+      "resendIn": "Resend in {{seconds}}s",
+      "resent": "A new OTP has been sent to your email.",
+      "otpRequired": "Please enter all 6 digits",
+      "wrongOtp": "Incorrect OTP, please try again.",
+      "success": "Email verified! You can sign in now.",
+      "missingEmail": "Registration details not found. Please sign up again.",
+      "backToRegister": "Back to sign up",
+      "digitLabel": "Digit {{index}}"
+    },
+    "forgotPassword": {
+      "pageTitle": "Forgot password | AILD",
+      "pageDescription": "Get a password reset link by email",
+      "title": "Forgot password",
+      "subtitle": "Enter your registered email and we'll send you a link to reset your password.",
+      "submit": "Send reset link",
+      "sentTitle": "Check your email",
+      "sentMessage": "We sent a password reset link to {{email}}. The link is valid for {{minutes}} minutes.",
+      "resend": "Resend email",
+      "resent": "The reset link has been sent again."
+    },
+    "resetPassword": {
+      "pageTitle": "Reset password | AILD",
+      "pageDescription": "Set a new password for your AILD account",
+      "title": "Set a new password",
+      "subtitle": "Your new password must be at least 8 characters.",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm new password",
+      "confirmPasswordPlaceholder": "Re-enter new password",
+      "submit": "Reset password",
+      "success": "Password reset! Please sign in with your new password.",
+      "checking": "Checking your link...",
+      "invalidTitle": "Invalid link",
+      "invalidMessage": "This password reset link is invalid, already used, or expired.",
+      "requestNewLink": "Request a new link"
+    },
+    "errors": {
+      "generic": "Something went wrong, please try again.",
+      "invalidRequest": "The submitted information is not valid.",
+      "userExisted": "This email is already registered, please use another one.",
+      "userNotExisted": "No account found with this email.",
+      "otpExpired": "The OTP has expired. Please request a new one.",
+      "tooManyAttempts": "Too many wrong attempts. Please request a new code.",
+      "resendTooSoon": "You just requested an email, please wait a moment and try again.",
+      "registrationExpired": "Your sign-up session has expired. Please sign up again.",
+      "resetTokenInvalid": "The password reset link is invalid or has expired.",
+      "adminNotAllowed": "Admin accounts cannot reset their password by email."
+    }
   }
 }

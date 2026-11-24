@@ -7,8 +7,9 @@ import { registerType } from '@/app/(DashboardLayout)/types/auth/auth';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { ROLE_CODE } from '@/modules/shared/constants';
 import { register as registerApi, checkEmailExist } from '@/apis/auth';
-import { showErrorToast, showSuccessToast } from '@/modules/shared/components/toasts/ToastHelper';
+import { showErrorToast } from '@/modules/shared/components/toasts/ToastHelper';
 import { useRouter } from 'next/navigation';
+import { AUTH_PATH, getAuthErrorKey, rememberOtpSent } from '../../constants/auth-flow.constant';
 import CustomTextField from '@/app/(DashboardLayout)/components/forms/theme-elements/CustomTextField';
 import AuthSocialButtons from './AuthSocialButtons';
 import Link from 'next/link';
@@ -61,15 +62,17 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         role: { code: ROLE_CODE.STUDENT },
       };
 
+      // The account is created only after the email is confirmed with the OTP mailed now
       const res = await registerApi(payload as any);
       if (res.code === 1000 || res.result) {
-        showSuccessToast(t('register.messages.successTitle'), t('register.messages.registerSuccess'));
-        router.push('/auth/login');
+        const email = (data.email as string).trim().toLowerCase();
+        rememberOtpSent(email);
+        router.push(`${AUTH_PATH.VERIFY_OTP}?email=${encodeURIComponent(email)}`);
       } else {
         showErrorToast(t('register.messages.errorTitle'), t('register.messages.registerFailed'));
       }
     } catch (error) {
-      showErrorToast(t('register.messages.errorTitle'), t('register.messages.registerError'));
+      showErrorToast(t('register.messages.errorTitle'), t(getAuthErrorKey(error, 'register.messages.registerError')));
       console.error(error);
     } finally {
       setIsRegistering(false);

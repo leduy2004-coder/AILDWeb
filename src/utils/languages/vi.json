@@ -1166,5 +1166,70 @@
       "empty_reason": "Vui lòng nhập lý do báo cáo",
       "submit_failed": "Có lỗi xảy ra, vui lòng thử lại sau."
     }
+  },
+  "authFlow": {
+    "common": {
+      "successTitle": "Thành công",
+      "errorTitle": "Lỗi",
+      "backToLogin": "Quay lại đăng nhập"
+    },
+    "verifyOtp": {
+      "pageTitle": "Xác thực email | AILD",
+      "pageDescription": "Nhập mã OTP được gửi tới email để kích hoạt tài khoản",
+      "title": "Xác thực email",
+      "subtitle": "Chúng tôi đã gửi mã gồm 6 chữ số tới",
+      "expiresIn": "Mã hết hạn sau {{time}}",
+      "expired": "Mã đã hết hạn. Vui lòng gửi lại mã mới.",
+      "submit": "Xác nhận",
+      "didNotReceive": "Không nhận được mã?",
+      "resend": "Gửi lại mã",
+      "resendIn": "Gửi lại sau {{seconds}} giây",
+      "resent": "Đã gửi mã OTP mới tới email của bạn.",
+      "otpRequired": "Vui lòng nhập đủ 6 chữ số",
+      "wrongOtp": "Mã OTP không đúng, vui lòng thử lại.",
+      "success": "Xác thực thành công! Bạn có thể đăng nhập ngay bây giờ.",
+      "missingEmail": "Không tìm thấy thông tin đăng ký. Vui lòng đăng ký lại.",
+      "backToRegister": "Quay lại đăng ký",
+      "digitLabel": "Chữ số thứ {{index}}"
+    },
+    "forgotPassword": {
+      "pageTitle": "Quên mật khẩu | AILD",
+      "pageDescription": "Nhận link đặt lại mật khẩu qua email",
+      "title": "Quên mật khẩu",
+      "subtitle": "Nhập email đã đăng ký, chúng tôi sẽ gửi cho bạn link để đặt lại mật khẩu.",
+      "submit": "Gửi link đặt lại mật khẩu",
+      "sentTitle": "Kiểm tra email của bạn",
+      "sentMessage": "Chúng tôi đã gửi link đặt lại mật khẩu tới {{email}}. Link có hiệu lực trong {{minutes}} phút.",
+      "resend": "Gửi lại email",
+      "resent": "Đã gửi lại link đặt lại mật khẩu."
+    },
+    "resetPassword": {
+      "pageTitle": "Đặt lại mật khẩu | AILD",
+      "pageDescription": "Đặt mật khẩu mới cho tài khoản AILD",
+      "title": "Đặt mật khẩu mới",
+      "subtitle": "Mật khẩu mới phải có ít nhất 8 ký tự.",
+      "newPassword": "Mật khẩu mới",
+      "newPasswordPlaceholder": "Nhập mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu mới",
+      "confirmPasswordPlaceholder": "Nhập lại mật khẩu mới",
+      "submit": "Đặt lại mật khẩu",
+      "success": "Đặt lại mật khẩu thành công! Vui lòng đăng nhập bằng mật khẩu mới.",
+      "checking": "Đang kiểm tra link...",
+      "invalidTitle": "Link không hợp lệ",
+      "invalidMessage": "Link đặt lại mật khẩu không hợp lệ, đã được sử dụng hoặc đã hết hạn.",
+      "requestNewLink": "Yêu cầu link mới"
+    },
+    "errors": {
+      "generic": "Đã có lỗi xảy ra, vui lòng thử lại.",
+      "invalidRequest": "Thông tin gửi lên không hợp lệ.",
+      "userExisted": "Email đã tồn tại, vui lòng sử dụng email khác.",
+      "userNotExisted": "Không tìm thấy tài khoản với email này.",
+      "otpExpired": "Mã OTP đã hết hạn. Vui lòng gửi lại mã mới.",
+      "tooManyAttempts": "Bạn đã nhập sai quá nhiều lần. Vui lòng gửi lại mã mới.",
+      "resendTooSoon": "Bạn vừa yêu cầu gửi email, vui lòng đợi một chút rồi thử lại.",
+      "registrationExpired": "Phiên đăng ký đã hết hạn. Vui lòng đăng ký lại.",
+      "resetTokenInvalid": "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.",
+      "adminNotAllowed": "Tài khoản quản trị không hỗ trợ quên mật khẩu qua email."
+    }
   }
 }
