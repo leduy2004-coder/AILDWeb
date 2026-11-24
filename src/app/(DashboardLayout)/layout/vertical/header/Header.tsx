@@ -11,7 +11,6 @@ import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Profile from './Profile';
-import Notifications from './Notification';
 import Language from './Language';
 
 const AppBarStyled = styled(AppBar)(({ theme }) => ({
@@ -111,7 +110,6 @@ const Header = () => {
           {/* ------------------------------------------- */}
           {/* End Ecommerce Dropdown */}
           {/* ------------------------------------------- */}
-          <Notifications />
           {<Profile />}
         </Stack>
       </ToolbarStyled>
