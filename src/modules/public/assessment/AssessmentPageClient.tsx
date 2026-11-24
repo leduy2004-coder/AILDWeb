@@ -428,10 +428,12 @@ export default function AssessmentPageClient() {
         </DialogTitle>
         <DialogContent>
           <Typography>
+            {/* violationWarning turns null as soon as the dialog closes, but the fade-out still renders
+                this text: fall back to the latest count instead of flashing 0 */}
             {t('assessment.antiCheat.warningDesc', {
-              count: violationWarning ?? 0,
+              count: violationWarning ?? violationCount,
               max: maxViolations,
-              defaultValue: `Hệ thống phát hiện bạn đã rời khỏi màn hình làm bài (${violationWarning ?? 0}/${maxViolations}). Nếu đạt ${maxViolations} lần, bài thi sẽ tự động được nộp.`,
+              defaultValue: `Hệ thống phát hiện bạn đã rời khỏi màn hình làm bài (${violationWarning ?? violationCount}/${maxViolations}). Nếu đạt ${maxViolations} lần, bài thi sẽ tự động được nộp.`,
             })}
           </Typography>
         </DialogContent>
