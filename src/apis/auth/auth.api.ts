@@ -74,3 +74,64 @@ export async function logout(): Promise<IApiResponse<void>> {
 
   return payload;
 }
+
+/** Why an OTP is being sent / checked; matches the backend OtpStatus enum */
+export type OtpPurpose = 'REGISTER' | 'FORGET_PASS' | 'CHANGE_PASS';
+
+export interface IVerifyOtpBody {
+  email: string;
+  otp: string;
+  status: OtpPurpose;
+}
+
+export interface IResetPasswordBody {
+  token: string;
+  newPassword: string;
+}
+
+export async function verifyOtp(body: IVerifyOtpBody): Promise<IApiResponse<boolean>> {
+  const { payload } = await http.post<IApiResponse<boolean>>(
+    `${API_PREFIX.AUTH}/email/verify-account`,
+    body,
+  );
+
+  return payload;
+}
+
+export async function resendOtp(email: string, status: OtpPurpose): Promise<IApiResponse<boolean>> {
+  const query = new URLSearchParams({ email, status });
+  const { payload } = await http.post<IApiResponse<boolean>>(
+    `${API_PREFIX.AUTH}/email/generate-otp?${query}`,
+    {},
+  );
+
+  return payload;
+}
+
+export async function forgotPassword(email: string): Promise<IApiResponse<boolean>> {
+  const query = new URLSearchParams({ email });
+  const { payload } = await http.post<IApiResponse<boolean>>(
+    `${API_PREFIX.AUTH}/forgot-password?${query}`,
+    {},
+  );
+
+  return payload;
+}
+
+export async function validateResetToken(token: string): Promise<IApiResponse<boolean>> {
+  const query = new URLSearchParams({ token });
+  const { payload } = await http.get<IApiResponse<boolean>>(
+    `${API_PREFIX.AUTH}/reset-password/validate?${query}`,
+  );
+
+  return payload;
+}
+
+export async function resetPassword(body: IResetPasswordBody): Promise<IApiResponse<boolean>> {
+  const { payload } = await http.post<IApiResponse<boolean>>(
+    `${API_PREFIX.AUTH}/reset-password`,
+    body,
+  );
+
+  return payload;
+}
