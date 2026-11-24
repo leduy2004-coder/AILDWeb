@@ -5,8 +5,15 @@ import { NextRequest, NextResponse } from 'next/server';
 const ADMIN_URL = process.env.NEXT_PUBLIC_ADMIN_URL;
 const STUDENT_URL = process.env.NEXT_PUBLIC_STUDENT_URL;
 
-// Auth pages that only exist for students: sign-up and the Google OAuth callback
-const STUDENT_ONLY_AUTH_PATHS = ['/auth/register', '/auth/login/google'];
+// Auth pages that only exist for students: sign-up and its email OTP step, password recovery
+// (admin accounts cannot reset by email) and the Google OAuth callback
+const STUDENT_ONLY_AUTH_PATHS = [
+  '/auth/register',
+  '/auth/verify-otp',
+  '/auth/forgot-password',
+  '/auth/reset-password',
+  '/auth/login/google',
+];
 
 export function proxy(request: NextRequest) {
   if (!ADMIN_URL || !STUDENT_URL) return NextResponse.next();

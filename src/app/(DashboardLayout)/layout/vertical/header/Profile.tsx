@@ -220,10 +220,12 @@ const Profile = () => {
         <Box mt={{ xs: 1, sm: 2 }}>
           <Grid container spacing={{ xs: 1, sm: 2 }}>
             <Grid size={6}>
+              {/* Disabled for now: the /change-password page does not exist yet */}
               <ActionButton
                 variant="contained"
                 color="success"
                 onClick={handleChangePassword}
+                disabled
                 fullWidth
                 sx={{ fontSize: { xs: '0.7rem', sm: '0.875rem' }, px: 1, py: { xs: 0.5, sm: 1 } }}
               >
