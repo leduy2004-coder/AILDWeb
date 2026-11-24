@@ -6,6 +6,8 @@
     "pageTitle": "Home | AILD",
     "pageDescription": "Learning overview and student progress on the AILD system",
     "welcome": "Welcome back",
+    "welcomeGuest": "Welcome to the AI Competency Assessment System",
+    "welcomeGuestSubtitle": "Sign in to start assessing your AI skills.",
     "lastEvaluation": "Last evaluation",
     "noEvaluationYet": "No assessment yet",
     "notAssessed": "NOT ASSESSED",
@@ -211,7 +213,8 @@
       "passwordRequired": "Please enter a password",
       "confirmPasswordRequired": "Please confirm your password",
       "emailRequired": "Please enter your email",
-      "emailInvalid": "Invalid email address"
+      "emailInvalid": "Invalid email address",
+      "emailNote": "Use a valid email to receive the verification OTP."
     },
     "step2": {
       "title": "Choose your role",

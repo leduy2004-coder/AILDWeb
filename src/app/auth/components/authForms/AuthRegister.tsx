@@ -113,7 +113,16 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                 pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t('register.step1.emailInvalid') },
               }}
               render={({ field }) => (
-                <CustomTextField {...field} fullWidth type="email" placeholder={t('login.email.placeholder')} error={!!errors.email} helperText={errors.email?.message} />
+                <CustomTextField
+                  {...field}
+                  fullWidth
+                  type="email"
+                  placeholder={t('login.email.placeholder')}
+                  error={!!errors.email}
+                  // The OTP is mailed here, so remind the user before they submit; a validation error replaces the note
+                  helperText={errors.email?.message || t('register.step1.emailNote')}
+                />
+
               )}
             />
           </Box>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,10 @@ import { AuthActionTypes } from '@/types/shared';
 import { UserApi } from '@/apis/user/user.api';
 
 import { IconSparkles } from '@tabler/icons-react';
+
+// Login and logout both navigate away, so the token never changes while this page is open
+const subscribeNever = () => () => {};
+const hasAccessToken = () => Boolean(getLocalStorageItem<string>(AuthActionTypes.ACCESS_TOKEN));
 
 interface HomeWelcomeProps {
   lastEvaluationDate?: string | null;
@@ -22,6 +26,8 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
   const [userName, setUserName] = useState<string>('Học viên');
 
   const [userInfo, setUserInfo] = useState<any>(null);
+  // Null on the server; then whether the browser holds a session (token only, like the header)
+  const isLoggedIn = useSyncExternalStore(subscribeNever, hasAccessToken, () => null);
 
   useEffect(() => {
     const userInfoStr = getLocalStorageItem<string>(AuthActionTypes.USER_INFO);
@@ -100,39 +106,48 @@ export const HomeWelcome: React.FC<HomeWelcomeProps> = ({ lastEvaluationDate, is
         mb: 4,
       }}
     >
-      <Box>
+      {/* Hidden until the browser says whether there is a session, so neither greeting flashes */}
+      <Box sx={{ visibility: isLoggedIn === null ? 'hidden' : 'visible' }}>
         <Typography variant="h3" fontWeight={700} color="text.primary" gutterBottom sx={{ '@media (max-width:600px)': { fontSize: '1.5rem' } }}>
-          {t('home.welcome', 'Chào mừng trở lại')}, {userName}
+          {isLoggedIn === false
+            ? t('home.welcomeGuest')
+            : `${t('home.welcome', 'Chào mừng trở lại')}, ${userName}`}
         </Typography>
-        
-        <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+
+        {isLoggedIn === false ? (
           <Typography variant="body1" color="text.secondary" sx={{ '@media (max-width:600px)': { fontSize: '0.9rem' } }}>
-            {t('home.lastEvaluation', 'Đánh giá lần cuối')}: {formattedDate}
+            {t('home.welcomeGuestSubtitle')}
           </Typography>
-          
-          {isEvaluated && finalScore !== undefined && finalScore !== null && (
-            <Box
-              sx={{
-                px: 2,
-                py: 0.5,
-                borderRadius: '20px',
-                background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                color: '#fff',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)',
-              }}
-            >
-              <Typography variant="subtitle2" fontWeight={700}>
-                {t('home.finalScore', 'Điểm tổng kết')}:
-              </Typography>
-              <Typography variant="subtitle1" fontWeight={800}>
-                {Math.round(finalScore * 100) / 100}/10
-              </Typography>
-            </Box>
-          )}
-        </Box>
+        ) : (
+          <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+            <Typography variant="body1" color="text.secondary" sx={{ '@media (max-width:600px)': { fontSize: '0.9rem' } }}>
+              {t('home.lastEvaluation', 'Đánh giá lần cuối')}: {formattedDate}
+            </Typography>
+
+            {isEvaluated && finalScore !== undefined && finalScore !== null && (
+              <Box
+                sx={{
+                  px: 2,
+                  py: 0.5,
+                  borderRadius: '20px',
+                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)',
+                }}
+              >
+                <Typography variant="subtitle2" fontWeight={700}>
+                  {t('home.finalScore', 'Điểm tổng kết')}:
+                </Typography>
+                <Typography variant="subtitle1" fontWeight={800}>
+                  {Math.round(finalScore * 100) / 100}/10
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        )}
       </Box>
       <Button
         variant="contained"
