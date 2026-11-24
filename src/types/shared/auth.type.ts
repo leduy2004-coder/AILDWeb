@@ -37,6 +37,8 @@ export interface IDetailUserResponse {
   userId?: number;
   age?: number;
   major?: string;
+  /** Role code (e.g. ADMIN, STUDENT); older logins stored it as { code } */
+  role?: string | { code?: string };
 }
 
 export interface IDetailMail {
