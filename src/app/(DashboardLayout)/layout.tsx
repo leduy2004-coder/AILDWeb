@@ -20,6 +20,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { getLocalStorageItem } from '@/modules/shared/utils';
 import { AuthActionTypes } from '@/types/shared';
 import { setMenuByUrl } from '@/store/menu';
+import { useAdminBadgeStream } from '@/apis/admin-badge';
 
 const PageWrapper = styled('div')(() => ({
   display: 'flex',
@@ -67,6 +68,9 @@ export default function RootLayout({
     if (!menuItems.length) return;
     dispatch(setMenuByUrl(pathname));
   }, [dispatch, menuItems.length, pathname]);
+
+  // Live updates for the admin menu badges (new submissions / reports / users)
+  useAdminBadgeStream(isAuthenticated === true);
   if (isAuthenticated === null) {
     return <div></div>;
   }
