@@ -6,6 +6,7 @@ import React from 'react';
 import { useSelector } from '@/store/hooks';
 import { AppState } from '@/store/store';
 import { AnyType } from '@/types/shared';
+import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import List from '@mui/material/List';
@@ -20,6 +21,7 @@ import { IMenuSidebar } from '@/types/navigations';
 import { useAppModal } from '@/modules/shared/hooks';
 import { ConfirmModal } from '@/modules/shared/components';
 import { useRouter } from 'next/navigation';
+import { useMenuBadge } from './useMenuBadge';
 
 interface ItemType {
   item: IMenuSidebar;
@@ -110,6 +112,8 @@ export default function NavItem({
     },
   }));
   const { show: showConfirmModal } = useAppModal(ConfirmModal);
+  // Something new (submission / report / user) since an admin last opened this menu
+  const { unread, clear: clearBadge } = useMenuBadge(item?.code);
 
   const logoutAndRedirect = (href: string) => {
     router.push(href);
@@ -142,7 +146,10 @@ export default function NavItem({
           // {...listItemProps}
           disabled={item?.disabled}
           selected={pathDirect.includes(item?.href ?? '')}
-          onClick={() => onClick(item)}
+          onClick={() => {
+            clearBadge();
+            onClick(item);
+          }}
           sx={{
             '&:hover': {
               '.MuiListItemIcon-root': {
@@ -198,7 +205,10 @@ export default function NavItem({
                 }}*/
               />
             ) : (
-              <Icon icon={'solar:' + item.icon} width="24" height="24" />
+              // Collapsed sidebar shows the "something new" dot on the icon itself
+              <Badge color="success" variant="dot" invisible={!hideMenu || !unread}>
+                <Icon icon={'solar:' + item.icon} width="24" height="24" />
+              </Badge>
             )}
             {/* {itemIcon} */}
           </ListItemIcon>
@@ -220,6 +230,13 @@ export default function NavItem({
               )}
             </ListItemText>
           </Tooltip>
+
+          {unread && !hideMenu && (
+            <Box
+              component="span"
+              sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main', flexShrink: 0, mr: 1 }}
+            />
+          )}
 
           {!item?.chip || hideMenu ? null : (
             <Chip
